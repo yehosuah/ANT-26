@@ -71,6 +71,29 @@ def test_benchmark_rejects_dataset_protocol_mismatch_before_catalog_read(tmp_pat
         )
 
 
+def test_synthetic_dataset_cannot_be_promoted_to_real_release(tmp_path, protocol_file):
+    pytest.importorskip("torch")
+    path, protocol = protocol_file
+    payload = dataset(tmp_path, protocol, [row(1)])
+    with pytest.raises(ValueError, match="real Mercedes cohort"):
+        main(
+            [
+                "--protocol",
+                str(path),
+                "prepare-release",
+                "--examples",
+                str(payload),
+                "--catalog",
+                str(tmp_path / "absent-catalog.json"),
+                "--baseline-report",
+                str(tmp_path / "absent-report.json"),
+                "--output",
+                str(tmp_path / "candidate"),
+            ]
+        )
+    assert not (tmp_path / "candidate").exists()
+
+
 @pytest.mark.parametrize("fit,calibration", [([1], [1]), ([1], [11404]), ([11404], [])])
 def test_train_invalid_scope_rejected_before_training(
     tmp_path, protocol_file, monkeypatch, fit, calibration

@@ -15,5 +15,7 @@ services:
       - "8501:8501"
     environment:
       ANT26_API_URL: http://api:8000
+    volumes:
+      - ./artifacts:/app/artifacts:ro
     depends_on:
       - api
