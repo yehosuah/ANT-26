@@ -7,6 +7,7 @@ covered and lost populations remain separate descriptive slices.
 
 from __future__ import annotations
 
+import copy
 import hashlib
 import json
 import math
@@ -19,6 +20,19 @@ from ant26.models.baselines import valid_examples
 
 STATUSES = ("scored", "censored", "abstained", "missing_record")
 SLOTS = {(lap, sector) for lap in range(1, 72) for sector in range(1, 4)}
+
+
+def export_public_comparison(comparison, output_path):
+    """Publish derived counts and metrics while retaining individual IDs locally."""
+    report = copy.deepcopy(_read(comparison))
+    for name in ("common_scoreable", "newly_scoreable", "lost_scoreable"):
+        report[name].pop("example_ids", None)
+    for name in ("newly_eligible", "lost_eligible"):
+        if name in report["coverage"]:
+            report["coverage"][name + "_count"] = len(report["coverage"].pop(name))
+    report["aggregate_only"] = True
+    _save(output_path, report)
+    return report
 
 
 def _read(value):

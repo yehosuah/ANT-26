@@ -212,7 +212,9 @@ def policy_comparison(report):
                 continue
             for version in ("prior", "new"):
                 counts = values.get(version, {})
-                if isinstance(counts, dict):
+                if isinstance(counts, dict) and any(
+                    key in counts for key in ("scored", "expected_slots")
+                ):
                     coverage.append(
                         {
                             "Scope": scope,
@@ -693,6 +695,13 @@ elif page == "Mexico Case Study":
                 ),
             ]
         )
+        if (
+            number(accounting, "censored_targets") is not None
+            or number(accounting, "missing_sector_records") is not None
+        ):
+            st.caption(
+                f"Sector-slot accounting: {displayed_number(accounting, 'scoreable_forecasts')} scored · {displayed_number(accounting, 'abstentions')} abstained · {displayed_number(accounting, 'censored_targets')} censored · {displayed_number(accounting, 'missing_sector_records')} missing."
+            )
         case_metrics = mexico.get("metrics", {}).get("macro", {})
         if case_metrics:
             metrics(
@@ -801,12 +810,12 @@ elif page == "Mexico Case Study":
                     if row is None
                     else "Scored"
                     if scored == 3
+                    else "Censored"
+                    if number(row, "censored_targets")
                     else "Partial"
                     if scored is not None and scored > 0
                     else "Abstained"
                     if abstained is not None and abstained > 0
-                    else "Censored"
-                    if number(row, "censored_targets")
                     else "Observed"
                 )
                 complete.append(
@@ -868,6 +877,7 @@ elif page == "Mexico Case Study":
                             {"field": "Status"},
                             {"field": "Scoreable"},
                             {"field": "Abstentions"},
+                            {"field": "Censored"},
                         ],
                     },
                 },
@@ -1110,11 +1120,17 @@ elif page == "Methods":
     st.write(
         "The public telemetry supports sampled speed and control-channel comparisons. Position feeds approximate progress around the circuit and do not establish accurate lateral racing lines. Fuel, setup, tyre temperature and other unobserved conditions limit behavioral interpretation."
     )
-    operations, operations_error = load_json(REPORT_ROOT / "operations.json")
+    operations_filename = (
+        "operations-pit-v0.2.0.json" if selected_case == "pit-v0.2.0" else "operations.json"
+    )
+    operations, operations_error = load_json(REPORT_ROOT / operations_filename)
     if operations_error:
         st.warning(operations_error)
     if isinstance(operations, dict):
         st.subheader("Measured local runtime")
+        st.caption(
+            f"Runtime artifact scope: {case_label}. Timings use this version's saved weights."
+        )
         measured = operations.get("measurements", {})
         runtime = operations.get("hardware_runtime", {})
         baseline_ms = number(measured.get("baseline_predict_total"), "p95_ms")
@@ -1141,7 +1157,7 @@ elif page == "Methods":
         st.caption(
             "Warm synchronous calls with materialized inputs. Source alignment, network, HTTP, disk and model loading are excluded; this is not a service load test."
         )
-        source_footer("reports/operations.json")
+        source_footer(f"reports/{operations_filename}")
     st.subheader("Run the portfolio from a fresh checkout")
     st.code(
         "uv sync --extra app\nuv run --extra app streamlit run app/portfolio.py", language="bash"

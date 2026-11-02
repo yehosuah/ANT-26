@@ -10,6 +10,7 @@ from ant26.evaluation.pit_comparison import (
     _digest,
     compare_development_examples,
     compare_pit_replays,
+    export_public_comparison,
 )
 
 
@@ -106,6 +107,21 @@ def test_no_common_scores_does_not_invent_paired_metrics():
     assert report["common_scoreable"]["count"] == 0
     assert report["common_scoreable"]["delta_new_minus_prior"] == {}
     assert report["newly_scoreable"]["count"] == 1
+
+
+def test_public_comparison_keeps_counts_without_forecast_identities(tmp_path):
+    private = compare_pit_replays(*replay({(1, 1): 1}), *replay({(1, 1): 2, (47, 1): 3}))
+    before = copy.deepcopy(private)
+    public = export_public_comparison(private, tmp_path / "public.json")
+    assert private == before
+    assert public["aggregate_only"] is True
+    assert public["common_scoreable"]["count"] == 1
+    assert public["newly_scoreable"]["count"] == 1
+    assert public["coverage"]["newly_eligible_count"] == 1
+    text = (tmp_path / "public.json").read_text()
+    assert "11404:12:" not in text
+    assert "example_ids" not in text
+    assert '"quantiles"' not in text and '"target_seconds"' not in text
 
 
 @pytest.mark.parametrize(

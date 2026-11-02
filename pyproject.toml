@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "ant26"
-version = "0.1.0"
+version = "0.2.0"
 description = "Auditable F1 telemetry representations and next-sector prediction"
 requires-python = ">=3.11"
 dependencies = ["numpy>=2.0", "scikit-learn>=1.5", "pyarrow>=18", "fastapi>=0.115", "uvicorn>=0.30"]
