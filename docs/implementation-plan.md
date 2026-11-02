@@ -157,9 +157,9 @@ Each milestone is owned by the implementer, ends with the listed evidence, and m
 - [x] M1 Initial Mercedes cohort audited; full-grid expansion remains open
 - [x] M2 Inputs and leakage tests complete
 - [x] M3 Initial cohort baselines reproduced
-- [ ] M4 Learned models evaluated
+- [x] M4 Learned models evaluated; baseline retained after failed improvement gates
 - [ ] M5 Atlas validated
-- [ ] M6 Application integrated
+- [x] M6 Application integrated and API/UI container checks passed
 - [ ] M7 Mexico case study complete
 
 ## Mexico case study and demo

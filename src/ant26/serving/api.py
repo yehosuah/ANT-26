@@ -64,6 +64,7 @@ def create_app(artifact_root: str | Path | None = None) -> FastAPI:
         driver_number: int = 12,
         session_key: int | None = None,
         model: str | None = None,
+        seed: int | None = None,
         offset: int = Query(0, ge=0),
         limit: int = Query(500, ge=1, le=5000),
     ):
@@ -74,6 +75,7 @@ def create_app(artifact_root: str | Path | None = None) -> FastAPI:
             if row.get("driver_number") == driver_number
             and (session_key is None or row.get("session_key") == session_key)
             and (model is None or row.get("model") == model)
+            and (seed is None or row.get("seed") == seed)
         ]
         return {
             "count": len(selected),
@@ -85,11 +87,19 @@ def create_app(artifact_root: str | Path | None = None) -> FastAPI:
     def prediction_index(run_id: str, driver_number: int = 12):
         rows = read_json(run_path(run_id) / "predictions.json")
         entries = {
-            (row["session_key"], row.get("model", "unknown"))
+            (row["session_key"], row.get("model", "unknown"), row.get("seed"))
             for row in rows
             if row.get("driver_number") == driver_number
         }
-        return {"entries": [{"session_key": key, "model": model} for key, model in sorted(entries)]}
+        return {
+            "entries": [
+                {"session_key": key, "model": model, "seed": seed}
+                for key, model, seed in sorted(
+                    entries,
+                    key=lambda entry: (entry[0], entry[1], -1 if entry[2] is None else entry[2]),
+                )
+            ]
+        }
 
     @app.get("/runs/{run_id}/atlas")
     def atlas(run_id: str):

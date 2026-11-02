@@ -62,3 +62,22 @@ def test_invalidated_experiments_are_quarantined_from_replay(tmp_path):
     client = TestClient(create_app(tmp_path))
     assert client.get("/runs").json()["runs"] == []
     assert client.get("/runs/superseded/report").status_code == 410
+
+
+def test_training_seeds_are_not_mixed_in_replay(tmp_path):
+    run = tmp_path / "multiseed"
+    run.mkdir()
+    (run / "predictions.json").write_text(
+        json.dumps(
+            [
+                {"driver_number": 12, "session_key": 1, "model": "encoder", "seed": seed}
+                for seed in [17, 29]
+            ]
+        )
+    )
+    client = TestClient(create_app(tmp_path))
+    index = client.get("/runs/multiseed/prediction-index").json()["entries"]
+    assert {row["seed"] for row in index} == {17, 29}
+    page = client.get("/runs/multiseed/predictions?seed=17").json()
+    assert page["count"] == 1
+    assert page["predictions"][0]["seed"] == 17

@@ -16,9 +16,9 @@ User authorized implementation and parallel independent work on November 1, 2026
 - [x] M1 Implement immutable ingestion and audit the initial Mercedes cohort
 - [x] M2 Implement past-only features and leakage tests
 - [x] M3 Implement rolling splits, metrics, baselines and initial cohort benchmark
-- [ ] M4 Implement and validate representation training
+- [x] M4 Run corrected fixed-budget representation experiments and record the baseline decision
 - [ ] M5 Implement and validate atlas retrieval
-- [ ] M6 Integrate API and replay application
+- [x] M6 Integrate API and replay application; container health verified in GitHub CI
 - [ ] M7 Freeze model and run Mexico case study
 
 Milestones are marked complete only after integration checks and the corresponding evidence exist. Component completion does not establish model quality or full-season data availability.
@@ -26,6 +26,8 @@ Milestones are marked complete only after integration checks and the correspondi
 M1 through M3 are complete for the declared initial Mercedes cohort: 18 Antonelli races and 17 scoreable Russell races. Full-grid representation pretraining remains an extension of the original population scope; no full-grid claim is made.
 
 ## Reconciliation evidence
+
+The next two sections preserve early implementation checkpoints. Their pending statuses are superseded by the full-cohort and corrected-experiment checkpoints below.
 
 - M0: 18 verified pre-Mexico development race entries; canceled races excluded; Mexico meeting 1298 quarantined. Official Formula 1 page resolves session 11731 as Bahrain GP in Malaysia. Canonical override preserves original fields.
 - M1 component: immutable cached ingestion, integrity checks, retry/backoff and source-quality audit implemented; 9 offline tests passed. Real three-race audit is ongoing; full-session telemetry response timeouts require bounded downloads.
@@ -52,3 +54,13 @@ M1 through M3 are complete for the declared initial Mercedes cohort: 18 Antonell
 - Real diagnostic coverage: 1,040 of 1,235 observed nominal green test origins retained (84.21%); one eligible censored target. Hungary's source values of 104 are masked and its selective coverage is reported.
 - A full first neural experiment exposed a constant-column normalization defect. Its checkpoints, source snapshots and invalidation record are preserved; the API excludes invalidated experiments. Regression-tested policy `constant_unit_scale_v2` uses unit scale for near-zero fitted variance and rejects old checkpoints. Fixed-budget corrected experiments are running separately.
 - Atlas discrete patterns failed the first bounded stability check (median ARI 0.32123 versus 0.6 target on one selective fold); continuous retrieval remains experimental. Blind review preparation is underway; no human preferences have been fabricated.
+
+## Corrected experiment and review checkpoint
+
+- Completed 160 corrected fixed-budget runs: 120 Antonelli-only runs (8 races x 5 seeds x 3 modes) and 40 Mercedes-cohort fine-tuning runs (8 races x 5 seeds). Pretrained modes used 3 reconstruction epochs; all modes used 5 forecast epochs. The numerical correction changed neither seeds nor budgets.
+- Antonelli-only fine-tuning: race-macro MAE 0.97827 seconds and WIS 0.68379. Best respective baselines were 0.94552 and 0.64307. Its paired improvement intervals cross zero and both 5% gates fail.
+- Mercedes fine-tuning: primary Antonelli MAE 0.99748 and WIS 0.77681, also failing the improvement gates. Secondary all-driver tail failures remain visible. These results do not justify deploying the learned forecast head.
+- Final candidate forecasting bundle is native CatBoost with validated JSON; seed 17, first 16 verified races fitted, Singapore and Austin calibrated. Selection optimizes WIS while accepting a measured 3.6951% point-MAE tradeoff. The separate continuous-retrieval encoder and frozen-reference candidate index are prepared with exact fitting snapshots.
+- All final artifacts still say `candidate_not_frozen_for_mexico`; Mexico was not queried. Candidate preparation closes technical work but does not bypass the atlas review gate.
+- Sixty corrected blind comparisons across eight held-out races are ready, with trace overlays and blank ratings. `app/review.py` is the explicit-save review UI. There are no human preferences yet; M5 stays open and M7 remains held out.
+- GitHub run 41388102462 passed offline checks, API/UI Docker Compose builds, HTTP health checks, and in-container protocol validation for commit 2933388. Domain/API type checking has subsequently been added to the final verification commands.
