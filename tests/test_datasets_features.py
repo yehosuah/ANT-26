@@ -254,6 +254,51 @@ class DatasetTests(unittest.TestCase):
         self.assertEqual(a["features"], b["features"])
         self.assertEqual(a["eligible"], b["eligible"])
 
+    def test_open_prerace_pit_closes_only_at_completed_running_lap_evidence(self):
+        laps, car, flags = fixture()
+        pit = [{"session_key": 11234, "driver_number": 12, "date": stamp(-10)}]
+        original = copy.deepcopy((laps, car, flags, pit))
+        rows = build_examples(laps, car, race_control=flags, pit=pit)
+        early = next(r for r in rows if r["lap_number"] == 1 and r["sector_index"] == 3)
+        self.assertIsNone(early["features"]["context"]["in_pit_lane"])
+        self.assertEqual(early["features"]["same_sector_history_count"], 0)
+        guarded = next(r for r in rows if r["lap_number"] == 2 and r["sector_index"] == 1)
+        self.assertEqual(guarded["cutoff"], stamp(29))
+        self.assertIsNone(guarded["features"]["context"]["in_pit_lane"])
+        later = next(r for r in rows if r["lap_number"] == 4 and r["sector_index"] == 1)
+        self.assertFalse(later["features"]["context"]["in_pit_lane"])
+        # First full running lap completes at t30: its sectors remain inside
+        # the conservative open interval. Lap2 and lap3 S1 can be references.
+        self.assertEqual(later["features"]["same_sector_history_count"], 2)
+        self.assertTrue(later["eligible"], later["exclusion_reasons"])
+        self.assertEqual((laps, car, flags, pit), original)
+
+    def test_later_pit_exit_evidence_cannot_change_earlier_features(self):
+        laps, car, flags = fixture()
+        # No non-pit-out completed lap is available by lap4 S1 cutoff t89.
+        for lap in laps[:3]:
+            lap["is_pit_out_lap"] = True
+        pit = [{"session_key": 11234, "driver_number": 12, "date": stamp(-10)}]
+        before = build_examples(laps, car, race_control=flags, pit=pit)
+        changed = copy.deepcopy(laps)
+        changed[3]["duration_sector_3"] = 17
+        changed[3]["lap_duration"] = 37
+        changed[4]["is_pit_out_lap"] = True
+        after = build_examples(changed, car, race_control=flags, pit=pit)
+        for original, mutated in zip(before, after, strict=True):
+            if original["cutoff"] is not None and original["cutoff"] <= stamp(89):
+                self.assertEqual(original["features"], mutated["features"])
+        earlier = next(r for r in before if r["lap_number"] == 4 and r["sector_index"] == 1)
+        self.assertIsNone(earlier["features"]["context"]["in_pit_lane"])
+
+    def test_known_duration_prerace_pit_interval_keeps_original_end(self):
+        laps, car, flags = fixture()
+        pit = [{"session_key": 11234, "driver_number": 12, "date": stamp(-10), "lane_duration": 10}]
+        rows = build_examples(laps, car, race_control=flags, pit=pit)
+        later = next(r for r in rows if r["lap_number"] == 4 and r["sector_index"] == 1)
+        self.assertEqual(later["features"]["same_sector_history_count"], 3)
+        self.assertTrue(later["eligible"])
+
     def test_previous_lap_future_sector_cannot_change_completed_sector_history(self):
         laps, car, flags = fixture()
         before = make_examples(laps, car, flags)

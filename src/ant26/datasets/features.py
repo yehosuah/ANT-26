@@ -314,15 +314,37 @@ def _pit_intervals(pit: list[dict], identity: tuple) -> list[tuple[float, float 
     return result
 
 
+def _bounded_pit_intervals(intervals: list, cutoff: float, completed_laps: list) -> list:
+    """Bound unknown exits with completed running-lap evidence available now.
+
+    Completion establishes only an upper bound on exit. Keep the entire first
+    evidenced lap inside the conservative interval rather than backdating exit
+    to its first sector. Known provider durations retain their exact semantics.
+    """
+    completed_at = sorted(
+        {
+            row["lap_completed_at"]
+            for row in completed_laps
+            if not row["lap"].get("is_pit_out_lap")
+            and row["lap_completed_at"] is not None
+            and row["lap_completed_at"] <= cutoff
+        }
+    )
+    return [
+        (
+            start,
+            end if end is not None else next((time for time in completed_at if time > start), None),
+        )
+        for start, end in intervals
+    ]
+
+
 def _pit_state(intervals: list, cutoff: float, previous: list) -> bool | None:
     started = [(start, end) for start, end in intervals if start <= cutoff]
     if started:
         start, end = started[-1]
         if end is not None:
             return cutoff < end
-        # A later completed running sector is evidence of exit under event-time replay.
-        if any(r["end"] is not None and start < r["end"] <= cutoff for r in previous):
-            return False
         return None
     return False if previous else None
 
@@ -461,6 +483,17 @@ def build_examples(
             cutoff = origin - policy["feature_guard_seconds"]
             row["cutoff"] = _iso(cutoff)
             prior = [r for r in driver_sectors if _historical_timing_valid(r, cutoff)]
+            # Full-lap validity is retrospective until the complete lap ends.
+            # Incomplete-lap sectors cannot establish exit from an open pit
+            # interval, and pit-out laps cannot establish a running-lap exit.
+            completed_lap_evidence = [
+                r
+                for r in prior
+                if r["lap_completed_at"] is not None
+                and r["lap_completed_at"] <= cutoff
+                and not r["lap"].get("is_pit_out_lap")
+            ]
+            bounded_pits = _bounded_pit_intervals(pits, cutoff, completed_lap_evidence)
             history = []
             for previous in prior:
                 if previous["sector_index"] != sector or previous["lap"].get("is_pit_out_lap"):
@@ -471,7 +504,7 @@ def build_examples(
                 )
                 was_pitting = any(
                     start < (pit_end if pit_end is not None else math.inf) and end > pit_start
-                    for pit_start, pit_end in pits
+                    for pit_start, pit_end in bounded_pits
                 )
                 if was_green and not was_pitting:
                     history.append(previous)
@@ -479,15 +512,7 @@ def build_examples(
             recent = [r["duration"] for r in history[-3:]]
             reference = statistics.median(recent) if recent else None
             state = _state_at(flags, cutoff)
-            # Full-lap validity is retrospective until the complete lap ends.
-            # Incomplete-lap sectors must not establish an inferred pit exit:
-            # their validity could depend on the future target duration.
-            completed_lap_evidence = [
-                r
-                for r in prior
-                if r["lap_completed_at"] is not None and r["lap_completed_at"] <= cutoff
-            ]
-            pitting = _pit_state(pits, cutoff, completed_lap_evidence)
+            pitting = _pit_state(bounded_pits, cutoff, completed_lap_evidence)
             features = _window(car, cutoff, flags, policy)
             features.update(
                 _context(cutoff, lap, stints or [], weather or [], intervals or [], lap_anchors)

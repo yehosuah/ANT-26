@@ -106,6 +106,7 @@ def main(argv: list[str] | None = None) -> int:
     freeze.add_argument("--examples", required=True)
     freeze.add_argument("--code-revision", required=True)
     freeze.add_argument("--output", required=True)
+    freeze.add_argument("--correction-record")
     case_ingest = commands.add_parser("case-ingest")
     case_ingest.add_argument("--freeze", required=True)
     case_ingest.add_argument("--cache-root", default="data/raw")
@@ -575,6 +576,7 @@ def main(argv: list[str] | None = None) -> int:
             args.examples,
             args.output,
             code_revision=args.code_revision,
+            correction_record=args.correction_record,
         )
         print(json.dumps({"output": args.output, "status": result.get("status")}))
     elif args.command == "case-ingest":

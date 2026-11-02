@@ -297,3 +297,112 @@ def test_real_features_and_targets_must_reconstruct_from_verified_sources(tmp_pa
     envelope["examples"][0]["target_seconds"] = 0.123
     with pytest.raises(ValueError, match="source reconstruction"):
         _verify_case_reconstruction(envelope, responses, protocol)
+
+
+def correction_record(tmp_path, freeze, release, *, eligible=0):
+    report = tmp_path / "preserved-first-report.json"
+    report.write_text(
+        json.dumps(
+            {
+                "status": "case_study_scored",
+                "race": {"session_key": 11404},
+                "accounting": {"eligible_forecasts": eligible, "scoreable_forecasts": 0},
+                "provenance": {
+                    "freeze_sha256": hashlib.sha256(freeze.read_bytes()).hexdigest(),
+                    "release_manifest_sha256": release["manifest_sha256"],
+                    "protocol_sha256": release["protocol_sha256"],
+                },
+            }
+        )
+    )
+    record = tmp_path / "correction.json"
+    record.write_text(
+        json.dumps(
+            {
+                "parent_freeze_path": str(freeze),
+                "parent_freeze_sha256": hashlib.sha256(freeze.read_bytes()).hexdigest(),
+                "parent_report_path": str(report),
+                "parent_report_sha256": hashlib.sha256(report.read_bytes()).hexdigest(),
+                "description": "Resolve a pre-race pit interval using only prior completed-lap evidence.",
+            }
+        )
+    )
+    return record
+
+
+def test_post_inspection_correction_is_explicit_and_preserves_first_attempt(prepared, tmp_path):
+    root, protocol, dataset, freeze, release, _ = prepared
+    original = freeze.read_bytes()
+    record = correction_record(tmp_path, freeze, release)
+    corrected = tmp_path / "corrected-freeze.json"
+    result = freeze_release(
+        root,
+        protocol,
+        dataset,
+        corrected,
+        code_revision="correction-revision",
+        correction_record=record,
+    )
+    assert (
+        result["case_study"]["claim"]
+        == "post_inspection_implementation_correction_diagnostic_replay"
+    )
+    assert result["implementation_correction"]["first_attempt_eligible_forecasts"] == 0
+    assert result["implementation_correction"]["post_inspection"] is True
+    assert result["artifact_files"] == release["artifact_files"]
+    assert result["atlas_decision"]["validated_retrieval"] is False
+    assert freeze.read_bytes() == original
+    assert verify_release(corrected, protocol) == result
+    assert (
+        freeze_release(
+            root,
+            protocol,
+            dataset,
+            corrected,
+            code_revision="correction-revision",
+            correction_record=record,
+        )
+        == result
+    )
+    with pytest.raises(ValueError, match="differs"):
+        freeze_release(root, protocol, dataset, corrected, code_revision="correction-revision")
+    payload = json.loads(record.read_text())
+    payload["description"] = "Changed rationale"
+    record.write_text(json.dumps(payload))
+    with pytest.raises(ValueError, match="provenance changed"):
+        verify_release(corrected, protocol)
+
+
+def test_correction_rejects_nonzero_first_attempt_and_changed_forecast_artifacts(
+    prepared, tmp_path
+):
+    root, protocol, dataset, freeze, release, _ = prepared
+    record = correction_record(tmp_path, freeze, release, eligible=1)
+    with pytest.raises(ValueError, match="zero-forecast"):
+        freeze_release(
+            root,
+            protocol,
+            dataset,
+            tmp_path / "bad.json",
+            code_revision="changed",
+            correction_record=record,
+        )
+    parent = copy.deepcopy(release)
+    parent["artifact_files"]["baseline/quantile-0.cbm"] = "different"
+    from ant26.release import _sha
+
+    parent["manifest_sha256"] = _sha(
+        {key: value for key, value in parent.items() if key != "manifest_sha256"}
+    )
+    fake_parent = tmp_path / "changed-parent.json"
+    fake_parent.write_text(json.dumps(parent))
+    record = correction_record(tmp_path, fake_parent, parent)
+    with pytest.raises(ValueError, match="preserve artifact_files"):
+        freeze_release(
+            root,
+            protocol,
+            dataset,
+            tmp_path / "changed-model.json",
+            code_revision="changed",
+            correction_record=record,
+        )
