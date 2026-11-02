@@ -1,0 +1,17 @@
+{
+  "schema_version": "ant26-catalog-overrides-v1",
+  "sessions": {
+    "11731": {
+      "verified_identity": true,
+      "event_name": "Bahrain Grand Prix in Malaysia 2026",
+      "host_country": "Malaysia",
+      "circuit": "Sepang International Circuit",
+      "reason": "Bahrain event identity was retained when the race moved to Sepang on October 4. Raw provider country_name is preserved separately from canonical host country.",
+      "sources": [
+        "https://www.formula1.com/en/racing/2026/bahrain",
+        "https://www.formula1.com/en/latest/article/formula-1-gulf-air-bahrain-grand-prix-2026.1IHoy7D2dfCIugb5mH78cE",
+        "https://www.fia.com/news/f1-2026-bahrain-gp-malaysia-schedule-press-conferences"
+      ]
+    }
+  }
+}

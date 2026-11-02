@@ -1,0 +1,21 @@
+# ANT-26 representation experiment
+
+The first representation candidate uses an adapted masked patch encoder and a non-crossing quantile forecast head. It is an implementation scaffold; development-fold predictive superiority, calibration, and Mexico performance have not been established.
+
+The default encoder has four transformer layers, width 128, four attention heads, eight-step patches, and a 128-step input window. A separate reconstruction head applies robust regression to speed, throttle, and RPM, and classification losses to brake application and gear. Only masked, usable entries contribute to the loss. A usable tensor-grid value can be a native observation or a permitted short-gap interpolation. Missing entries and padding do not become training targets; the grid adds no source resolution.
+
+`train_representation` validates its fitting allowlist before extracting inputs or fitting normalization. Mexico meeting 1298 and known Mexico session keys are rejected. Tuning data must use a disjoint explicit allowlist; it is evaluated after fitting and never enters normalization or optimization. The initial scaffold uses fixed caller-selected epoch budgets; automated early stopping remains integration work.
+
+Three modes are available: `scratch` skips reconstruction pretraining, `frozen` fits only the forecast head after pretraining, and `finetune` also updates the encoder. Forecasts predict log duration relative to the historical reference, then convert to seconds. Ordered offsets around the median enforce non-crossing quantiles at 0.05, 0.10, 0.50, 0.90, and 0.95.
+
+Artifacts save the architecture, fitting and tuning sessions, channel/feature schemas, fitted normalization, seed, parameter count, training losses, data kind, and checkpoint checksum. Loading checks the checksum; saving refuses to overwrite an existing bundle. Prediction consumes the same preprocessing used in training.
+
+`bundle.calibrate(examples, calibration_sessions={...})` widens the central intervals using held-out calibration residuals in seconds. It rejects fitting/tuning overlap and Mexico before reading targets, records its exact calibration scope and input checksum, and leaves encoder/head/normalization unchanged. Calibration is an empirical adjustment; serial dependence and circuit shift prevent an independent-exchangeable coverage guarantee. Saving after calibration includes that state in the artifact metadata.
+
+The training input is a JSON list of canonical example dictionaries, each containing `features.sequence` and `features.sequence_mask` as time-by-five-channel nested lists in the order speed, throttle, brake, RPM, gear. Fit the three modes through `train_representation(examples, fit_sessions={...}, mode="finetune")`; call `bundle.save(new_directory)` to write `model.pt` and `metadata.json`. Reuse via `RepresentationBundle.load(directory)`, then `.predict(examples)` or `.encode(examples)`. CLI orchestration can wrap this API without introducing a second feature transform.
+
+CPU tests use a reduced encoder on explicitly synthetic telemetry to verify finite optimization, decreased reconstruction loss, masking, scope rejection, ordered quantiles, and artifact round-tripping. A falling reconstruction loss on the fitting fixture is optimization evidence, not evidence of out-of-sample skill. The default encoder's parameter budget is checked separately.
+
+The implemented default encoder has 559,104 parameters. With PyTorch 2.14.1 on CPU and seed 17, the reduced synthetic fixture's fixed-mask reconstruction loss fell from 3.7861056 to 2.9098163 after ten pretraining epochs. Scratch, frozen, and fine-tuning modes all executed with finite forecast losses. Five representation tests passed, including prediction equality after a checkpoint round-trip, immutable-save refusal, checksum rejection after deliberate file corruption, and calibration-scope enforcement. Ten split, metric, and baseline tests also passed. These checks used synthetic fixtures and establish implementation behavior only.
+
+Remaining M4 gates are chronological real-data experiments, five-seed results, timing sensitivity, ablations, actual compute reporting, designated-race interval calibration, and the comparison against the strongest baselines. Mexico stays excluded until those decisions and artifacts are frozen.
