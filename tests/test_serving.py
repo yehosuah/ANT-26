@@ -52,3 +52,13 @@ def test_prediction_index_and_pagination_preserve_late_races(tmp_path):
     assert page["count"] == 5002
     assert len(page["predictions"]) == 1
     assert client.get("/runs/large/predictions?session_key=2&model=ridge").json()["count"] == 1
+
+
+def test_invalidated_experiments_are_quarantined_from_replay(tmp_path):
+    run = tmp_path / "superseded"
+    run.mkdir()
+    (run / "report.json").write_text('{"status":"evaluated"}')
+    (run / "normalization-defect.json").write_text('{"invalidated":true}')
+    client = TestClient(create_app(tmp_path))
+    assert client.get("/runs").json()["runs"] == []
+    assert client.get("/runs/superseded/report").status_code == 410

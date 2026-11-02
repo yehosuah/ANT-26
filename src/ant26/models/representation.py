@@ -280,6 +280,10 @@ class RepresentationBundle:
         metadata = json.loads((directory / "metadata.json").read_text())
         if metadata.get("schema_version") != "ant26-representation-v1":
             raise ValueError("Unsupported representation artifact schema")
+        if metadata.get("normalization_policy") != "constant_unit_scale_v2":
+            raise ValueError(
+                "Unsupported legacy normalization policy; retrain this checkpoint before prediction"
+            )
         checkpoint = directory / "model.pt"
         if hashlib.sha256(checkpoint.read_bytes()).hexdigest() != metadata["checkpoint_sha256"]:
             raise ValueError("Model checkpoint checksum mismatch")
@@ -344,16 +348,18 @@ def train_representation(
     channel_count = mask.sum(axis=(0, 1))
     if (channel_count == 0).any():
         raise ValueError("Every sequence channel needs usable fitting observations")
-    mean = (values * mask).sum(axis=(0, 1)) / channel_count
+    mean = (values * mask).sum(axis=(0, 1), dtype=np.float64) / channel_count
     variance = (((values - mean) ** 2) * mask).sum(axis=(0, 1)) / channel_count
-    scale = np.maximum(np.sqrt(variance), 1e-6)
+    scale = np.sqrt(variance)
+    scale[scale < 1e-6] = 1.0
     context = feature_matrix(rows)
     observed_context = np.isfinite(context)
     context_mean = np.where(observed_context, context, 0).sum(axis=0) / observed_context.sum(
         axis=0
     ).clip(1)
     clean = np.where(observed_context, context, context_mean)
-    context_scale = np.maximum(clean.std(axis=0), 1e-6)
+    context_scale = clean.std(axis=0)
+    context_scale[context_scale < 1e-6] = 1.0
     encoder, head = MaskedPatchEncoder(config), QuantileHead(config.width)
     parameters = sum(item.numel() for item in encoder.parameters())
     maximum = (protocol or {}).get("experiments", {}).get("maximum_encoder_parameters", 2_000_000)
@@ -361,6 +367,7 @@ def train_representation(
         raise ValueError("Encoder exceeds the protocol parameter budget")
     metadata = {
         "schema_version": "ant26-representation-v1",
+        "normalization_policy": "constant_unit_scale_v2",
         "model_type": "masked_patch_encoder_quantile_head",
         "encoder_config": asdict(config),
         "encoder_parameters": parameters,

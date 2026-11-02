@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import math
 import statistics
 from collections import Counter
 from datetime import datetime, timedelta, timezone
@@ -35,6 +36,25 @@ def audit_rows(endpoint: str, rows: list[dict[str, Any]]) -> dict[str, Any]:
                 "gaps_over_one_second": sum(gap > 1 for gap in gaps),
             }
         )
+        bounds = {"speed": (0, 500), "throttle": (0, 100), "rpm": (0, 25000), "n_gear": (0, 8)}
+        invalid_counts = {}
+        for channel in (*bounds, "brake"):
+            invalid = 0
+            for row in rows:
+                value = row.get(channel)
+                if value is None:
+                    continue
+                if not isinstance(value, (int, float)) or not math.isfinite(value):
+                    invalid += 1
+                elif channel == "brake":
+                    invalid += value not in (0, 1, 100)
+                else:
+                    low, high = bounds[channel]
+                    invalid += not low <= value <= high or (
+                        channel == "n_gear" and not float(value).is_integer()
+                    )
+            invalid_counts[channel] = invalid
+        report["out_of_range_counts"] = invalid_counts
     if endpoint == "laps":
         numbers = sorted({int(row["lap_number"]) for row in rows})
         inconsistent = []

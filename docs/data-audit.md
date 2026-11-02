@@ -43,8 +43,22 @@ Use `offline=True` to require cached responses. To expand telemetry, call `OpenF
 
 ## Verification and remaining work
 
-Twelve offline ingestion tests passed, covering immutable refresh, tamper detection, offline failure, schema rejection, transient retry, authentication errors, source identity overrides, canceled/future/Mexico exclusions, lap quality, half-open bounded time queries, and checkpoint recovery after a failed telemetry chunk. Formatting and lint checks passed for the ingestion package and its tests.
+Twenty offline ingestion tests passed, covering immutable refresh, tamper detection, offline failure, schema rejection, transient retry, authentication errors, source identity overrides, canceled/future/Mexico exclusions, lap quality, half-open bounded time queries, checkpoint recovery after a failed telemetry chunk, CSV normalization, raw CSV integrity, bulk acquisition filter checks, explicit no-results responses, and zero-timed-lap retirement handling. Formatting and lint checks passed for the ingestion package and its tests.
 
-This audit leaves whole-race telemetry acquisition, all-driver development coverage, as-of sector eligibility, and the six-race benchmark denominator to subsequent implementation. It makes no claim about model quality or complete season coverage.
+The initial sampled audit makes no claim about model quality or complete season coverage. Subsequent full-trace acquisition is recorded separately below.
 
 Full-trace expansion is implemented separately through `expand_full_traces`. It fetches Antonelli's Austin trace first, then Singapore and Sepang, before moving to Russell. The ignored `data/audit/full-trace-progress.json` records every acquired chunk, its immutable source manifest, row count, and failed boundaries. Acquisition status `complete` means every requested time chunk was fetched; feature retention and source gaps still require analysis.
+
+## Full development acquisition
+
+All 18 pre-Mexico races now have complete race-bounded telemetry and context for Antonelli: **395,446 telemetry rows**. Russell supplies 17 additional traces and **365,248 rows**. His Belgium race has no valid timed lap and is recorded as unscorable, with no invented telemetry interval. Combined acquisition contains **35 usable driver-race traces and 760,694 telemetry rows**. Bounds extend from the first timed lap's start through the last valid timed lap's end. Untimed retirement tails remain outside those bounds. This is an Antonelli-and-Russell subset, not all available drivers.
+
+The bulk path uses a bounded per-driver CSV query, preserving original bytes in `response.csv` and numeric/UTC-normalized records in `response.json`. Manifests carry separate raw-source and normalized checksums. An offline integrity check verifies both. The shared limiter still caps acquisition at 25 requests per minute.
+
+For Austin Antonelli, the 96 original one-minute JSON queries and a single bounded CSV query yielded exactly the same 21,252 records after sorting by timestamp. The local `data/audit/csv-equivalence.json` records equality and the canonical data hash. This reduces that telemetry query count from 96 to 1 without changing its data. A full-race all-driver CSV pilot was rejected with HTTP 422 and a response indicating the query requested too much data; production acquisition therefore remains per-driver.
+
+`data/audit/bulk-progress.json` uses the same progress schema as bounded expansion and records all context-source manifests. `ingest_development` is resumable because every completed query is reused from verified immutable cache. Partial sessions retain visible errors and are excluded from full-trace materialization.
+
+Russell's Canada and Belgium pit queries returned the exact provider response `404 {"detail":"No results found."}`. Explicit opt-in normalization retains that raw body, its checksum and HTTP status while exposing an empty list of available records. It does not prove that no pit event happened. Unknown 404 bodies and ordinary errors still fail visibly. Canada supplies 29 complete timed laps before an incomplete retirement lap; Belgium has zero complete timed laps. The summary is saved in `data/audit/development-source-summary.json`.
+
+Hungary illustrates why acquisition completeness and usable feature coverage differ. Antonelli's 22,154 telemetry rows include 6,551 out-of-range brake values of 104 and 2,077 throttle values of 104, preserved from the original CSV. Under the fixed 80% required-channel coverage rule, only 28 of 206 nominal green-sector opportunities passed origin eligibility in the initial feature check. Coverage thresholds remain unchanged; the rejected sectors stay visible in the quality report. Detailed source reports are saved in `data/audit/full-trace-quality.json`.

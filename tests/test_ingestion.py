@@ -156,6 +156,12 @@ def test_audit_reports_gaps_missing_laps_and_inconsistent_sums():
     )
     assert report["max_gap_seconds"] == 2
     assert report["null_counts"]["speed"] == 1
+    invalid = audit_rows(
+        "car_data", [{"date": "2026-01-01T00:00:00Z", "brake": 104, "throttle": 104, "n_gear": 1.5}]
+    )
+    assert invalid["out_of_range_counts"]["brake"] == 1
+    assert invalid["out_of_range_counts"]["throttle"] == 1
+    assert invalid["out_of_range_counts"]["n_gear"] == 1
 
 
 def test_mexico_development_ingestion_rejected_before_network(tmp_path):
@@ -228,3 +234,35 @@ def test_expansion_checkpoints_partial_failure_and_recovers(tmp_path):
     assert second["sessions"]["11396:12"]["rows"] == 2
     with pytest.raises(ValueError, match="quarantined"):
         expand_full_traces(client, session_keys=(11404,), progress_path=path)
+
+
+def test_explicit_no_results_preserves_original_404_without_fabricating_events(tmp_path):
+    original = b'{"detail":"No results found."}'
+
+    def opener(*args, **kwargs):
+        raise HTTPError("url", 404, "none", {}, io.BytesIO(original))
+
+    client = OpenF1Client(tmp_path, opener=opener, rate_limit_per_minute=0)
+    with pytest.raises(ProviderError, match="404"):
+        client.fetch("pit", {"driver_number": 63})
+    assert client.fetch("pit", {"driver_number": 63}, allow_no_results=True) == []
+    manifest = client.last_manifest
+    assert manifest["http_status"] == 404
+    assert (
+        manifest["empty_result_interpretation"]
+        == "no_available_provider_records_not_proof_of_no_events"
+    )
+    assert Path(manifest["snapshot_path"], "response.error.json").read_bytes() == original
+    offline = OpenF1Client(tmp_path, offline=True)
+    assert offline.fetch("pit", {"driver_number": 63}) == []
+
+
+def test_unknown_404_body_stays_an_error(tmp_path):
+    def opener(*args, **kwargs):
+        raise HTTPError("url", 404, "missing", {}, io.BytesIO(b'{"detail":"Unknown endpoint"}'))
+
+    with pytest.raises(ProviderError, match="404"):
+        OpenF1Client(tmp_path, opener=opener, rate_limit_per_minute=0).fetch(
+            "pit", allow_no_results=True
+        )
+    assert not list(tmp_path.rglob("manifest.json"))

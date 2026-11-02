@@ -13,15 +13,17 @@ User authorized implementation and parallel independent work on November 1, 2026
 ## Active work
 
 - [x] M0 Lock validated source catalog and protocol
-- [ ] M1 Implement immutable ingestion and run a three-race feasibility audit
-- [ ] M2 Implement past-only features and leakage tests
-- [ ] M3 Implement rolling splits, metrics, baselines and offline benchmark
+- [x] M1 Implement immutable ingestion and audit the initial Mercedes cohort
+- [x] M2 Implement past-only features and leakage tests
+- [x] M3 Implement rolling splits, metrics, baselines and initial cohort benchmark
 - [ ] M4 Implement and validate representation training
 - [ ] M5 Implement and validate atlas retrieval
 - [ ] M6 Integrate API and replay application
 - [ ] M7 Freeze model and run Mexico case study
 
 Milestones are marked complete only after integration checks and the corresponding evidence exist. Component completion does not establish model quality or full-season data availability.
+
+M1 through M3 are complete for the declared initial Mercedes cohort: 18 Antonelli races and 17 scoreable Russell races. Full-grid representation pretraining remains an extension of the original population scope; no full-grid claim is made.
 
 ## Reconciliation evidence
 
@@ -40,3 +42,13 @@ Milestones are marked complete only after integration checks and the correspondi
 - Reconciliation fixed historical-timing leakage, target censoring, protocol hash mismatch, future-date fitting, exact encoder/index snapshot matching, and API pagination.
 - Synthetic CLI flow verified: baseline smoke, default encoder training, disjoint calibration, artifact save/load, and five-neighbor atlas query. All outputs explicitly labeled synthetic.
 - Streamlit AppTest verified API-backed run/model/session selection, forecasts, provenance, synthetic warning and saved atlas rendering. Docker daemon is unavailable; image build remains unverified.
+
+## Full development cohort checkpoint
+
+- Source acquisition: 760,694 native telemetry rows, 35 scoreable driver-race traces and one explicitly unscoreable Russell Belgian race. Every source and normalized CSV has a checksum; Mexico remains excluded.
+- Materialized Mercedes cohort: `data/processed/mercedes/merged-e7ed15ec6216606e.json`, 6,204 observed sectors and 5,008 scoreable examples. Feature-code checksums now invalidate stale materialization caches.
+- Classification crosscheck: 36 driver-race comparisons against the provider's result endpoint; no missing completed-lap records, five extra partial tail records. Independent FIA verification remains separate.
+- Real benchmark: eight held-out Antonelli races, 1,039 identical scored examples per baseline. Best point MAE is persistence at 0.94568 seconds; best weighted interval score is CatBoost at 0.62862, with 90% interval coverage 0.92996. Results describe this Mercedes cohort.
+- Real diagnostic coverage: 1,040 of 1,235 observed nominal green test origins retained (84.21%); one eligible censored target. Hungary's source values of 104 are masked and its selective coverage is reported.
+- A full first neural experiment exposed a constant-column normalization defect. Its checkpoints, source snapshots and invalidation record are preserved; the API excludes invalidated experiments. Regression-tested policy `constant_unit_scale_v2` uses unit scale for near-zero fitted variance and rejects old checkpoints. Fixed-budget corrected experiments are running separately.
+- Atlas discrete patterns failed the first bounded stability check (median ARI 0.32123 versus 0.6 target on one selective fold); continuous retrieval remains experimental. Blind review preparation is underway; no human preferences have been fabricated.

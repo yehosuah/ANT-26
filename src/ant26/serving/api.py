@@ -14,12 +14,20 @@ def create_app(artifact_root: str | Path | None = None) -> FastAPI:
     root = Path(artifact_root or os.environ.get("ANT26_ARTIFACT_ROOT", "artifacts")).resolve()
     app = FastAPI(title="ANT-26", version=__version__)
 
+    def invalidated(path: Path) -> bool:
+        return any(
+            (path / filename).exists()
+            for filename in ("invalidated.json", "normalization-defect.json", "superseded.json")
+        )
+
     def run_path(run_id: str) -> Path:
         if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,80}", run_id):
             raise HTTPException(400, "Invalid run identifier")
         path = (root / run_id).resolve()
         if path.parent != root or not path.is_dir():
             raise HTTPException(404, "Run not found")
+        if invalidated(path):
+            raise HTTPException(410, "Run was invalidated; use a corrected version")
         return path
 
     def read_json(path: Path):
@@ -38,7 +46,9 @@ def create_app(artifact_root: str | Path | None = None) -> FastAPI:
     def runs():
         return {
             "runs": sorted(
-                p.name for p in root.iterdir() if p.is_dir() and (p / "report.json").is_file()
+                p.name
+                for p in root.iterdir()
+                if p.is_dir() and (p / "report.json").is_file() and not invalidated(p)
             )
             if root.exists()
             else []
@@ -84,6 +94,10 @@ def create_app(artifact_root: str | Path | None = None) -> FastAPI:
     @app.get("/runs/{run_id}/atlas")
     def atlas(run_id: str):
         return read_json(run_path(run_id) / "atlas.json")
+
+    @app.get("/runs/{run_id}/diagnostics")
+    def diagnostics(run_id: str):
+        return read_json(run_path(run_id) / "diagnostics.json")
 
     return app
 

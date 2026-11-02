@@ -75,6 +75,14 @@ with st.expander("Behavioral atlas"):
             st.info("No atlas query has been saved for this run.")
         else:
             raise
+with st.expander("Error and coverage slices"):
+    try:
+        st.json(get(f"/runs/{run}/diagnostics"))
+    except httpx.HTTPStatusError as exc:
+        if exc.response.status_code == 404:
+            st.info("No diagnostics have been saved for this run.")
+        else:
+            raise
 st.caption(
     "Historical event-time replay; source publication latency was not observed. Mexico remains reserved until model freeze."
 )
