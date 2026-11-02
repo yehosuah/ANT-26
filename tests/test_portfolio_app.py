@@ -429,3 +429,83 @@ def test_revised_baseline_summary_is_separate_from_historical_neural_fits(offlin
     assert any("160 neural fits remain attached" in caption.value for caption in app.caption)
     assert {m.label: m.value for m in app.metric}["Revised-policy scoreable examples"] == "5"
     assert app.dataframe[-1].value.iloc[0]["MAE (s)"] == 1.5
+
+
+def test_operations_report_tracks_the_selected_case_weights(offline_environment):
+    reports, _ = offline_environment
+    for filename in (
+        "mexico-case-study.json",
+        "mexico-case-study-pit-v0.2.0.json",
+        "operations.json",
+        "operations-pit-v0.2.0.json",
+    ):
+        shutil.copyfile(ROOT / "reports" / filename, reports / filename)
+    app = AppTest.from_file(APP_PATH).run()
+    app.sidebar.radio[0].set_value("Methods").run()
+    assert not app.exception
+    values = {metric.label: metric.value for metric in app.metric}
+    assert (values["CatBoost p95"], values["Encoder p95"]) == ("0.716 ms", "0.372 ms")
+    assert any("reports/operations-pit-v0.2.0.json" in caption.value for caption in app.caption)
+    app.sidebar.selectbox[0].set_value("published-v0.1").run()
+    assert not app.exception
+    values = {metric.label: metric.value for metric in app.metric}
+    assert (values["CatBoost p95"], values["Encoder p95"]) == ("0.710 ms", "0.360 ms")
+    assert any("reports/operations.json" in caption.value for caption in app.caption)
+    # A missing revised report cannot silently show timings from older weights.
+    (reports / "operations-pit-v0.2.0.json").unlink()
+    app.sidebar.selectbox[0].set_value("pit-v0.2.0").run()
+    assert not app.exception
+    assert not app.metric
+
+
+def test_real_revised_case_reconciles_censoring_comparison_and_legacy_switch(offline_environment):
+    reports, _ = offline_environment
+    for filename in (
+        "mexico-case-study.json",
+        "mexico-case-study-pit-v0.2.0.json",
+        "pit-policy-comparison.json",
+    ):
+        shutil.copyfile(ROOT / "reports" / filename, reports / filename)
+    app = AppTest.from_file(APP_PATH).run()
+    app.sidebar.radio[0].set_value("Mexico Case Study").run()
+    assert not app.exception
+    assert app.sidebar.selectbox[0].value == "pit-v0.2.0"
+    values = {metric.label: metric.value for metric in app.metric}
+    assert (
+        values["Scoreable forecasts"],
+        values["Abstentions"],
+        values["Common scored origins"],
+        values["Newly scored origins"],
+        values["Lost scored origins"],
+    ) == ("177", "32", "115", "62", "0")
+    assert (values["Case MAE"], values["Case interval score"], values["Case 90% coverage"]) == (
+        "0.876 s",
+        "0.610",
+        "92.7%",
+    )
+    common = next(
+        table.value for table in app.dataframe if "Common-origin subset" in table.value.columns
+    )
+    assert common.loc[common["Common-origin subset"] == "Prior", "MAE (s)"].item() == pytest.approx(
+        0.7236416399782453
+    )
+    assert common.loc[
+        common["Common-origin subset"] == "Revised", "MAE (s)"
+    ].item() == pytest.approx(0.7204364570100978)
+    assert common.loc[
+        common["Common-origin subset"] == "Revised", "Interval score"
+    ].item() == pytest.approx(0.5093054728564964)
+    accounting = next(table.value for table in app.dataframe if "Lap" in table.value.columns)
+    assert len(accounting) == 71 and accounting["Scoreable"].sum() == 177
+    assert accounting["Censored"].sum() == 1
+    assert accounting.loc[accounting["Lap"] == 65, "Status"].item() == "Censored"
+    assert not any("All 75 sector origins" in notice.value for notice in app.info)
+    assert not any("training examples are unchanged" in caption.value for caption in app.caption)
+    coverage = app.dataframe[0].value
+    assert len(coverage) == 4  # two real scopes x prior/new, excluding status-transition maps
+    late = coverage.loc[coverage["Scope"] == "late_75_slots_laps_47_to_71"]
+    assert late.loc[late["Version"] == "new", "scored"].item() == 62
+    app.sidebar.selectbox[0].set_value("published-v0.1").run()
+    assert not app.exception
+    assert {metric.label: metric.value for metric in app.metric}["Scoreable forecasts"] == "115"
+    assert any("All 75 sector origins" in notice.value for notice in app.info)

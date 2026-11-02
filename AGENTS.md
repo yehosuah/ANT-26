@@ -11,7 +11,8 @@ ANT-26 is a research portfolio combining observed F1 telemetry retrieval and pro
 - Keep all fixed seeds and held-out races visible, including Hungary's selective coverage. An executed experiment is not evidence of superiority. Keep failed and invalidated runs separate.
 - Normalization policy is `constant_unit_scale_v2`. Legacy checkpoints are refused. Remaining near-constant/OOD failures are documented; the final forecasting candidate is a baseline.
 - Human atlas preferences must come from explicit ratings. Blank forms, generated neighbors and automated stability checks are not human validation.
-- The published Mexico case is a post-inspection diagnostic replay after a preserved zero-forecast first attempt. Never relabel it an independent blind test. Correction provenance, source snapshots and model/index invariance are mandatory. The fixed long-pit interpretation excludes every origin after lap 46; those exclusions are not ground truth about the car's location.
+- The published v0.1 Mexico case is a post-inspection diagnostic replay after a preserved zero-forecast first attempt. Its unchanged-model repair retains mandatory model/index invariance. The v0.2 pit-policy revision instead requires explicit parent/evidence links, revised development inputs and refitted artifacts under fixed settings. Neither is an independent blind test. Preserve both runs; source snapshots and complete accounting are mandatory. V0.1's late-pit exclusions are not ground truth about the car's location.
+- The legacy default protocol remains versioned. Use `configs/evaluation-protocol-pit-v0.2.0.json` explicitly for the corrected report-time policy. Filter reports by original date at the cutoff before deriving past occupancy; never backfill earlier origins from future pit reports. Physical pit boundaries and API publication latency remain unverified.
 
 ## Commands
 

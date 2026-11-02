@@ -111,6 +111,7 @@ def main(argv: list[str] | None = None) -> int:
     case_ingest = commands.add_parser("case-ingest")
     case_ingest.add_argument("--freeze", required=True)
     case_ingest.add_argument("--cache-root", default="data/raw")
+    case_ingest.add_argument("--offline", action="store_true")
     case_ingest.add_argument("--output", default="data/case-study/mexico")
     case_score = commands.add_parser("case-score")
     case_score.add_argument("--freeze", required=True)
@@ -121,6 +122,13 @@ def main(argv: list[str] | None = None) -> int:
     case_export.add_argument("--freeze", required=True)
     case_export.add_argument("--output", required=True)
     case_export.add_argument("--chapters")
+    compare = commands.add_parser("compare-pit")
+    compare.add_argument("--prior-run", required=True)
+    compare.add_argument("--new-run", required=True)
+    compare.add_argument("--prior-freeze", required=True)
+    compare.add_argument("--new-freeze", required=True)
+    compare.add_argument("--output", required=True)
+    compare.add_argument("--public-output")
     serve = commands.add_parser("serve")
     serve.add_argument("--port", type=int, default=8000)
     args = parser.parse_args(argv)
@@ -588,7 +596,7 @@ def main(argv: list[str] | None = None) -> int:
         from ant26.ingestion.client import OpenF1Client
 
         result = ingest_case_study(
-            OpenF1Client(args.cache_root),
+            OpenF1Client(args.cache_root, offline=args.offline),
             args.freeze,
             protocol,
             output_root=args.output,
@@ -623,6 +631,33 @@ def main(argv: list[str] | None = None) -> int:
         )
         print(
             json.dumps({"output": args.output, "status": result["status"], "aggregate_only": True})
+        )
+    elif args.command == "compare-pit":
+        from ant26.evaluation.pit_comparison import compare_pit_replays, export_public_comparison
+
+        prior, new = Path(args.prior_run), Path(args.new_run)
+        result = compare_pit_replays(
+            prior / "report.json",
+            prior / "predictions.json",
+            prior / "timeline.json",
+            new / "report.json",
+            new / "predictions.json",
+            new / "timeline.json",
+            prior_freeze=args.prior_freeze,
+            new_freeze=args.new_freeze,
+            output_path=args.output,
+        )
+        if args.public_output:
+            export_public_comparison(result, args.public_output)
+        print(
+            json.dumps(
+                {
+                    "output": args.output,
+                    "common_scoreable": result["common_scoreable"]["count"],
+                    "newly_scoreable": result["newly_scoreable"]["count"],
+                    "lost_scoreable": result["lost_scoreable"]["count"],
+                }
+            )
         )
     elif args.command == "serve":
         import uvicorn

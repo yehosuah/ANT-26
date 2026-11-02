@@ -1,0 +1,1900 @@
+{
+  "aggregate_only": true,
+  "common_scoreable": {
+    "changed_reference_seconds_count": 0,
+    "count": 115,
+    "delta_new_minus_prior": {
+      "coverage_80": 0.0,
+      "coverage_90": 0.0,
+      "mae_seconds": -0.003205182968147424,
+      "normalized_absolute_error": -0.0003358270095592565,
+      "weighted_interval_score": 0.0042379862615187225,
+      "width_80_seconds": 0.23862480894356142,
+      "width_90_seconds": 0.14738409306375866
+    },
+    "new_metrics": {
+      "aggregation": "equal_race_weight",
+      "driver_number": 12,
+      "forecast_count": 115,
+      "macro": {
+        "coverage_80": 0.9043478260869565,
+        "coverage_90": 0.9304347826086956,
+        "mae_seconds": 0.7204364570100978,
+        "normalized_absolute_error": 0.023567275171388576,
+        "weighted_interval_score": 0.5093054728564964,
+        "width_80_seconds": 1.5994578808473476,
+        "width_90_seconds": 2.4450111472122336
+      },
+      "per_race": {
+        "11404": {
+          "count": 115,
+          "coverage_80": 0.9043478260869565,
+          "coverage_90": 0.9304347826086956,
+          "mae_seconds": 0.7204364570100978,
+          "normalized_absolute_error": 0.023567275171388576,
+          "weighted_interval_score": 0.5093054728564964,
+          "width_80_seconds": 1.5994578808473476,
+          "width_90_seconds": 2.4450111472122336
+        }
+      },
+      "race_count": 1
+    },
+    "paired_labels_identical": true,
+    "prior_metrics": {
+      "aggregation": "equal_race_weight",
+      "driver_number": 12,
+      "forecast_count": 115,
+      "macro": {
+        "coverage_80": 0.9043478260869565,
+        "coverage_90": 0.9304347826086956,
+        "mae_seconds": 0.7236416399782453,
+        "normalized_absolute_error": 0.023903102180947832,
+        "weighted_interval_score": 0.5050674865949777,
+        "width_80_seconds": 1.3608330719037862,
+        "width_90_seconds": 2.297627054148475
+      },
+      "per_race": {
+        "11404": {
+          "count": 115,
+          "coverage_80": 0.9043478260869565,
+          "coverage_90": 0.9304347826086956,
+          "mae_seconds": 0.7236416399782453,
+          "normalized_absolute_error": 0.023903102180947832,
+          "weighted_interval_score": 0.5050674865949777,
+          "width_80_seconds": 1.3608330719037862,
+          "width_90_seconds": 2.297627054148475
+        }
+      },
+      "race_count": 1
+    }
+  },
+  "coverage": {
+    "all_213_slots": {
+      "new": {
+        "abstained": 32,
+        "censored": 1,
+        "eligibility_fraction_of_all_slots": 0.8356807511737089,
+        "eligible": 178,
+        "expected_slots": 213,
+        "missing_record": 3,
+        "scoreable_fraction_of_all_slots": 0.8309859154929577,
+        "scored": 177
+      },
+      "prior": {
+        "abstained": 95,
+        "censored": 0,
+        "eligibility_fraction_of_all_slots": 0.539906103286385,
+        "eligible": 115,
+        "expected_slots": 213,
+        "missing_record": 3,
+        "scoreable_fraction_of_all_slots": 0.539906103286385,
+        "scored": 115
+      }
+    },
+    "by_lap": [
+      {
+        "lap_number": 1,
+        "new": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 2,
+        "new": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 3,
+        "new": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 4,
+        "new": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 5,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 3,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 3,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 6,
+        "new": {
+          "abstained": 1,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.6666666666666666,
+          "eligible": 2,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.6666666666666666,
+          "scored": 2
+        },
+        "prior": {
+          "abstained": 1,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.6666666666666666,
+          "eligible": 2,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.6666666666666666,
+          "scored": 2
+        }
+      },
+      {
+        "lap_number": 7,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 8,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 9,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 10,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 11,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 12,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 13,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 14,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 15,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 16,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 17,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 18,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 19,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 20,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 21,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 22,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 23,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 24,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 25,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 26,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 27,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 28,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 29,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 30,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 31,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 32,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 33,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 34,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 35,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 36,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 37,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 38,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 39,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 40,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 41,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 42,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 43,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        }
+      },
+      {
+        "lap_number": 44,
+        "new": {
+          "abstained": 1,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.6666666666666666,
+          "eligible": 2,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.6666666666666666,
+          "scored": 2
+        },
+        "prior": {
+          "abstained": 1,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.6666666666666666,
+          "eligible": 2,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.6666666666666666,
+          "scored": 2
+        }
+      },
+      {
+        "lap_number": 45,
+        "new": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 46,
+        "new": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 47,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 48,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 49,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 50,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 51,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 52,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 53,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 54,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 55,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 56,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 57,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 58,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 59,
+        "new": {
+          "abstained": 1,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.6666666666666666,
+          "eligible": 2,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.6666666666666666,
+          "scored": 2
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 60,
+        "new": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 61,
+        "new": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 62,
+        "new": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 63,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 64,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 65,
+        "new": {
+          "abstained": 2,
+          "censored": 1,
+          "eligibility_fraction_of_all_slots": 0.3333333333333333,
+          "eligible": 1,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 66,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 67,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 68,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 69,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 70,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      },
+      {
+        "lap_number": 71,
+        "new": {
+          "abstained": 0,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 1.0,
+          "eligible": 3,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 1.0,
+          "scored": 3
+        },
+        "prior": {
+          "abstained": 3,
+          "censored": 0,
+          "eligibility_fraction_of_all_slots": 0.0,
+          "eligible": 0,
+          "expected_slots": 3,
+          "missing_record": 0,
+          "scoreable_fraction_of_all_slots": 0.0,
+          "scored": 0
+        }
+      }
+    ],
+    "late_75_slots_laps_47_to_71": {
+      "new": {
+        "abstained": 12,
+        "censored": 1,
+        "eligibility_fraction_of_all_slots": 0.84,
+        "eligible": 63,
+        "expected_slots": 75,
+        "missing_record": 0,
+        "scoreable_fraction_of_all_slots": 0.8266666666666667,
+        "scored": 62
+      },
+      "prior": {
+        "abstained": 75,
+        "censored": 0,
+        "eligibility_fraction_of_all_slots": 0.0,
+        "eligible": 0,
+        "expected_slots": 75,
+        "missing_record": 0,
+        "scoreable_fraction_of_all_slots": 0.0,
+        "scored": 0
+      }
+    },
+    "lost_eligible_count": 0,
+    "newly_eligible_count": 63,
+    "status_transitions": {
+      "abstained->abstained": 32,
+      "abstained->censored": 1,
+      "abstained->scored": 62,
+      "missing_record->missing_record": 3,
+      "scored->scored": 115
+    }
+  },
+  "each_version_scored_population": {
+    "new": {
+      "aggregation": "equal_race_weight",
+      "driver_number": 12,
+      "forecast_count": 177,
+      "macro": {
+        "coverage_80": 0.8587570621468926,
+        "coverage_90": 0.9265536723163842,
+        "mae_seconds": 0.8758612898465458,
+        "normalized_absolute_error": 0.029818478946076775,
+        "weighted_interval_score": 0.610123758976364,
+        "width_80_seconds": 1.629510709035985,
+        "width_90_seconds": 2.4609226112041633
+      },
+      "per_race": {
+        "11404": {
+          "count": 177,
+          "coverage_80": 0.8587570621468926,
+          "coverage_90": 0.9265536723163842,
+          "mae_seconds": 0.8758612898465458,
+          "normalized_absolute_error": 0.029818478946076775,
+          "weighted_interval_score": 0.610123758976364,
+          "width_80_seconds": 1.629510709035985,
+          "width_90_seconds": 2.4609226112041633
+        }
+      },
+      "race_count": 1
+    },
+    "prior": {
+      "aggregation": "equal_race_weight",
+      "driver_number": 12,
+      "forecast_count": 115,
+      "macro": {
+        "coverage_80": 0.9043478260869565,
+        "coverage_90": 0.9304347826086956,
+        "mae_seconds": 0.7236416399782452,
+        "normalized_absolute_error": 0.02390310218094783,
+        "weighted_interval_score": 0.5050674865949777,
+        "width_80_seconds": 1.3608330719037864,
+        "width_90_seconds": 2.297627054148475
+      },
+      "per_race": {
+        "11404": {
+          "count": 115,
+          "coverage_80": 0.9043478260869565,
+          "coverage_90": 0.9304347826086956,
+          "mae_seconds": 0.7236416399782452,
+          "normalized_absolute_error": 0.02390310218094783,
+          "weighted_interval_score": 0.5050674865949777,
+          "width_80_seconds": 1.3608330719037864,
+          "width_90_seconds": 2.297627054148475
+        }
+      },
+      "race_count": 1
+    }
+  },
+  "implementation_and_model_changes": {
+    "baseline_artifacts_changed": true,
+    "development_examples_changed": true,
+    "encoder_artifacts_changed": true,
+    "fit_or_calibration_sessions_changed": false,
+    "index_changed": true,
+    "protocol_changed": true
+  },
+  "interpretation": {
+    "common_cohort_delta_is_descriptive_not_causal": true,
+    "coverage_recovery_is_not_forecast_skill_improvement": true,
+    "improvement_claim_allowed": false,
+    "normalized_errors_use_each_version_reference": true,
+    "timestamp_policy_effect_is_not_isolated_from_model_or_data_changes": true,
+    "uncertainty": "one_race_no_sector_bootstrap_or_population_generalization",
+    "whole_population_metrics_have_different_denominators": true
+  },
+  "lost_scoreable": {
+    "count": 0,
+    "metrics": {
+      "aggregation": "equal_race_weight",
+      "driver_number": 12,
+      "forecast_count": 0,
+      "macro": {},
+      "per_race": {},
+      "race_count": 0
+    }
+  },
+  "newly_scoreable": {
+    "count": 62,
+    "metrics": {
+      "aggregation": "equal_race_weight",
+      "driver_number": 12,
+      "forecast_count": 62,
+      "macro": {
+        "coverage_80": 0.7741935483870968,
+        "coverage_90": 0.9193548387096774,
+        "mae_seconds": 1.1641492862367315,
+        "normalized_absolute_error": 0.04141345368945005,
+        "weighted_interval_score": 0.7971254187148281,
+        "width_80_seconds": 1.6852538580955552,
+        "width_90_seconds": 2.490435810544032
+      },
+      "per_race": {
+        "11404": {
+          "count": 62,
+          "coverage_80": 0.7741935483870968,
+          "coverage_90": 0.9193548387096774,
+          "mae_seconds": 1.1641492862367315,
+          "normalized_absolute_error": 0.04141345368945005,
+          "weighted_interval_score": 0.7971254187148281,
+          "width_80_seconds": 1.6852538580955552,
+          "width_90_seconds": 2.490435810544032
+        }
+      },
+      "race_count": 1
+    }
+  },
+  "provenance": {
+    "input_sha256": {
+      "new_freeze": "17f1c087e27c60749e9785a5ce3fecaedfa78f577f56940eecfb9075b82c2472",
+      "new_predictions": "80e702e0ba7bb38907c37855649c8695a3793bcb74da835c6e470dfad12ea6e9",
+      "new_report": "811c7469423203bd810a79eb0622b8ca171a2e487ae595dba2715d2b2e16f217",
+      "new_timeline": "376d1ad454a4760ffb954bfb3adcea2cfb66b0fae079e867d9f4fa0b29ba9177",
+      "prior_freeze": "18993c0b3195f84abccc721cd313c6f248ad8538b2788616258040fa58100299",
+      "prior_predictions": "ebf801bfd3bb82d5e54c0501d5b596b1a07a23f6a8e6059b32aebfbfde928eb9",
+      "prior_report": "ebe5052ec12a624214d6bfc5fd1447d58b1a3050c9b24734bc14414c5bc60ea6",
+      "prior_timeline": "d5a954ab7cb6dcc67552c292da7e7c2c985d76a6d441a1843bd4c6ab847e05e0"
+    },
+    "new_claim": "post_inspection_feature_policy_revision_diagnostic_replay",
+    "new_freeze_sha256": "17f1c087e27c60749e9785a5ce3fecaedfa78f577f56940eecfb9075b82c2472",
+    "new_protocol_sha256": "25d2bfbb6ce03851d5aee252d2217f895cc97393552af2f5ee1f020ab8baee92",
+    "prior_claim": "post_inspection_implementation_correction_diagnostic_replay",
+    "prior_freeze_sha256": "18993c0b3195f84abccc721cd313c6f248ad8538b2788616258040fa58100299",
+    "prior_protocol_sha256": "a2a6613afea012b51fa7e2dc0ae2b99d6f213ea99c498a9b732f7f2ed8f1ebd7"
+  },
+  "race": {
+    "driver_number": 12,
+    "lap_count": 71,
+    "session_key": 11404
+  },
+  "schema_version": "ant26-pit-replay-comparison-v1",
+  "synthetic": false
+}
