@@ -75,6 +75,9 @@ def main(argv: list[str] | None = None) -> int:
     deep.add_argument("--output", required=True)
     deep.add_argument("--baseline-report")
     deep.add_argument("--seeds", nargs="+", type=int)
+    deep.add_argument(
+        "--modes", nargs="+", choices=["scratch", "frozen", "finetune"], default=["finetune"]
+    )
     deep.add_argument("--max-folds", type=int)
     deep.add_argument("--pretrain-epochs", type=int, default=3)
     deep.add_argument("--forecast-epochs", type=int, default=5)
@@ -93,6 +96,29 @@ def main(argv: list[str] | None = None) -> int:
     atlas.add_argument("--bundle", required=True)
     atlas.add_argument("--query-example", required=True)
     atlas.add_argument("--output", required=True)
+    prepare = commands.add_parser("prepare-release")
+    prepare.add_argument("--examples", required=True)
+    prepare.add_argument("--catalog", default="data/audit/catalog.json")
+    prepare.add_argument("--baseline-report", required=True)
+    prepare.add_argument("--output", required=True)
+    freeze = commands.add_parser("freeze")
+    freeze.add_argument("--candidate-root", required=True)
+    freeze.add_argument("--examples", required=True)
+    freeze.add_argument("--code-revision", required=True)
+    freeze.add_argument("--output", required=True)
+    case_ingest = commands.add_parser("case-ingest")
+    case_ingest.add_argument("--freeze", required=True)
+    case_ingest.add_argument("--cache-root", default="data/raw")
+    case_ingest.add_argument("--output", default="data/case-study/mexico")
+    case_score = commands.add_parser("case-score")
+    case_score.add_argument("--freeze", required=True)
+    case_score.add_argument("--examples", required=True)
+    case_score.add_argument("--output", default="artifacts/mexico-case-study")
+    case_export = commands.add_parser("case-export")
+    case_export.add_argument("--run", required=True)
+    case_export.add_argument("--freeze", required=True)
+    case_export.add_argument("--output", required=True)
+    case_export.add_argument("--chapters")
     serve = commands.add_parser("serve")
     serve.add_argument("--port", type=int, default=8000)
     args = parser.parse_args(argv)
@@ -340,6 +366,7 @@ def main(argv: list[str] | None = None) -> int:
                 protocol,
                 args.output,
                 seeds=args.seeds,
+                modes=tuple(args.modes),
                 max_folds=args.max_folds,
                 pretrain_epochs=args.pretrain_epochs,
                 forecast_epochs=args.forecast_epochs,
@@ -458,6 +485,139 @@ def main(argv: list[str] | None = None) -> int:
                     }
                 )
             )
+    elif args.command == "prepare-release":
+        import torch
+
+        from ant26.atlas import AtlasIndex
+        from ant26.datasets.materialize import _feature_code_sha256, _snapshot
+        from ant26.models.artifacts import final_candidate_partitions, fit_final_candidate
+        from ant26.models.baselines import valid_examples
+        from ant26.models.representation import train_representation
+
+        torch.set_num_threads(1)
+        output = Path(args.output)
+        if output.exists() and any(output.iterdir()):
+            raise FileExistsError("Candidate artifacts are immutable; choose a new directory")
+        serialized = Path(args.examples).read_bytes()
+        payload = json.loads(serialized)
+        if payload.get("protocol_sha256") != protocol_hash(protocol):
+            raise ValueError("Candidate dataset protocol differs from runtime")
+        if payload.get("data_kind") != "real_openf1_mercedes" or sorted(
+            payload.get("cohort_driver_numbers", [])
+        ) != [12, 63]:
+            raise ValueError("Release preparation requires the declared real Mercedes cohort")
+        if payload.get("feature_builder_sha256") != _feature_code_sha256():
+            raise ValueError("Candidate dataset feature builder differs from runtime")
+        manifests = payload.get("source_manifests", [])
+        if not manifests or any(
+            not row.get("snapshot_path") or not row.get("sha256") for row in manifests
+        ):
+            raise ValueError("Release preparation requires exact source snapshots")
+        checked = set()
+        for manifest in manifests:
+            identity = (manifest["endpoint"], manifest["sha256"])
+            if identity not in checked:
+                _snapshot(manifest)
+                checked.add(identity)
+        catalog = json.loads(Path(args.catalog).read_text())
+        examples = payload["examples"]
+        bundle = fit_final_candidate(
+            examples,
+            catalog,
+            protocol,
+            development_report=args.baseline_report,
+            data_kind=payload["data_kind"],
+            source_envelope_sha256=hashlib.sha256(serialized).hexdigest(),
+        )
+        bundle.save(output / "baseline")
+        partitions = final_candidate_partitions(catalog, protocol)
+        fit_scope = set(partitions["fit_sessions"])
+        cal_scope = set(partitions["calibration_sessions"])
+        fitting = [row for row in examples if row["session_key"] in fit_scope]
+        calibration = [row for row in examples if row["session_key"] in cal_scope]
+        encoder = train_representation(
+            fitting,
+            fit_scope,
+            protocol=protocol,
+            mode="finetune",
+            seed=17,
+            pretrain_epochs=3,
+            forecast_epochs=5,
+            data_kind=payload["data_kind"],
+        )
+        encoder.calibrate(calibration, calibration_sessions=cal_scope)
+        encoder.metadata.update(
+            status="candidate_not_frozen_for_mexico",
+            mexico_evaluated=False,
+            purpose="continuous_atlas_reference_no_predictive_superiority_claim",
+            source_envelope_sha256=hashlib.sha256(serialized).hexdigest(),
+            partitions=partitions,
+        )
+        encoder.save(output / "encoder")
+        references = valid_examples(fitting)
+        index = AtlasIndex().fit(references, encoder.encode(references), allowed_sessions=fit_scope)
+        index.save(output / "index.json")
+        print(
+            json.dumps(
+                {
+                    "output": str(output),
+                    "status": "candidate_not_frozen_for_mexico",
+                    "references": len(references),
+                }
+            )
+        )
+    elif args.command == "freeze":
+        from ant26.release import freeze_release
+
+        result = freeze_release(
+            args.candidate_root,
+            protocol,
+            args.examples,
+            args.output,
+            code_revision=args.code_revision,
+        )
+        print(json.dumps({"output": args.output, "status": result.get("status")}))
+    elif args.command == "case-ingest":
+        from ant26.ingestion.case_study import ingest_case_study
+        from ant26.ingestion.client import OpenF1Client
+
+        result = ingest_case_study(
+            OpenF1Client(args.cache_root),
+            args.freeze,
+            protocol,
+            output_root=args.output,
+            on_endpoint=lambda endpoint, rows: print(
+                json.dumps({"endpoint": endpoint, "rows": rows}), flush=True
+            ),
+        )
+        print(json.dumps(result))
+    elif args.command == "case-score":
+        from ant26.release import score_case_study
+
+        result = score_case_study(
+            args.freeze,
+            protocol,
+            args.examples,
+            args.output,
+        )
+        print(json.dumps({"output": args.output, "status": result.get("status")}))
+    elif args.command == "case-export":
+        from ant26.evaluation.case_report import export_case_report
+
+        chapters = json.loads(Path(args.chapters).read_text()) if args.chapters else []
+        result = export_case_report(
+            args.run,
+            args.freeze,
+            args.output,
+            chapters=chapters,
+            sources=[
+                "https://openf1.org/",
+                "https://www.formula1.com/en/latest/article/antonelli-crowned-youngest-ever-f1-champion-as-verstappen-wins-eventful-mexico-city-grand-prix.xpMMeef0KmRURs9IDs3LH",
+            ],
+        )
+        print(
+            json.dumps({"output": args.output, "status": result["status"], "aggregate_only": True})
+        )
     elif args.command == "serve":
         import uvicorn
 

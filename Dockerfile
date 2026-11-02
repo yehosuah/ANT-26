@@ -11,6 +11,8 @@ CMD ["uv", "run", "--no-sync", "uvicorn", "ant26.serving.api:app", "--host", "0.
 
 FROM api AS ui
 COPY app ./app
+COPY reports ./reports
+COPY .streamlit ./.streamlit
 RUN uv sync --frozen --no-dev --extra app
 EXPOSE 8501
-CMD ["uv", "run", "--no-sync", "streamlit", "run", "app/replay.py", "--server.address", "0.0.0.0", "--server.port", "8501"]
+CMD ["uv", "run", "--no-sync", "streamlit", "run", "app/portfolio.py", "--server.address", "0.0.0.0", "--server.port", "8501"]
