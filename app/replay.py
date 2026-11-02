@@ -32,6 +32,12 @@ report = get(f"/runs/{run}/report")
 if report.get("synthetic"):
     st.warning("Synthetic integration fixture. These results are not evidence about Antonelli.")
 st.caption(f"Evaluation status: {report.get('status', 'unknown')}")
+if report.get("claims") and not any(
+    row.get("improvement_claim_allowed", False) for row in report["claims"].values()
+):
+    st.info(
+        "Improvement gates failed. The baseline is retained for forecasting; these candidate results remain available for research inspection."
+    )
 entries = get(f"/runs/{run}/prediction-index?driver_number=12")["entries"]
 if not entries:
     st.info("This run has no eligible Antonelli forecasts. Inspect the quality report.")
@@ -42,15 +48,27 @@ model = st.selectbox("Model", sorted({r["model"] for r in entries}))
 session = st.selectbox(
     "Race session", sorted({r["session_key"] for r in entries if r["model"] == model})
 )
+seeds = sorted(
+    {
+        r["seed"]
+        for r in entries
+        if r["model"] == model and r["session_key"] == session and r.get("seed") is not None
+    }
+)
+seed = st.selectbox("Training seed", seeds) if seeds else None
+seed_query = f"&seed={seed}" if seed is not None else ""
 selected = []
 while True:
     page = get(
-        f"/runs/{run}/predictions?driver_number=12&session_key={session}&model={model}&offset={len(selected)}&limit=5000"
+        f"/runs/{run}/predictions?driver_number=12&session_key={session}&model={model}{seed_query}&offset={len(selected)}&limit=5000"
     )
     selected.extend(page["predictions"])
     if len(selected) >= page["count"] or not page["predictions"]:
         break
 selected.sort(key=lambda r: r["origin"])
+st.caption(
+    "Scored forecasts only. Coverage diagnostics include abstentions and censored targets; individual training seeds are viewed separately."
+)
 st.line_chart(
     {
         "actual_seconds": [r["target_seconds"] for r in selected],

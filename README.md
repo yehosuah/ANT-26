@@ -11,7 +11,7 @@ The implementation is in progress. Source ingestion, past-only features, baselin
 - The declared Mercedes cohort contains 6,204 observed sector examples and 5,008 scoreable forecasts. This is a two-driver cohort, not a full-grid dataset.
 - Eight-race baseline backtest: persistence MAE 0.946 seconds; CatBoost weighted interval score 0.629 with 93.0% coverage for its 90% intervals. These describe Antonelli forecasts trained with the Mercedes cohort; learned-model improvement remains unestablished.
 - Hungary has substantial out-of-range brake/throttle data. Fixed masking rules retain only 13.6% of its observed nominal origins; the report exposes the selection rather than hiding it.
-- Default encoder: 559,104 parameters. CPU optimization, calibration, artifact round-trips and atlas integration verified on explicitly synthetic fixtures.
+- Default encoder: 559,104 parameters. Completed 160 corrected runs across eight held-out races and five seeds. Antonelli-only fine-tuning achieved MAE 0.978 seconds and WIS 0.684, missing both improvement gates; the baseline remains preferred.
 - Mexico is excluded from fitting, calibration and reference-index construction. Source publication latency is unobserved; forecasts use documented historical event-time assumptions.
 
 ## Run locally
@@ -22,6 +22,7 @@ Requires Python 3.11 and uv. The locked core environment supports ingestion, fea
 uv sync --locked --group dev --no-editable
 uv run --no-sync ant26 protocol-check
 uv run --no-sync pytest
+uv run --no-sync mypy
 uv run --no-sync ant26 smoke --output artifacts/smoke
 uv run --no-sync ant26 serve
 ```
@@ -50,7 +51,7 @@ Requests are rate-limited and raw responses are immutable and checksummed. Full 
 
 Use the path emitted by `materialize` with `benchmark`, `representation-benchmark`, `diagnose`, `train` and `atlas`. Every dataset records its protocol hash. Training validates fitting/calibration scopes before optimization, and atlas construction checks the encoder's exact fitting snapshot. An incomplete real-data benchmark reports insufficient data instead of inventing scores.
 
-Constant fitted columns use unit scale under the versioned normalization policy. Regression tests guard against amplified out-of-distribution inputs; the loader rejects checkpoints using the superseded policy. Invalidated experiments are kept for audit and excluded from replay.
+Constant fitted columns use unit scale under the versioned normalization policy. Regression tests guard against the original exact-constant amplification defect; the loader rejects checkpoints using the superseded policy. Corrected runs still expose near-constant distribution-shift failures, including severe pooled-driver forecast tails, documented in the development results. Invalidated experiments are kept for audit and excluded from replay.
 
 ## Architecture
 
@@ -74,5 +75,7 @@ flowchart LR
 - [Source audit](docs/data-audit.md) and [data card](docs/data-card.md)
 - [Real-data quality review](docs/real-data-quality.md)
 - [Model card](docs/model-card.md) and [representation experiment](docs/representation-experiment.md)
+- [Development results](docs/development-results.md) and [aggregate results JSON](reports/development-results.json)
+- [Blind atlas review](docs/atlas-review.md) and [final candidate preparation](docs/final-candidate.md)
 
-Remaining gates include the corrected chronological five-seed experiments, retrieval review, cluster stability and the frozen Mexico case study. Full-grid expansion remains separate from the initial Mercedes cohort. `docker compose up --build` starts the API on port 8000 and UI on port 8501; GitHub CI verifies both containers. The local Docker daemon is stopped.
+The fixed-budget experiments are complete. Blind retrieval review remains unrated. An initial cluster-stability check failed, so discrete-state claims were dropped. Mexico remains held out until the review/freeze gate. Full-grid expansion remains separate from the initial Mercedes cohort. `docker compose up --build` starts the API on port 8000 and UI on port 8501; GitHub CI has verified both containers. CI also includes optional ML/UI tests using the CPU PyTorch wheel; Mypy checks domain/API boundaries.

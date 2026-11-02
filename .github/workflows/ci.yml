@@ -13,6 +13,7 @@ jobs:
           python-version: "3.11"
       - run: uv sync --locked --group dev
       - run: uv run ruff check .
+      - run: uv run mypy
       - run: uv run pytest
       - run: uv run ant26 protocol-check
   container:
@@ -37,3 +38,19 @@ jobs:
                   raise SystemExit(f'Container did not become healthy: {endpoint}')
           PY
       - run: docker compose exec -T api uv run --no-sync ant26 protocol-check
+  ml:
+    needs: offline
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12.0"
+          python-version: "3.11"
+      - run: uv sync --locked --group dev --no-editable
+      - name: Install CPU ML runtime
+        run: uv pip install --index-url https://download.pytorch.org/whl/cpu torch==2.14.1+cpu
+      - name: Install remaining optional test components
+        run: uv pip install catboost==1.2.10 streamlit==1.66.1
+      - run: .venv/bin/python -m pytest
