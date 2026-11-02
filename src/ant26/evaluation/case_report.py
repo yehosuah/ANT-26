@@ -98,6 +98,7 @@ def export_case_report(run_path, freeze_path, output_path, *, chapters=(), sourc
         "synthetic": False,
         "status": report["status"],
         "case_kind": report["provenance"]["case_claim"],
+        "protocol_version": freeze.get("protocol_version"),
         "race": report["race"],
         "accounting": report["accounting"],
         "metrics": report["metrics"],
@@ -150,6 +151,14 @@ def export_case_report(run_path, freeze_path, output_path, *, chapters=(), sourc
         payload["limits"].insert(
             0,
             "This is a post-inspection diagnostic replay after a preserved zero-forecast first attempt; it is not a new independent test.",
+        )
+    if revision := freeze.get("feature_policy_revision"):
+        payload["feature_policy_revision"] = {
+            key: value for key, value in revision.items() if key != "record_path"
+        }
+        payload["limits"].insert(
+            0,
+            "This post-inspection feature-policy replay uses refitted artifacts and revised development data. Added coverage and forecast-quality changes are distinct outcomes.",
         )
     output = Path(output_path)
     serialized = json.dumps(payload, sort_keys=True, indent=2, allow_nan=False) + "\n"

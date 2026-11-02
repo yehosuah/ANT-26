@@ -1,4 +1,5 @@
 import copy
+import hashlib
 import json
 import tempfile
 import unittest
@@ -60,6 +61,73 @@ def make_examples(laps=None, car_data=None, flags=None, **kwargs):
 
 
 class DatasetTests(unittest.TestCase):
+    def test_completion_report_policy_outside_after_report_and_history_is_retrospective(self):
+        laps, car, flags = fixture()
+        pit = [{"session_key": 11234, "driver_number": 12, "date": stamp(89), "lane_duration": 20}]
+        protocol = {"prediction": {"pit_timestamp_policy": "completion_report_v2"}}
+        rows = build_examples(laps, car, race_control=flags, pit=pit, protocol=protocol)
+        row = next(r for r in rows if r["lap_number"] == 4 and r["sector_index"] == 1)
+        self.assertFalse(row["features"]["context"]["in_pit_lane"])
+        self.assertEqual(row["features"]["same_sector_history_count"], 2)
+        self.assertTrue(row["eligible"], row["exclusion_reasons"])
+        self.assertEqual(row["provenance"]["pit_timestamp_policy"], "completion_report_v2")
+        # At cutoff t89 the completed pass [t69,t89] becomes observable. A
+        # report one millisecond later cannot backfill that historical overlap.
+        future = [dict(pit[0], date=stamp(89.001))]
+        unseen = build_examples(laps, car, race_control=flags, pit=future, protocol=protocol)
+        counterpart = next(r for r in unseen if r["example_id"] == row["example_id"])
+        self.assertEqual(counterpart["features"]["same_sector_history_count"], 3)
+        legacy = build_examples(laps, car, race_control=flags, pit=pit)
+        original = next(r for r in legacy if r["example_id"] == row["example_id"])
+        self.assertTrue(original["features"]["context"]["in_pit_lane"])
+        self.assertNotIn("pit_timestamp_policy", original["provenance"])
+
+    def test_completion_report_future_date_and_duration_do_not_backfill_features(self):
+        laps, car, flags = fixture()
+        protocol = {"prediction": {"pit_timestamp_policy": "completion_report_v2"}}
+        future = [
+            {"session_key": 11234, "driver_number": 12, "date": stamp(85), "lane_duration": 40}
+        ]
+        changed = [dict(future[0], date=stamp(150), lane_duration=1000)]
+        variants = [
+            build_examples(laps, car, race_control=flags, pit=pit, protocol=protocol)
+            for pit in ([], future, changed)
+        ]
+        for rows in variants[1:]:
+            for before, after in zip(variants[0], rows, strict=True):
+                if before["cutoff"] is not None and before["cutoff"] < stamp(85):
+                    self.assertEqual(before["features"], after["features"])
+                    self.assertEqual(before["eligible"], after["eligible"])
+                    self.assertEqual(before["target_valid"], after["target_valid"])
+
+    def test_completion_report_unknown_duration_keeps_conservative_running_lap_bound(self):
+        laps, car, flags = fixture()
+        pit = [{"session_key": 11234, "driver_number": 12, "date": stamp(-10)}]
+        legacy = build_examples(laps, car, race_control=flags, pit=pit)
+        updated = build_examples(
+            laps,
+            car,
+            race_control=flags,
+            pit=pit,
+            protocol={"prediction": {"pit_timestamp_policy": "completion_report_v2"}},
+        )
+        self.assertEqual([r["features"] for r in legacy], [r["features"] for r in updated])
+
+    def test_absent_pit_policy_preserves_published_legacy_fixture_bytes(self):
+        laps, car, flags = fixture()
+        pit = [
+            {"session_key": 11234, "driver_number": 12, "date": stamp(-10)},
+            {"session_key": 11234, "driver_number": 12, "date": stamp(85), "lane_duration": 20},
+        ]
+        rows = build_examples(laps, car, race_control=flags, pit=pit)
+        serialized = json.dumps(
+            rows, sort_keys=True, separators=(",", ":"), allow_nan=False
+        ).encode()
+        self.assertEqual(
+            hashlib.sha256(serialized).hexdigest(),
+            "4db36894cf5ccb27855150139e99ff7ea49166e50a7b3a0a8429739c26569e37",
+        )
+
     def test_sector_examples_have_past_reference_and_valid_window(self):
         rows = make_examples()
         self.assertEqual(len(rows), 18)

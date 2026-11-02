@@ -107,6 +107,7 @@ def main(argv: list[str] | None = None) -> int:
     freeze.add_argument("--code-revision", required=True)
     freeze.add_argument("--output", required=True)
     freeze.add_argument("--correction-record")
+    freeze.add_argument("--feature-revision-record")
     case_ingest = commands.add_parser("case-ingest")
     case_ingest.add_argument("--freeze", required=True)
     case_ingest.add_argument("--cache-root", default="data/raw")
@@ -548,6 +549,8 @@ def main(argv: list[str] | None = None) -> int:
         )
         encoder.calibrate(calibration, calibration_sessions=cal_scope)
         encoder.metadata.update(
+            data_sha256=bundle.metadata["data_sha256"],
+            cohort_driver_numbers=payload["cohort_driver_numbers"],
             status="candidate_not_frozen_for_mexico",
             mexico_evaluated=False,
             purpose="continuous_atlas_reference_no_predictive_superiority_claim",
@@ -577,6 +580,7 @@ def main(argv: list[str] | None = None) -> int:
             args.output,
             code_revision=args.code_revision,
             correction_record=args.correction_record,
+            feature_revision_record=args.feature_revision_record,
         )
         print(json.dumps({"output": args.output, "status": result.get("status")}))
     elif args.command == "case-ingest":

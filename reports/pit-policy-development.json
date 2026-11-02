@@ -1,0 +1,808 @@
+{
+  "aggregate_only": true,
+  "baseline_hyperparameters": "fixed_in_code_no_search",
+  "cohort_driver_numbers": [
+    12,
+    63
+  ],
+  "eligible_example_count": 5249,
+  "evaluated_fold_count": 8,
+  "input_example_count": 6204,
+  "input_sha256": "a257f8751a7d41c86f3f66bb869ed7a57cf76aa048a53726b3e814ed184c92c3",
+  "observed_driver_numbers": [
+    12,
+    63
+  ],
+  "origin_eligible_example_count": 5264,
+  "protocol_sha256": "25d2bfbb6ce03851d5aee252d2217f895cc97393552af2f5ee1f020ab8baee92",
+  "protocol_version": "0.2.0",
+  "schema_version": "ant26-pit-policy-development-v1",
+  "scoreable_example_count": 5249,
+  "summary": {
+    "catboost_quantile": {
+      "all_drivers": {
+        "aggregation": "equal_race_weight",
+        "driver_number": null,
+        "forecast_count": 2255,
+        "macro": {
+          "coverage_80": 0.8328864192145472,
+          "coverage_90": 0.9220435221787254,
+          "mae_seconds": 0.9381779264541497,
+          "normalized_absolute_error": 0.028427159255412976,
+          "weighted_interval_score": 0.596640488710998,
+          "width_80_seconds": 2.083084610280226,
+          "width_90_seconds": 3.3729615117890157
+        },
+        "per_race": {
+          "11342": {
+            "count": 54,
+            "coverage_80": 0.7592592592592593,
+            "coverage_90": 0.8888888888888888,
+            "mae_seconds": 1.0150593090788769,
+            "normalized_absolute_error": 0.03557605964466969,
+            "weighted_interval_score": 0.49002450556894345,
+            "width_80_seconds": 2.981698043215481,
+            "width_90_seconds": 4.754532917636822
+          },
+          "11353": {
+            "count": 402,
+            "coverage_80": 0.8134328358208955,
+            "coverage_90": 0.8955223880597015,
+            "mae_seconds": 1.110056987203715,
+            "normalized_absolute_error": 0.03918929763215335,
+            "weighted_interval_score": 0.8101219964894617,
+            "width_80_seconds": 1.1608459806956704,
+            "width_90_seconds": 2.0721833307902204
+          },
+          "11361": {
+            "count": 287,
+            "coverage_80": 0.8013937282229965,
+            "coverage_90": 0.9303135888501742,
+            "mae_seconds": 0.6273752290760563,
+            "normalized_absolute_error": 0.021415375840592252,
+            "weighted_interval_score": 0.46894498890768077,
+            "width_80_seconds": 0.8655194743772779,
+            "width_90_seconds": 1.6155688786536786
+          },
+          "11369": {
+            "count": 330,
+            "coverage_80": 0.8636363636363636,
+            "coverage_90": 0.9757575757575757,
+            "mae_seconds": 0.6026534502976183,
+            "normalized_absolute_error": 0.01877509879618561,
+            "weighted_interval_score": 0.40322649447702924,
+            "width_80_seconds": 1.482971356362329,
+            "width_90_seconds": 2.9253154409891713
+          },
+          "11377": {
+            "count": 251,
+            "coverage_80": 0.9163346613545816,
+            "coverage_90": 0.9561752988047809,
+            "mae_seconds": 0.4409975109114293,
+            "normalized_absolute_error": 0.0121905589792415,
+            "weighted_interval_score": 0.3353088955933823,
+            "width_80_seconds": 1.5397868553576812,
+            "width_90_seconds": 3.2211636923249594
+          },
+          "11388": {
+            "count": 358,
+            "coverage_80": 0.88268156424581,
+            "coverage_90": 0.952513966480447,
+            "mae_seconds": 0.5598151111007965,
+            "normalized_absolute_error": 0.01752109148955488,
+            "weighted_interval_score": 0.32905524003422343,
+            "width_80_seconds": 1.5518340104414068,
+            "width_90_seconds": 2.4215998106834666
+          },
+          "11396": {
+            "count": 323,
+            "coverage_80": 0.8823529411764706,
+            "coverage_90": 0.9411764705882353,
+            "mae_seconds": 0.8744072062254551,
+            "normalized_absolute_error": 0.023583859674749227,
+            "weighted_interval_score": 0.6468850413927899,
+            "width_80_seconds": 1.8541842560613715,
+            "width_90_seconds": 2.995086532565033
+          },
+          "11731": {
+            "count": 250,
+            "coverage_80": 0.744,
+            "coverage_90": 0.836,
+            "mae_seconds": 2.27505860773925,
+            "normalized_absolute_error": 0.05916593198615732,
+            "weighted_interval_score": 1.2895567472244727,
+            "width_80_seconds": 5.2278369057305865,
+            "width_90_seconds": 6.978241490668771
+          }
+        },
+        "race_count": 8
+      },
+      "antonelli": {
+        "aggregation": "equal_race_weight",
+        "driver_number": 12,
+        "forecast_count": 1137,
+        "macro": {
+          "coverage_80": 0.8411887698276967,
+          "coverage_90": 0.9243481796245875,
+          "mae_seconds": 0.9088119720311856,
+          "normalized_absolute_error": 0.027363657352950994,
+          "weighted_interval_score": 0.5809761397809793,
+          "width_80_seconds": 2.090451359372886,
+          "width_90_seconds": 3.3592469811190875
+        },
+        "per_race": {
+          "11342": {
+            "count": 28,
+            "coverage_80": 0.8214285714285714,
+            "coverage_90": 0.9285714285714286,
+            "mae_seconds": 0.7532634571843762,
+            "normalized_absolute_error": 0.02478498365307069,
+            "weighted_interval_score": 0.35853731169766995,
+            "width_80_seconds": 2.5854458638128284,
+            "width_90_seconds": 4.195853508681602
+          },
+          "11353": {
+            "count": 201,
+            "coverage_80": 0.8109452736318408,
+            "coverage_90": 0.8955223880597015,
+            "mae_seconds": 1.0567165851916205,
+            "normalized_absolute_error": 0.03772530872562258,
+            "weighted_interval_score": 0.7451653316565384,
+            "width_80_seconds": 1.251493157781736,
+            "width_90_seconds": 2.1736098045446335
+          },
+          "11361": {
+            "count": 145,
+            "coverage_80": 0.8275862068965517,
+            "coverage_90": 0.9103448275862069,
+            "mae_seconds": 0.8408878289405758,
+            "normalized_absolute_error": 0.028376169944283172,
+            "weighted_interval_score": 0.651967958278962,
+            "width_80_seconds": 0.9746319300771036,
+            "width_90_seconds": 1.7457934999203706
+          },
+          "11369": {
+            "count": 165,
+            "coverage_80": 0.8787878787878788,
+            "coverage_90": 0.9878787878787879,
+            "mae_seconds": 0.5147370706641272,
+            "normalized_absolute_error": 0.01608032307188974,
+            "weighted_interval_score": 0.34842719278674483,
+            "width_80_seconds": 1.41287604177974,
+            "width_90_seconds": 2.7335202350055305
+          },
+          "11377": {
+            "count": 125,
+            "coverage_80": 0.848,
+            "coverage_90": 0.928,
+            "mae_seconds": 0.6228154164298211,
+            "normalized_absolute_error": 0.017674664365786172,
+            "weighted_interval_score": 0.42095064113113323,
+            "width_80_seconds": 1.6515454971263301,
+            "width_90_seconds": 3.6537930014891034
+          },
+          "11388": {
+            "count": 180,
+            "coverage_80": 0.8611111111111112,
+            "coverage_90": 0.9388888888888889,
+            "mae_seconds": 0.5817168576410979,
+            "normalized_absolute_error": 0.018512495971925728,
+            "weighted_interval_score": 0.3565984758472759,
+            "width_80_seconds": 1.5904434676900974,
+            "width_90_seconds": 2.384687528977082
+          },
+          "11396": {
+            "count": 162,
+            "coverage_80": 0.9259259259259259,
+            "coverage_90": 0.9506172839506173,
+            "mae_seconds": 0.7802937484354155,
+            "normalized_absolute_error": 0.0206826252356046,
+            "weighted_interval_score": 0.5650251238910007,
+            "width_80_seconds": 1.9837672734719074,
+            "width_90_seconds": 3.0894421025425136
+          },
+          "11731": {
+            "count": 131,
+            "coverage_80": 0.7557251908396947,
+            "coverage_90": 0.8549618320610687,
+            "mae_seconds": 2.1200648117624503,
+            "normalized_absolute_error": 0.055072687855425274,
+            "weighted_interval_score": 1.2011370829585093,
+            "width_80_seconds": 5.2734076432433445,
+            "width_90_seconds": 6.897276167791864
+          }
+        },
+        "race_count": 8
+      }
+    },
+    "historical_reference": {
+      "all_drivers": {
+        "aggregation": "equal_race_weight",
+        "driver_number": null,
+        "forecast_count": 2255,
+        "macro": {
+          "coverage_80": 0.8074870765030318,
+          "coverage_90": 0.9000442008325544,
+          "mae_seconds": 0.9160064014285539,
+          "normalized_absolute_error": 0.028301751737984555,
+          "weighted_interval_score": 0.8103617940415033,
+          "width_80_seconds": 0.961985452814171,
+          "width_90_seconds": 3.4713667736963494
+        },
+        "per_race": {
+          "11342": {
+            "count": 54,
+            "coverage_80": 0.7592592592592593,
+            "coverage_90": 0.8518518518518519,
+            "mae_seconds": 0.44911158481207814,
+            "normalized_absolute_error": 0.01492780081726706,
+            "weighted_interval_score": 0.34357176878890855,
+            "width_80_seconds": 0.7661377084628204,
+            "width_90_seconds": 2.1877288498776353
+          },
+          "11353": {
+            "count": 402,
+            "coverage_80": 0.7885572139303483,
+            "coverage_90": 0.8756218905472637,
+            "mae_seconds": 1.30496883634988,
+            "normalized_absolute_error": 0.04664132972953596,
+            "weighted_interval_score": 1.2010933828590682,
+            "width_80_seconds": 0.6820858622399603,
+            "width_90_seconds": 2.413924683885403
+          },
+          "11361": {
+            "count": 287,
+            "coverage_80": 0.8466898954703833,
+            "coverage_90": 0.9651567944250871,
+            "mae_seconds": 0.7077244589797415,
+            "normalized_absolute_error": 0.024177195156847832,
+            "weighted_interval_score": 0.6464123967146803,
+            "width_80_seconds": 0.881782464046896,
+            "width_90_seconds": 4.721251490356074
+          },
+          "11369": {
+            "count": 330,
+            "coverage_80": 0.8242424242424242,
+            "coverage_90": 0.9545454545454546,
+            "mae_seconds": 0.6449483104839531,
+            "normalized_absolute_error": 0.020097360822152705,
+            "weighted_interval_score": 0.5383701714769371,
+            "width_80_seconds": 0.8735751383421644,
+            "width_90_seconds": 2.7321457631001143
+          },
+          "11377": {
+            "count": 251,
+            "coverage_80": 0.8406374501992032,
+            "coverage_90": 0.9362549800796812,
+            "mae_seconds": 0.4394818307834147,
+            "normalized_absolute_error": 0.01207391785589755,
+            "weighted_interval_score": 0.3534654488263136,
+            "width_80_seconds": 0.9434100618275958,
+            "width_90_seconds": 3.5458269418983575
+          },
+          "11388": {
+            "count": 358,
+            "coverage_80": 0.8910614525139665,
+            "coverage_90": 0.952513966480447,
+            "mae_seconds": 0.7179367087135234,
+            "normalized_absolute_error": 0.022678900291728563,
+            "weighted_interval_score": 0.6286344128415402,
+            "width_80_seconds": 1.3399250603916628,
+            "width_90_seconds": 4.448601948411336
+          },
+          "11396": {
+            "count": 323,
+            "coverage_80": 0.8854489164086687,
+            "coverage_90": 0.9164086687306502,
+            "mae_seconds": 1.0870960003093624,
+            "normalized_absolute_error": 0.03101307484303465,
+            "weighted_interval_score": 1.0117182642519686,
+            "width_80_seconds": 1.293143175108425,
+            "width_90_seconds": 4.743740947799898
+          },
+          "11731": {
+            "count": 250,
+            "coverage_80": 0.624,
+            "coverage_90": 0.748,
+            "mae_seconds": 1.9767834809964784,
+            "normalized_absolute_error": 0.05480443438741213,
+            "weighted_interval_score": 1.7596285065726092,
+            "width_80_seconds": 0.9158241520938434,
+            "width_90_seconds": 2.977713564241978
+          }
+        },
+        "race_count": 8
+      },
+      "antonelli": {
+        "aggregation": "equal_race_weight",
+        "driver_number": 12,
+        "forecast_count": 1137,
+        "macro": {
+          "coverage_80": 0.8107350044535215,
+          "coverage_90": 0.902044192833746,
+          "mae_seconds": 0.9253942378495993,
+          "normalized_absolute_error": 0.028692804056852008,
+          "weighted_interval_score": 0.822852668023587,
+          "width_80_seconds": 0.9613577255295646,
+          "width_90_seconds": 3.4697169756421182
+        },
+        "per_race": {
+          "11342": {
+            "count": 28,
+            "coverage_80": 0.8571428571428571,
+            "coverage_90": 0.8928571428571429,
+            "mae_seconds": 0.28758625776249513,
+            "normalized_absolute_error": 0.009319598912555965,
+            "weighted_interval_score": 0.22577885766211173,
+            "width_80_seconds": 0.7733172740842701,
+            "width_90_seconds": 2.2075240203104234
+          },
+          "11353": {
+            "count": 201,
+            "coverage_80": 0.7910447761194029,
+            "coverage_90": 0.8805970149253731,
+            "mae_seconds": 1.2863314773122738,
+            "normalized_absolute_error": 0.04646240237969788,
+            "weighted_interval_score": 1.1838114004357378,
+            "width_80_seconds": 0.6785843670871083,
+            "width_90_seconds": 2.402867192173386
+          },
+          "11361": {
+            "count": 145,
+            "coverage_80": 0.8482758620689655,
+            "coverage_90": 0.9517241379310345,
+            "mae_seconds": 0.975950132320154,
+            "normalized_absolute_error": 0.032991308028872124,
+            "weighted_interval_score": 0.9054767887164219,
+            "width_80_seconds": 0.8811172986184942,
+            "width_90_seconds": 4.719132575439863
+          },
+          "11369": {
+            "count": 165,
+            "coverage_80": 0.8606060606060606,
+            "coverage_90": 0.9696969696969697,
+            "mae_seconds": 0.5468556744170261,
+            "normalized_absolute_error": 0.01699812709191447,
+            "weighted_interval_score": 0.4574310496709685,
+            "width_80_seconds": 0.8732315452260193,
+            "width_90_seconds": 2.731088755185992
+          },
+          "11377": {
+            "count": 125,
+            "coverage_80": 0.728,
+            "coverage_90": 0.896,
+            "mae_seconds": 0.6207680864852226,
+            "normalized_absolute_error": 0.01750231696510607,
+            "weighted_interval_score": 0.46424618151914654,
+            "width_80_seconds": 0.9479360620760426,
+            "width_90_seconds": 3.562838010859074
+          },
+          "11388": {
+            "count": 180,
+            "coverage_80": 0.8888888888888888,
+            "coverage_90": 0.95,
+            "mae_seconds": 0.7520163912263963,
+            "normalized_absolute_error": 0.024295246765349936,
+            "weighted_interval_score": 0.6699128165804912,
+            "width_80_seconds": 1.3343002177948966,
+            "width_90_seconds": 4.432327551647726
+          },
+          "11396": {
+            "count": 162,
+            "coverage_80": 0.9012345679012346,
+            "coverage_90": 0.9197530864197531,
+            "mae_seconds": 1.016487550694921,
+            "normalized_absolute_error": 0.02880718918119602,
+            "weighted_interval_score": 0.9700311546186923,
+            "width_80_seconds": 1.2894363731261933,
+            "width_90_seconds": 4.733626013225192
+          },
+          "11731": {
+            "count": 131,
+            "coverage_80": 0.6106870229007634,
+            "coverage_90": 0.7557251908396947,
+            "mae_seconds": 1.9171583325783053,
+            "normalized_absolute_error": 0.053166243130123615,
+            "weighted_interval_score": 1.7061330949851268,
+            "width_80_seconds": 0.9129386662234922,
+            "width_90_seconds": 2.9683316862952895
+          }
+        },
+        "race_count": 8
+      }
+    },
+    "regularized_linear_residual": {
+      "all_drivers": {
+        "aggregation": "equal_race_weight",
+        "driver_number": null,
+        "forecast_count": 2255,
+        "macro": {
+          "coverage_80": 0.778031570732779,
+          "coverage_90": 0.8867618671647871,
+          "mae_seconds": 1.6880863792707044,
+          "normalized_absolute_error": 0.051197853825131576,
+          "weighted_interval_score": 1.0407470216129395,
+          "width_80_seconds": 3.8356874834655224,
+          "width_90_seconds": 5.628112790657749
+        },
+        "per_race": {
+          "11342": {
+            "count": 54,
+            "coverage_80": 0.5740740740740741,
+            "coverage_90": 0.7592592592592593,
+            "mae_seconds": 1.720609419674202,
+            "normalized_absolute_error": 0.059976231579877,
+            "weighted_interval_score": 0.8790623365955704,
+            "width_80_seconds": 3.96115761699052,
+            "width_90_seconds": 5.064264135688258
+          },
+          "11353": {
+            "count": 402,
+            "coverage_80": 0.835820895522388,
+            "coverage_90": 0.9104477611940298,
+            "mae_seconds": 1.7336563371503677,
+            "normalized_absolute_error": 0.06361625605956041,
+            "weighted_interval_score": 1.0989130068322426,
+            "width_80_seconds": 3.637161994978128,
+            "width_90_seconds": 5.511839740727559
+          },
+          "11361": {
+            "count": 287,
+            "coverage_80": 0.9407665505226481,
+            "coverage_90": 0.9651567944250871,
+            "mae_seconds": 0.8766090067001305,
+            "normalized_absolute_error": 0.03017208656387077,
+            "weighted_interval_score": 0.6833534234058439,
+            "width_80_seconds": 3.829079196772869,
+            "width_90_seconds": 6.408945705740108
+          },
+          "11369": {
+            "count": 330,
+            "coverage_80": 0.7121212121212122,
+            "coverage_90": 0.8666666666666667,
+            "mae_seconds": 1.51526221144446,
+            "normalized_absolute_error": 0.047163285728173535,
+            "weighted_interval_score": 0.7997864134258982,
+            "width_80_seconds": 3.3718543886674706,
+            "width_90_seconds": 4.589709679471648
+          },
+          "11377": {
+            "count": 251,
+            "coverage_80": 0.6972111553784861,
+            "coverage_90": 0.8645418326693227,
+            "mae_seconds": 2.4094175098683976,
+            "normalized_absolute_error": 0.06335607476435526,
+            "weighted_interval_score": 1.6524450886609603,
+            "width_80_seconds": 3.5836375708397235,
+            "width_90_seconds": 5.253865613941135
+          },
+          "11388": {
+            "count": 358,
+            "coverage_80": 0.8994413407821229,
+            "coverage_90": 0.9441340782122905,
+            "mae_seconds": 1.2958031782315167,
+            "normalized_absolute_error": 0.037645217379508274,
+            "weighted_interval_score": 0.7395103889211345,
+            "width_80_seconds": 4.2250506919585336,
+            "width_90_seconds": 5.9737902712869175
+          },
+          "11396": {
+            "count": 323,
+            "coverage_80": 0.8328173374613003,
+            "coverage_90": 0.9318885448916409,
+            "mae_seconds": 1.557659043094253,
+            "normalized_absolute_error": 0.04331939605718007,
+            "weighted_interval_score": 1.00299307465278,
+            "width_80_seconds": 3.6533364321298096,
+            "width_90_seconds": 6.006901678544362
+          },
+          "11731": {
+            "count": 250,
+            "coverage_80": 0.732,
+            "coverage_90": 0.852,
+            "mae_seconds": 2.3956743280023067,
+            "normalized_absolute_error": 0.0643342824685273,
+            "weighted_interval_score": 1.4699124404090846,
+            "width_80_seconds": 4.424221975387124,
+            "width_90_seconds": 6.215585499862002
+          }
+        },
+        "race_count": 8
+      },
+      "antonelli": {
+        "aggregation": "equal_race_weight",
+        "driver_number": 12,
+        "forecast_count": 1137,
+        "macro": {
+          "coverage_80": 0.7965890184848935,
+          "coverage_90": 0.8894859105584192,
+          "mae_seconds": 1.590680914818471,
+          "normalized_absolute_error": 0.048532515195073365,
+          "weighted_interval_score": 0.9412454787394471,
+          "width_80_seconds": 3.8230430816595895,
+          "width_90_seconds": 5.609456544313292
+        },
+        "per_race": {
+          "11342": {
+            "count": 28,
+            "coverage_80": 0.6428571428571429,
+            "coverage_90": 0.75,
+            "mae_seconds": 1.5294320072923067,
+            "normalized_absolute_error": 0.05181409815423022,
+            "weighted_interval_score": 0.7612104082133181,
+            "width_80_seconds": 3.955863661181508,
+            "width_90_seconds": 5.056814221070577
+          },
+          "11353": {
+            "count": 201,
+            "coverage_80": 0.8805970149253731,
+            "coverage_90": 0.9154228855721394,
+            "mae_seconds": 1.7325877482369254,
+            "normalized_absolute_error": 0.06401978484132537,
+            "weighted_interval_score": 1.1034428576345072,
+            "width_80_seconds": 3.632293975991749,
+            "width_90_seconds": 5.504873238851903
+          },
+          "11361": {
+            "count": 145,
+            "coverage_80": 0.9310344827586207,
+            "coverage_90": 0.9517241379310345,
+            "mae_seconds": 1.140474969683516,
+            "normalized_absolute_error": 0.038936952960613856,
+            "weighted_interval_score": 0.8819430894896395,
+            "width_80_seconds": 3.8189939679773457,
+            "width_90_seconds": 6.3945808736767535
+          },
+          "11369": {
+            "count": 165,
+            "coverage_80": 0.7090909090909091,
+            "coverage_90": 0.8606060606060606,
+            "mae_seconds": 1.4693845296152852,
+            "normalized_absolute_error": 0.04577040484688274,
+            "weighted_interval_score": 0.7602383371321519,
+            "width_80_seconds": 3.3692416582395803,
+            "width_90_seconds": 4.585902602699371
+          },
+          "11377": {
+            "count": 125,
+            "coverage_80": 0.696,
+            "coverage_90": 0.872,
+            "mae_seconds": 1.7116939097782877,
+            "normalized_absolute_error": 0.04549501239094575,
+            "weighted_interval_score": 0.9291763577162898,
+            "width_80_seconds": 3.5198508277884413,
+            "width_90_seconds": 5.158720972076672
+          },
+          "11388": {
+            "count": 180,
+            "coverage_80": 0.9055555555555556,
+            "coverage_90": 0.95,
+            "mae_seconds": 1.3926628104933,
+            "normalized_absolute_error": 0.040906038689304994,
+            "weighted_interval_score": 0.7960291321931692,
+            "width_80_seconds": 4.205656856116622,
+            "width_90_seconds": 5.944887793175807
+          },
+          "11396": {
+            "count": 162,
+            "coverage_80": 0.8518518518518519,
+            "coverage_90": 0.9382716049382716,
+            "mae_seconds": 1.5370853305214116,
+            "normalized_absolute_error": 0.042021646030209935,
+            "weighted_interval_score": 0.9645082304935017,
+            "width_80_seconds": 3.6587489727489064,
+            "width_90_seconds": 6.0150651434042635
+          },
+          "11731": {
+            "count": 131,
+            "coverage_80": 0.7557251908396947,
+            "coverage_90": 0.8778625954198473,
+            "mae_seconds": 2.2121260129267366,
+            "normalized_absolute_error": 0.05929618364707407,
+            "weighted_interval_score": 1.3334154170429995,
+            "width_80_seconds": 4.423694733232562,
+            "width_90_seconds": 6.21480750955099
+          }
+        },
+        "race_count": 8
+      }
+    },
+    "same_sector_persistence": {
+      "all_drivers": {
+        "aggregation": "equal_race_weight",
+        "driver_number": null,
+        "forecast_count": 2255,
+        "macro": {
+          "coverage_80": 0.8339809097237612,
+          "coverage_90": 0.9227783749844053,
+          "mae_seconds": 0.8637479540601859,
+          "normalized_absolute_error": 0.027364508932226472,
+          "weighted_interval_score": 0.7724560465940427,
+          "width_80_seconds": 0.7927581130155754,
+          "width_90_seconds": 2.4020451534690204
+        },
+        "per_race": {
+          "11342": {
+            "count": 54,
+            "coverage_80": 0.9259259259259259,
+            "coverage_90": 0.9814814814814815,
+            "mae_seconds": 0.20039157658297063,
+            "normalized_absolute_error": 0.007168659214923214,
+            "weighted_interval_score": 0.16450586053053787,
+            "width_80_seconds": 0.7649438430457522,
+            "width_90_seconds": 3.3872617574562156
+          },
+          "11353": {
+            "count": 402,
+            "coverage_80": 0.8084577114427861,
+            "coverage_90": 0.8805970149253731,
+            "mae_seconds": 1.55690701624011,
+            "normalized_absolute_error": 0.05474442667821968,
+            "weighted_interval_score": 1.460937465949799,
+            "width_80_seconds": 0.6429011717419078,
+            "width_90_seconds": 1.6279953204923951
+          },
+          "11361": {
+            "count": 287,
+            "coverage_80": 0.8257839721254355,
+            "coverage_90": 0.9303135888501742,
+            "mae_seconds": 1.0695999266201095,
+            "normalized_absolute_error": 0.03588183074573315,
+            "weighted_interval_score": 0.9843947914591427,
+            "width_80_seconds": 0.7002664668872182,
+            "width_90_seconds": 2.7467174877831977
+          },
+          "11369": {
+            "count": 330,
+            "coverage_80": 0.8242424242424242,
+            "coverage_90": 0.9393939393939394,
+            "mae_seconds": 0.6284057664720385,
+            "normalized_absolute_error": 0.019608478723033666,
+            "weighted_interval_score": 0.5300028595989145,
+            "width_80_seconds": 0.7916693136334382,
+            "width_90_seconds": 2.2163929585085946
+          },
+          "11377": {
+            "count": 251,
+            "coverage_80": 0.8645418326693227,
+            "coverage_90": 0.9601593625498008,
+            "mae_seconds": 0.3764631614237207,
+            "normalized_absolute_error": 0.010437396393449169,
+            "weighted_interval_score": 0.2997643768054818,
+            "width_80_seconds": 0.8636728627492077,
+            "width_90_seconds": 2.2877719727422576
+          },
+          "11388": {
+            "count": 358,
+            "coverage_80": 0.8240223463687151,
+            "coverage_90": 0.9162011173184358,
+            "mae_seconds": 0.9433647984628976,
+            "normalized_absolute_error": 0.029017687580797098,
+            "weighted_interval_score": 0.8334125867987521,
+            "width_80_seconds": 0.8027585537890383,
+            "width_90_seconds": 2.090766773669802
+          },
+          "11396": {
+            "count": 323,
+            "coverage_80": 0.8668730650154799,
+            "coverage_90": 0.9380804953560371,
+            "mae_seconds": 0.8164483559078419,
+            "normalized_absolute_error": 0.023749465029933744,
+            "weighted_interval_score": 0.7428486990079362,
+            "width_80_seconds": 0.9365302615720904,
+            "width_90_seconds": 2.7096551193072034
+          },
+          "11731": {
+            "count": 250,
+            "coverage_80": 0.732,
+            "coverage_90": 0.836,
+            "mae_seconds": 1.3184030307717989,
+            "normalized_absolute_error": 0.03830812709172206,
+            "weighted_interval_score": 1.163781732601777,
+            "width_80_seconds": 0.8393224307059501,
+            "width_90_seconds": 2.149799837792495
+          }
+        },
+        "race_count": 8
+      },
+      "antonelli": {
+        "aggregation": "equal_race_weight",
+        "driver_number": 12,
+        "forecast_count": 1137,
+        "macro": {
+          "coverage_80": 0.8375898363124495,
+          "coverage_90": 0.9249191374301943,
+          "mae_seconds": 0.9269522592596247,
+          "normalized_absolute_error": 0.02952131851413582,
+          "weighted_interval_score": 0.8401431705806501,
+          "width_80_seconds": 0.7932520469033897,
+          "width_90_seconds": 2.4032476380905523
+        },
+        "per_race": {
+          "11342": {
+            "count": 28,
+            "coverage_80": 1.0,
+            "coverage_90": 1.0,
+            "mae_seconds": 0.103539341905587,
+            "normalized_absolute_error": 0.003574975351146557,
+            "weighted_interval_score": 0.11977361826238878,
+            "width_80_seconds": 0.7733724647367083,
+            "width_90_seconds": 3.406542564590152
+          },
+          "11353": {
+            "count": 201,
+            "coverage_80": 0.8059701492537313,
+            "coverage_90": 0.8855721393034826,
+            "mae_seconds": 1.6532432177598715,
+            "normalized_absolute_error": 0.05885432132244506,
+            "weighted_interval_score": 1.5553492955528925,
+            "width_80_seconds": 0.6425788360998799,
+            "width_90_seconds": 1.6271790816365417
+          },
+          "11361": {
+            "count": 145,
+            "coverage_80": 0.8413793103448276,
+            "coverage_90": 0.9241379310344827,
+            "mae_seconds": 1.4883943541306044,
+            "normalized_absolute_error": 0.04900932089032774,
+            "weighted_interval_score": 1.3932389329681718,
+            "width_80_seconds": 0.702089524633132,
+            "width_90_seconds": 2.75132069196032
+          },
+          "11369": {
+            "count": 165,
+            "coverage_80": 0.8606060606060606,
+            "coverage_90": 0.9454545454545454,
+            "mae_seconds": 0.5339758345491058,
+            "normalized_absolute_error": 0.016624222075134778,
+            "weighted_interval_score": 0.4491004453036204,
+            "width_80_seconds": 0.791398624042148,
+            "width_90_seconds": 2.2157207671571233
+          },
+          "11377": {
+            "count": 125,
+            "coverage_80": 0.76,
+            "coverage_90": 0.944,
+            "mae_seconds": 0.5196150337306232,
+            "normalized_absolute_error": 0.014863032790495865,
+            "weighted_interval_score": 0.3861703434093875,
+            "width_80_seconds": 0.8674170876719064,
+            "width_90_seconds": 2.297690002134227
+          },
+          "11388": {
+            "count": 180,
+            "coverage_80": 0.8277777777777777,
+            "coverage_90": 0.9222222222222223,
+            "mae_seconds": 0.9646959440645434,
+            "normalized_absolute_error": 0.030438905256072575,
+            "weighted_interval_score": 0.8592366024983468,
+            "width_80_seconds": 0.7964746051952536,
+            "width_90_seconds": 2.0756006343602134
+          },
+          "11396": {
+            "count": 162,
+            "coverage_80": 0.8950617283950617,
+            "coverage_90": 0.9382716049382716,
+            "mae_seconds": 0.7536247990578694,
+            "normalized_absolute_error": 0.021885910413884834,
+            "weighted_interval_score": 0.7136993857100188,
+            "width_80_seconds": 0.933442287919516,
+            "width_90_seconds": 2.702331116115179
+          },
+          "11731": {
+            "count": 131,
+            "coverage_80": 0.7099236641221374,
+            "coverage_90": 0.8396946564885496,
+            "mae_seconds": 1.3985295488787923,
+            "normalized_absolute_error": 0.04091986001357915,
+            "weighted_interval_score": 1.2445767409403747,
+            "width_80_seconds": 0.8392429449285727,
+            "width_90_seconds": 2.149596246770664
+          }
+        },
+        "race_count": 8
+      }
+    }
+  },
+  "synthetic": false
+}

@@ -1,0 +1,656 @@
+{
+  "added_example_count": 0,
+  "aggregate_only": true,
+  "all_example_values_and_order_unchanged": false,
+  "by_driver_race": [
+    {
+      "driver_number": 12,
+      "new": {
+        "eligible": 168,
+        "examples": 174,
+        "scoreable": 168
+      },
+      "prior": {
+        "eligible": 167,
+        "examples": 174,
+        "scoreable": 167
+      },
+      "session_key": 11234
+    },
+    {
+      "driver_number": 63,
+      "new": {
+        "eligible": 161,
+        "examples": 174,
+        "scoreable": 160
+      },
+      "prior": {
+        "eligible": 161,
+        "examples": 174,
+        "scoreable": 160
+      },
+      "session_key": 11234
+    },
+    {
+      "driver_number": 12,
+      "new": {
+        "eligible": 150,
+        "examples": 168,
+        "scoreable": 150
+      },
+      "prior": {
+        "eligible": 150,
+        "examples": 168,
+        "scoreable": 150
+      },
+      "session_key": 11245
+    },
+    {
+      "driver_number": 63,
+      "new": {
+        "eligible": 136,
+        "examples": 168,
+        "scoreable": 136
+      },
+      "prior": {
+        "eligible": 136,
+        "examples": 168,
+        "scoreable": 136
+      },
+      "session_key": 11245
+    },
+    {
+      "driver_number": 12,
+      "new": {
+        "eligible": 116,
+        "examples": 159,
+        "scoreable": 114
+      },
+      "prior": {
+        "eligible": 116,
+        "examples": 159,
+        "scoreable": 114
+      },
+      "session_key": 11253
+    },
+    {
+      "driver_number": 63,
+      "new": {
+        "eligible": 122,
+        "examples": 159,
+        "scoreable": 122
+      },
+      "prior": {
+        "eligible": 122,
+        "examples": 159,
+        "scoreable": 122
+      },
+      "session_key": 11253
+    },
+    {
+      "driver_number": 12,
+      "new": {
+        "eligible": 148,
+        "examples": 171,
+        "scoreable": 148
+      },
+      "prior": {
+        "eligible": 148,
+        "examples": 171,
+        "scoreable": 148
+      },
+      "session_key": 11280
+    },
+    {
+      "driver_number": 63,
+      "new": {
+        "eligible": 146,
+        "examples": 171,
+        "scoreable": 146
+      },
+      "prior": {
+        "eligible": 146,
+        "examples": 171,
+        "scoreable": 146
+      },
+      "session_key": 11280
+    },
+    {
+      "driver_number": 12,
+      "new": {
+        "eligible": 198,
+        "examples": 204,
+        "scoreable": 198
+      },
+      "prior": {
+        "eligible": 198,
+        "examples": 204,
+        "scoreable": 198
+      },
+      "session_key": 11291
+    },
+    {
+      "driver_number": 63,
+      "new": {
+        "eligible": 82,
+        "examples": 90,
+        "scoreable": 81
+      },
+      "prior": {
+        "eligible": 82,
+        "examples": 90,
+        "scoreable": 81
+      },
+      "session_key": 11291
+    },
+    {
+      "driver_number": 12,
+      "new": {
+        "eligible": 206,
+        "examples": 234,
+        "scoreable": 206
+      },
+      "prior": {
+        "eligible": 176,
+        "examples": 234,
+        "scoreable": 176
+      },
+      "session_key": 11299
+    },
+    {
+      "driver_number": 63,
+      "new": {
+        "eligible": 202,
+        "examples": 234,
+        "scoreable": 202
+      },
+      "prior": {
+        "eligible": 189,
+        "examples": 234,
+        "scoreable": 189
+      },
+      "session_key": 11299
+    },
+    {
+      "driver_number": 12,
+      "new": {
+        "eligible": 178,
+        "examples": 186,
+        "scoreable": 177
+      },
+      "prior": {
+        "eligible": 178,
+        "examples": 186,
+        "scoreable": 177
+      },
+      "session_key": 11307
+    },
+    {
+      "driver_number": 63,
+      "new": {
+        "eligible": 192,
+        "examples": 198,
+        "scoreable": 192
+      },
+      "prior": {
+        "eligible": 192,
+        "examples": 198,
+        "scoreable": 192
+      },
+      "session_key": 11307
+    },
+    {
+      "driver_number": 12,
+      "new": {
+        "eligible": 205,
+        "examples": 213,
+        "scoreable": 204
+      },
+      "prior": {
+        "eligible": 204,
+        "examples": 213,
+        "scoreable": 203
+      },
+      "session_key": 11315
+    },
+    {
+      "driver_number": 63,
+      "new": {
+        "eligible": 205,
+        "examples": 213,
+        "scoreable": 204
+      },
+      "prior": {
+        "eligible": 203,
+        "examples": 213,
+        "scoreable": 202
+      },
+      "session_key": 11315
+    },
+    {
+      "driver_number": 12,
+      "new": {
+        "eligible": 134,
+        "examples": 156,
+        "scoreable": 134
+      },
+      "prior": {
+        "eligible": 131,
+        "examples": 156,
+        "scoreable": 131
+      },
+      "session_key": 11326
+    },
+    {
+      "driver_number": 63,
+      "new": {
+        "eligible": 136,
+        "examples": 156,
+        "scoreable": 136
+      },
+      "prior": {
+        "eligible": 134,
+        "examples": 156,
+        "scoreable": 134
+      },
+      "session_key": 11326
+    },
+    {
+      "driver_number": 12,
+      "new": {
+        "eligible": 117,
+        "examples": 135,
+        "scoreable": 116
+      },
+      "prior": {
+        "eligible": 117,
+        "examples": 135,
+        "scoreable": 116
+      },
+      "session_key": 11334
+    },
+    {
+      "driver_number": 12,
+      "new": {
+        "eligible": 28,
+        "examples": 210,
+        "scoreable": 28
+      },
+      "prior": {
+        "eligible": 28,
+        "examples": 210,
+        "scoreable": 28
+      },
+      "session_key": 11342
+    },
+    {
+      "driver_number": 63,
+      "new": {
+        "eligible": 26,
+        "examples": 210,
+        "scoreable": 26
+      },
+      "prior": {
+        "eligible": 26,
+        "examples": 210,
+        "scoreable": 26
+      },
+      "session_key": 11342
+    },
+    {
+      "driver_number": 12,
+      "new": {
+        "eligible": 203,
+        "examples": 216,
+        "scoreable": 201
+      },
+      "prior": {
+        "eligible": 157,
+        "examples": 216,
+        "scoreable": 156
+      },
+      "session_key": 11353
+    },
+    {
+      "driver_number": 63,
+      "new": {
+        "eligible": 203,
+        "examples": 216,
+        "scoreable": 201
+      },
+      "prior": {
+        "eligible": 163,
+        "examples": 216,
+        "scoreable": 162
+      },
+      "session_key": 11353
+    },
+    {
+      "driver_number": 12,
+      "new": {
+        "eligible": 146,
+        "examples": 159,
+        "scoreable": 145
+      },
+      "prior": {
+        "eligible": 93,
+        "examples": 159,
+        "scoreable": 93
+      },
+      "session_key": 11361
+    },
+    {
+      "driver_number": 63,
+      "new": {
+        "eligible": 144,
+        "examples": 159,
+        "scoreable": 142
+      },
+      "prior": {
+        "eligible": 94,
+        "examples": 159,
+        "scoreable": 94
+      },
+      "session_key": 11361
+    },
+    {
+      "driver_number": 12,
+      "new": {
+        "eligible": 165,
+        "examples": 171,
+        "scoreable": 165
+      },
+      "prior": {
+        "eligible": 165,
+        "examples": 171,
+        "scoreable": 165
+      },
+      "session_key": 11369
+    },
+    {
+      "driver_number": 63,
+      "new": {
+        "eligible": 165,
+        "examples": 171,
+        "scoreable": 165
+      },
+      "prior": {
+        "eligible": 163,
+        "examples": 171,
+        "scoreable": 163
+      },
+      "session_key": 11369
+    },
+    {
+      "driver_number": 12,
+      "new": {
+        "eligible": 125,
+        "examples": 153,
+        "scoreable": 125
+      },
+      "prior": {
+        "eligible": 125,
+        "examples": 153,
+        "scoreable": 125
+      },
+      "session_key": 11377
+    },
+    {
+      "driver_number": 63,
+      "new": {
+        "eligible": 126,
+        "examples": 153,
+        "scoreable": 126
+      },
+      "prior": {
+        "eligible": 126,
+        "examples": 153,
+        "scoreable": 126
+      },
+      "session_key": 11377
+    },
+    {
+      "driver_number": 12,
+      "new": {
+        "eligible": 180,
+        "examples": 186,
+        "scoreable": 180
+      },
+      "prior": {
+        "eligible": 180,
+        "examples": 186,
+        "scoreable": 180
+      },
+      "session_key": 11388
+    },
+    {
+      "driver_number": 63,
+      "new": {
+        "eligible": 178,
+        "examples": 186,
+        "scoreable": 178
+      },
+      "prior": {
+        "eligible": 178,
+        "examples": 186,
+        "scoreable": 178
+      },
+      "session_key": 11388
+    },
+    {
+      "driver_number": 12,
+      "new": {
+        "eligible": 162,
+        "examples": 168,
+        "scoreable": 162
+      },
+      "prior": {
+        "eligible": 162,
+        "examples": 168,
+        "scoreable": 162
+      },
+      "session_key": 11396
+    },
+    {
+      "driver_number": 63,
+      "new": {
+        "eligible": 161,
+        "examples": 168,
+        "scoreable": 161
+      },
+      "prior": {
+        "eligible": 160,
+        "examples": 168,
+        "scoreable": 160
+      },
+      "session_key": 11396
+    },
+    {
+      "driver_number": 12,
+      "new": {
+        "eligible": 131,
+        "examples": 165,
+        "scoreable": 131
+      },
+      "prior": {
+        "eligible": 130,
+        "examples": 165,
+        "scoreable": 130
+      },
+      "session_key": 11731
+    },
+    {
+      "driver_number": 63,
+      "new": {
+        "eligible": 119,
+        "examples": 150,
+        "scoreable": 119
+      },
+      "prior": {
+        "eligible": 118,
+        "examples": 150,
+        "scoreable": 118
+      },
+      "session_key": 11731
+    }
+  ],
+  "calibration_scope_changed": true,
+  "calibration_sessions": [
+    11388,
+    11396
+  ],
+  "canonical_examples_sha256": {
+    "new": "a257f8751a7d41c86f3f66bb869ed7a57cf76aa048a53726b3e814ed184c92c3",
+    "prior": "4b365b21c246446940a506da7df40e7389797d27550e47b3d7d26ab9a1274afe"
+  },
+  "change_impact": {
+    "changed_examples": 6204,
+    "changed_top_level_fields": {
+      "eligible": 246,
+      "exclusion_reasons": 249,
+      "features": 1638,
+      "provenance": 6204,
+      "reference_seconds": 374
+    },
+    "eligibility_changed_examples": 246,
+    "eligibility_reason_changed_examples": 249,
+    "forecast_input_changed_examples": 1638,
+    "lost_eligible_examples": 0,
+    "metadata_only_changed_examples": 4566,
+    "newly_eligible_examples": 246,
+    "substantive_changed_examples": 1638,
+    "target_changed_examples": 0
+  },
+  "change_impact_by_scope": {
+    "final_calibration": {
+      "changed_examples": 708,
+      "changed_top_level_fields": {
+        "eligible": 1,
+        "exclusion_reasons": 1,
+        "features": 129,
+        "provenance": 708,
+        "reference_seconds": 11
+      },
+      "eligibility_changed_examples": 1,
+      "eligibility_reason_changed_examples": 1,
+      "forecast_input_changed_examples": 129,
+      "lost_eligible_examples": 0,
+      "metadata_only_changed_examples": 579,
+      "newly_eligible_examples": 1,
+      "substantive_changed_examples": 129,
+      "target_changed_examples": 0
+    },
+    "final_fit": {
+      "changed_examples": 5496,
+      "changed_top_level_fields": {
+        "eligible": 245,
+        "exclusion_reasons": 248,
+        "features": 1509,
+        "provenance": 5496,
+        "reference_seconds": 363
+      },
+      "eligibility_changed_examples": 245,
+      "eligibility_reason_changed_examples": 248,
+      "forecast_input_changed_examples": 1509,
+      "lost_eligible_examples": 0,
+      "metadata_only_changed_examples": 3987,
+      "newly_eligible_examples": 245,
+      "substantive_changed_examples": 1509,
+      "target_changed_examples": 0
+    },
+    "rolling_test": {
+      "changed_examples": 2841,
+      "changed_top_level_fields": {
+        "eligible": 194,
+        "exclusion_reasons": 196,
+        "features": 1047,
+        "provenance": 2841,
+        "reference_seconds": 264
+      },
+      "eligibility_changed_examples": 194,
+      "eligibility_reason_changed_examples": 196,
+      "forecast_input_changed_examples": 1047,
+      "lost_eligible_examples": 0,
+      "metadata_only_changed_examples": 1794,
+      "newly_eligible_examples": 194,
+      "substantive_changed_examples": 1047,
+      "target_changed_examples": 0
+    }
+  },
+  "changed_example_count": 6204,
+  "changed_sessions": [
+    11234,
+    11245,
+    11253,
+    11280,
+    11291,
+    11299,
+    11307,
+    11315,
+    11326,
+    11334,
+    11342,
+    11353,
+    11361,
+    11369,
+    11377,
+    11388,
+    11396,
+    11731
+  ],
+  "changed_top_level_fields": {
+    "eligible": 246,
+    "exclusion_reasons": 249,
+    "features": 1638,
+    "provenance": 6204,
+    "reference_seconds": 374
+  },
+  "fit_scope_changed": true,
+  "fit_sessions": [
+    11234,
+    11245,
+    11253,
+    11280,
+    11291,
+    11299,
+    11307,
+    11315,
+    11326,
+    11334,
+    11342,
+    11353,
+    11361,
+    11369,
+    11377,
+    11731
+  ],
+  "input_sha256": {
+    "new": "470f097c8dd657d2985bba26d66645ab4045f604892c8441b8cb0c8061907575",
+    "prior": "b477d4f6aa7fef55ce9f7cd47142039c76f481ccc69700f2e07f64fed420d9e0"
+  },
+  "interpretation": "Changed fitting/calibration examples require new learned artifacts with the fixed configuration; historical experiments remain tied to their original feature policy.",
+  "learned_artifact_reuse_allowed": false,
+  "new_counts": {
+    "eligible": 5264,
+    "examples": 6204,
+    "scoreable": 5249
+  },
+  "prior_counts": {
+    "eligible": 5018,
+    "examples": 6204,
+    "scoreable": 5008
+  },
+  "removed_example_count": 0,
+  "rolling_test_sessions": [
+    11342,
+    11353,
+    11361,
+    11369,
+    11377,
+    11388,
+    11396,
+    11731
+  ],
+  "schema_version": "ant26-pit-development-comparison-v1",
+  "scope_note": "Final fit and calibration are disjoint; rolling test races can overlap final-fit races because the final candidate is refitted after development evaluation."
+}

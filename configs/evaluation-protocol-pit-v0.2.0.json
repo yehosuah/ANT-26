@@ -1,0 +1,196 @@
+{
+  "project": "ANT-26",
+  "protocol_version": "0.2.0",
+  "status": "implementation_in_progress",
+  "planning_date_local": "2026-11-01",
+  "timezone": "America/Guatemala",
+  "source": {
+    "primary": "openf1",
+    "year": 2026,
+    "session_name": "Race",
+    "request_budget_per_minute": 25,
+    "exclude_canceled": true,
+    "require_verified_event_identity": true,
+    "event_identity_quarantine": [],
+    "resolved_event_identities": {
+      "11731": {
+        "event": "Bahrain Grand Prix in Malaysia",
+        "host_country": "Malaysia",
+        "circuit": "Sepang International Circuit",
+        "source": "https://www.formula1.com/en/racing/2026/bahrain"
+      }
+    }
+  },
+  "subject": {
+    "driver_number": 12,
+    "name": "Kimi Antonelli",
+    "training_population": "all_available_drivers",
+    "primary_metrics_population": "antonelli"
+  },
+  "final_case_study": {
+    "name": "Mexico 2026",
+    "meeting_key": 1298,
+    "race_session_key": 11404,
+    "quarantine_scope": "entire_weekend_all_drivers",
+    "exclude_from": [
+      "pretraining",
+      "model_fitting",
+      "hyperparameter_selection",
+      "normalizer_fitting",
+      "calibration",
+      "feature_learning",
+      "reference_geometry_construction",
+      "cluster_fitting",
+      "retrieval_index_construction"
+    ],
+    "prior_exploratory_inspection": true,
+    "claim": "held_out_from_fitting_and_selection_not_untouched_blind_test",
+    "allowed_pre_freeze_inspection": [
+      "identity",
+      "schema",
+      "completeness"
+    ],
+    "expected_race_laps": 71,
+    "previously_observed_missing_lap_numbers": [
+      5
+    ],
+    "freeze_required_before_scoring": true
+  },
+  "prediction": {
+    "target": "next_sector_duration_seconds",
+    "origin": "reconstructed_sector_entry",
+    "replay_assumption": "event_time_not_verified_live_publication_time",
+    "feature_guard_seconds": 1.0,
+    "sensitivity_guards_seconds": [
+      0.5,
+      2.0
+    ],
+    "window_seconds": 32,
+    "tensor_grid_hz": 4,
+    "grid_adds_information": false,
+    "max_interpolation_gap_seconds": 1.0,
+    "minimum_required_channel_coverage": 0.8,
+    "required_channels": [
+      "speed",
+      "throttle",
+      "brake",
+      "rpm",
+      "n_gear"
+    ],
+    "origin_requirements": [
+      "latest_flag_at_cutoff_is_green",
+      "latest_pit_state_at_cutoff_is_outside_pit_lane",
+      "quality_pass",
+      "two_prior_valid_same_sector_observations_in_current_race"
+    ],
+    "reference": "median_last_up_to_three_valid_same_driver_same_sector_durations_before_cutoff",
+    "head_target": "log_duration_over_reference",
+    "quantiles": [
+      0.05,
+      0.1,
+      0.5,
+      0.9,
+      0.95
+    ],
+    "primary_scoring": "all_valid_targets_for_eligible_origins_including_surprise_neutralizations",
+    "diagnostic_scoring": "uninterrupted_green_subset",
+    "cold_start": "explicit_abstention",
+    "invalid_or_censored_targets": "exclude_with_reason_and_report_counts",
+    "pit_timestamp_policy": "completion_report_v2"
+  },
+  "splits": {
+    "group": "entire_weekend_all_drivers",
+    "ordering": "verified_non_canceled_pre_mexico_race_start_utc",
+    "first_rolling_test_race_one_based": 11,
+    "minimum_initial_fitting_races": 6,
+    "tuning_races_immediately_before_calibration": 2,
+    "calibration_races_immediately_before_test": 2,
+    "minimum_usable_development_test_races": 6,
+    "refit_fit_plus_tuning_before_calibration": true,
+    "test_prefix_feature_updates": true,
+    "test_weight_updates": false,
+    "test_index_updates": false,
+    "learned_preprocessing_fit_scope": "fitting_only_then_optional_fit_plus_tuning_refit"
+  },
+  "experiments": {
+    "seeds": [
+      17,
+      29,
+      43,
+      71,
+      101
+    ],
+    "final_deployment_seed": 17,
+    "seed_summary": "mean_paired_race_errors_across_fixed_seeds_without_treating_seeds_as_races",
+    "maximum_initial_encoder_configurations": 8,
+    "maximum_pretraining_epochs": 30,
+    "maximum_fine_tuning_epochs": 50,
+    "maximum_encoder_parameters": 2000000,
+    "baselines": [
+      "same_sector_persistence",
+      "historical_reference",
+      "regularized_linear_residual",
+      "catboost_quantile"
+    ],
+    "ablations": [
+      "no_pretraining",
+      "frozen_encoder",
+      "no_sequence_input",
+      "no_race_context",
+      "no_driver_conditioning",
+      "timing_guard",
+      "quality_filtering_diagnostic_only"
+    ]
+  },
+  "metrics": {
+    "aggregation": "antonelli_mean_within_race_then_equal_mean_across_races",
+    "point": [
+      "mae_seconds",
+      "reference_normalized_absolute_error"
+    ],
+    "probabilistic": [
+      "weighted_interval_score",
+      "coverage_80",
+      "coverage_90",
+      "interval_width"
+    ],
+    "bootstrap": {
+      "unit": "paired_complete_race_blocks",
+      "resamples": 1000,
+      "confidence_level": 0.95
+    },
+    "improvement_claim_gates": {
+      "minimum_relative_mae_improvement": 0.05,
+      "minimum_relative_wis_improvement": 0.05,
+      "respective_strongest_baselines_selected_without_mexico": true,
+      "improvement_interval_must_exclude_zero": true
+    },
+    "engineering_targets": {
+      "pooled_90_interval_coverage_range": [
+        0.87,
+        0.93
+      ],
+      "minimum_nominal_green_sector_retention": 0.7,
+      "cpu_p95_inference_ms": 200
+    },
+    "failed_improvement_gate": "publish_result_and_keep_stronger_baseline_for_prediction"
+  },
+  "atlas": {
+    "reference_scope": "pre_mexico_fitting_period_only",
+    "development_evaluation": "fold_specific_encoder_and_reference_index_with_queries_from_later_test_race",
+    "candidate_cluster_counts": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "minimum_development_review_queries": 60,
+    "minimum_review_races": 6,
+    "retrieval_preference_target": 0.6,
+    "cluster_bootstrap_median_ari_target": 0.6,
+    "unstable_clusters": "retain_continuous_retrieval_drop_state_claims",
+    "completed_sector_analysis": "retrospective_only_never_used_for_own_forecast"
+  }
+}
