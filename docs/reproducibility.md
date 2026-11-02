@@ -65,3 +65,16 @@ The repository publishes code, a locked dependency resolution and safe aggregate
 Deterministic seeds and artifact hashes make one revision inspectable. They do not promise bit-identical numerical results across CPU architectures, library builds or provider revisions. The original benchmark source/input/protocol hashes are recorded in `reports/development-results.json`. Compare those hashes before claiming an exact reproduction. Aggregate differences on a new source revision should be reported as new results.
 
 Script validation uses offline command stubs for orchestration and safety guards; this documentation does not claim that a second complete real acquisition was executed. No reproduction validation requests Mexico data.
+
+## Historical correction provenance
+
+The public Mexico case preserves two attempts. The first freeze at `f5775cc` emitted zero forecasts. A prefix-safe unresolved-pit history repair at `2cb6bfb` left all 6,204 development examples unchanged, independently verified in `reports/development-correction-impact.json`. The second freeze requires a correction record with paths, exact SHA-256 values and a rationale linking the first freeze and zero-forecast report:
+
+```bash
+ant26 freeze --candidate-root artifacts/final-candidate \
+  --examples data/processed/correction-v2/merged-b477d4f6aa7fef55.json \
+  --code-revision 2cb6bfb --correction-record artifacts/releases/pit-history-correction.json \
+  --output artifacts/releases/ant26-v2-freeze.json
+```
+
+These historical paths require the original local assets and corresponding source revision. The correction record's required fields are `parent_freeze_path`, `parent_freeze_sha256`, `parent_report_path`, `parent_report_sha256`, and `description`; paths resolve relative to the record. The helper enforces unchanged model files, index, protocol, fitting/calibration scopes and canonical development examples. It labels the resulting case as a post-inspection diagnostic replay. A fresh current-code reproduction is a new run, not a re-creation of the original failure or a new blind test on Mexico.

@@ -1,81 +1,69 @@
 # ANT-26
 
-ANT-26 combines a behavioral telemetry atlas and probabilistic next-sector prediction to study Kimi Antonelli's 2026 Formula 1 performances. Mexico 2026 is reserved for the final case study.
+[![Checks](https://github.com/yehosuah/ANT-26/actions/workflows/ci.yml/badge.svg)](https://github.com/yehosuah/ANT-26/actions/workflows/ci.yml)
 
-The implementation is in progress. Source ingestion, past-only features, baseline evaluation, a masked sequence encoder, calibrated quantile forecasts, frozen retrieval indexes, an API and an interactive artifact viewer are implemented. Real-data predictive superiority has not been established.
+**Can a short telemetry history improve the next-sector forecast?** ANT-26 studies Kimi Antonelli's 2026 season with masked sequence learning, calibrated quantile forecasts, and an experimental behavioral atlas.
 
-## Current evidence
+The benchmark retained CatBoost. The project includes 160 representation fits, a complete research pipeline, an offline portfolio application, and a Mexico case study that preserves a failed first attempt and its implementation correction.
 
-- Eighteen verified pre-Mexico races in the development catalog; canceled events excluded.
-- Full traces for Antonelli's 18 development races and Russell's 17 scoreable races: 760,694 native telemetry rows. Russell's Belgian race has no complete timed lap and is explicitly excluded.
-- The declared Mercedes cohort contains 6,204 observed sector examples and 5,008 scoreable forecasts. This is a two-driver cohort, not a full-grid dataset.
-- Eight-race baseline backtest: persistence MAE 0.946 seconds; CatBoost weighted interval score 0.629 with 93.0% coverage for its 90% intervals. These describe Antonelli forecasts trained with the Mercedes cohort; learned-model improvement remains unestablished.
-- Hungary has substantial out-of-range brake/throttle data. Fixed masking rules retain only 13.6% of its observed nominal origins; the report exposes the selection rather than hiding it.
-- Default encoder: 559,104 parameters. Completed 160 corrected runs across eight held-out races and five seeds. Antonelli-only fine-tuning achieved MAE 0.978 seconds and WIS 0.684, missing both improvement gates; the baseline remains preferred.
-- Mexico is excluded from fitting, calibration and reference-index construction. Source publication latency is unobserved; forecasts use documented historical event-time assumptions.
+![ANT-26 portfolio overview](docs/assets/overview.png)
 
-## Run locally
+## Try the portfolio
 
-Requires Python 3.11 and uv. The locked core environment supports ingestion, features, baseline evaluation and the API.
+Requires Python 3.11 and [uv](https://docs.astral.sh/uv/). From a fresh checkout:
 
 ```bash
-uv sync --locked --group dev --no-editable
-uv run --no-sync ant26 protocol-check
-uv run --no-sync pytest
-uv run --no-sync mypy
-uv run --no-sync ant26 smoke --output artifacts/smoke
-uv run --no-sync ant26 serve
+make install
+make demo
 ```
 
-The smoke pipeline uses deterministic synthetic sources. Its forecasts are integration evidence and must not be interpreted as Antonelli performance results. Tests for optional ML components skip when PyTorch is absent.
+Open `http://127.0.0.1:8501`. The five pages work with committed aggregate results. No API, provider credentials, downloaded telemetry, trained weights, or GPU is required. `docker compose up --build` also starts the portfolio and read-only API.
 
-Install model and UI extras when needed:
+Watch the [short recorded walkthrough](docs/walkthrough.md), or browse the [v0.1.0 release](https://github.com/yehosuah/ANT-26/releases/tag/v0.1.0).
+
+The API-backed artifact viewer remains available through `streamlit run app/replay.py` after starting `ant26 serve`. Local immutable Mexico artifacts add individual forecasts and experimental neighbors to the portfolio; the public checkout shows real aggregate evidence and full lap accounting.
+
+## What the evidence says
+
+| Evidence | Result |
+|---|---|
+| Development data | 18 Antonelli races, 17 scoreable Russell races; 760,694 native telemetry rows |
+| Forecast dataset | 6,204 observed sectors, 5,008 scoreable examples; Mercedes cohort only |
+| Evaluation | Eight chronological whole-race holdouts; five fixed encoder seeds; paired race bootstrap |
+| Advanced ML | 559,104-parameter masked patch encoder; scratch, frozen and fine-tuned comparisons |
+| Forecast selection | CatBoost WIS 0.629; persistence has lower point MAE, 0.946 s |
+| Learned-model outcome | No predictive improvement gate passed; corrected tail failures remain reported |
+| Mexico diagnostic replay | 115 scored sectors, 95 abstentions, 3 missing; MAE 0.724 s, WIS 0.505 |
+| Local CPU inference | CatBoost p95 0.710 ms; encoder p95 0.360 ms, warm batch-one calls |
+
+Development scores evaluate Antonelli, with model-specific cohorts stated in the [results](docs/development-results.md). The Mexico replay follows a disclosed implementation repair after the original frozen pipeline emitted zero forecasts. It is **post-inspection diagnostic evidence**, not a new independent blind test. All 75 sector origins after lap 46 abstain under the fixed pit-context interpretation; Mexico metrics therefore describe a selective subset.
+
+## Inspect the engineering
+
+- [Mexico case study](docs/mexico-case-study.md): full accounting, source limitations, successful and difficult examples, and the preserved first attempt.
+- [Engineering decisions](docs/engineering.md): architecture, learning objective, leakage boundaries, normalization failure and model selection.
+- [Development results](docs/development-results.md): complete comparisons, paired intervals, cohort scope and failed gates.
+- [Reproduction guide](docs/reproducibility.md): fresh source acquisition through experiments, freeze and offline case scoring.
+- [Operational evidence](docs/operations.md): measured preprocessing/inference phases, hardware and warning-only drift diagnostics.
+- [Data quality](docs/real-data-quality.md), [data card](docs/data-card.md), [model card](docs/model-card.md), and [evaluation protocol](configs/evaluation-protocol.json).
+
+The [aggregate reports](reports/) contain exact metrics, hashes, 71-lap derived accounting, and the [development invariance audit](reports/development-correction-impact.json). Raw source records, individual forecasts, weights, private review assignments and ratings remain outside Git.
+
+## Reproduce and verify
 
 ```bash
+make check
+make smoke
 uv sync --locked --group dev --extra ml --extra app --no-editable
-uv run --no-sync streamlit run app/replay.py
+scripts/reproduce-development.sh development --run-id my-source-revision
 ```
 
-The UI connects to the API at `http://127.0.0.1:8000`. Set `ANT26_API_URL` to use another API address. The API reads saved artifacts without accessing the provider or fitting models.
+The smoke pipeline is explicitly synthetic integration evidence. The development script fetches real data and runs all 160 fixed-budget fits; it can take time and does not fetch Mexico. A separate verified freeze and explicit final-case opt-in are required. Re-fetching a mutable provider can produce different source bytes and hashes; new revisions become new runs.
 
-## Ingest real data
+CI checks lint, formatting, domain/API types, offline tests, optional CPU ML/UI tests, and API/UI container builds and HTTP health. Tests cover future-record mutations, missing laps, unresolved pit exits, source reconstruction, artifact corruption, freeze boundaries, censoring and UI use without private assets.
 
-```bash
-uv run --no-sync ant26 audit
-uv run --no-sync ant26 audit --offline
-uv run --no-sync ant26 ingest --all-development --drivers 12 63 --progress data/audit/bulk-progress.json
-uv run --no-sync ant26 materialize --drivers 12 63
-```
+## Research limits
 
-Requests are rate-limited and raw responses are immutable and checksummed. Full traces use CSV snapshots with preserved raw bytes and explicit numeric normalization; one-minute JSON chunks remain a fallback. Austin's 96 JSON chunks and one CSV request matched all 21,252 rows exactly. Reusing the same progress file resumes completed requests from cache. Materialization pins exact snapshots and feature-code checksums. Source data and model artifacts remain outside Git.
+OpenF1 provides sampled telemetry, not exact racing lines. A 4 Hz tensor grid adds no native resolution. Sector entries and historical availability are reconstructed; verified live-publication latency is unavailable. The observed population is Antonelli and Russell, and it cannot separate driver behavior from the car, setup and strategy.
 
-Use the path emitted by `materialize` with `benchmark`, `representation-benchmark`, `diagnose`, `train` and `atlas`. Every dataset records its protocol hash. Training validates fitting/calibration scopes before optimization, and atlas construction checks the encoder's exact fitting snapshot. An incomplete real-data benchmark reports insufficient data instead of inventing scores.
-
-Constant fitted columns use unit scale under the versioned normalization policy. Regression tests guard against the original exact-constant amplification defect; the loader rejects checkpoints using the superseded policy. Corrected runs still expose near-constant distribution-shift failures, including severe pooled-driver forecast tails, documented in the development results. Invalidated experiments are kept for audit and excluded from replay.
-
-## Architecture
-
-```mermaid
-flowchart LR
-    A[Immutable OpenF1 snapshots] --> B[Validated past-only features]
-    B --> C[Chronological baseline evaluation]
-    B --> D[Masked sequence encoder]
-    D --> E[Calibrated quantile head]
-    D --> F[Frozen atlas index]
-    C --> G[Saved research artifacts]
-    E --> G
-    F --> G
-    G --> H[FastAPI and Streamlit replay]
-```
-
-## Research and progress
-
-- [Implementation plan](docs/implementation-plan.md) and [execution record](docs/execution.md)
-- [Evaluation protocol](configs/evaluation-protocol.json)
-- [Source audit](docs/data-audit.md) and [data card](docs/data-card.md)
-- [Real-data quality review](docs/real-data-quality.md)
-- [Model card](docs/model-card.md) and [representation experiment](docs/representation-experiment.md)
-- [Development results](docs/development-results.md) and [aggregate results JSON](reports/development-results.json)
-- [Blind atlas review](docs/atlas-review.md) and [final candidate preparation](docs/final-candidate.md)
-
-The fixed-budget experiments are complete. Blind retrieval review remains unrated. An initial cluster-stability check failed, so discrete-state claims were dropped. Mexico remains held out until the review/freeze gate. Full-grid expansion remains separate from the initial Mercedes cohort. `docker compose up --build` starts the API on port 8000 and UI on port 8501; GitHub CI has verified both containers. CI also includes optional ML/UI tests using the CPU PyTorch wheel; Mypy checks domain/API boundaries.
+Continuous atlas retrieval remains experimental with **zero human ratings**. Cluster stability failed, so discrete driving-state claims were removed. The [blind review protocol](docs/atlas-review.md) remains available for later human evaluation. No result attributes championship success, intent, confidence, or tyre preservation to an embedding.

@@ -11,6 +11,7 @@ ANT-26 is a research portfolio combining observed F1 telemetry retrieval and pro
 - Keep all fixed seeds and held-out races visible, including Hungary's selective coverage. An executed experiment is not evidence of superiority. Keep failed and invalidated runs separate.
 - Normalization policy is `constant_unit_scale_v2`. Legacy checkpoints are refused. Remaining near-constant/OOD failures are documented; the final forecasting candidate is a baseline.
 - Human atlas preferences must come from explicit ratings. Blank forms, generated neighbors and automated stability checks are not human validation.
+- The published Mexico case is a post-inspection diagnostic replay after a preserved zero-forecast first attempt. Never relabel it an independent blind test. Correction provenance, source snapshots and model/index invariance are mandatory. The fixed long-pit interpretation excludes every origin after lap 46; those exclusions are not ground truth about the car's location.
 
 ## Commands
 

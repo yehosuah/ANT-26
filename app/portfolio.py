@@ -359,16 +359,22 @@ elif page == "Development Results":
                             "y": {
                                 "field": "Model",
                                 "type": "nominal",
+                                "axis": {"labelLimit": 260},
                                 "sort": {"field": "Value", "order": "ascending"},
                                 "title": None,
                             },
                             "x": {
                                 "field": "Value",
                                 "type": "quantitative",
+                                "stack": None,
+                                "scale": {
+                                    "domain": [0, max(row["Value"] for row in chart_rows) * 1.12]
+                                },
                                 "title": f"Race-macro {metric} · lower is better",
                             },
                             "color": {
                                 "field": "Family",
+                                "type": "nominal",
                                 "scale": {
                                     "domain": ["Baseline", "Encoder"],
                                     "range": ["#526b68", "#bd945d"],
@@ -378,6 +384,7 @@ elif page == "Development Results":
                             "tooltip": [{"field": "Model"}, {"field": "Value", "format": ".4f"}],
                         },
                     },
+                    key=f"development-chart-{selected}-{metric}",
                     width="stretch",
                 )
             st.dataframe(pd.DataFrame(table), hide_index=True, width="stretch")
@@ -440,12 +447,32 @@ elif page == "Development Results":
             source_footer("reports/development-results.json")
 
 elif page == "Mexico Case Study":
+    diagnostic_claim = "post_inspection_implementation_correction_diagnostic_replay"
+    diagnostic = bool(mexico) and (
+        mexico.get("case_kind") == diagnostic_claim
+        or mexico.get("provenance", {}).get("case_claim") == diagnostic_claim
+    )
     hero(
         "Mexico 2026",
         "The final race case study: forecasts, interruptions and coverage under a frozen development protocol.",
         kicker="ANT-26 / FINAL CASE STUDY",
-        tag="Development and final-case evidence stay separate",
+        tag="Post-inspection diagnostic replay"
+        if diagnostic
+        else "Development and final-case evidence stay separate",
     )
+    if diagnostic:
+        st.warning(
+            "The original frozen Mexico run emitted 0 forecasts. This corrected run is a diagnostic replay after an implementation repair made following inspection of the case. It is not an independent blind test."
+        )
+        correction = mexico.get("implementation_correction", {})
+        if correction.get("forecast_artifacts_and_training_examples_unchanged") is True:
+            st.caption(
+                "The forecast artifacts and training examples are unchanged. The original zero-forecast result is preserved in reports/mexico-first-attempt.json."
+            )
+        else:
+            st.caption(
+                "The original zero-forecast result is preserved in reports/mexico-first-attempt.json; correction provenance is retained in the case report."
+            )
     if not mexico:
         st.info(
             "The final Mexico case report has not been bundled yet. No race replay or case metrics are displayed without source-backed output."
@@ -489,6 +516,41 @@ elif page == "Mexico Case Study":
                 ),
             ]
         )
+        case_metrics = mexico.get("metrics", {}).get("macro", {})
+        if case_metrics:
+            metrics(
+                [
+                    (
+                        "Case MAE",
+                        f"{case_metrics['mae_seconds']:.3f} s"
+                        if finite(case_metrics.get("mae_seconds"))
+                        else "—",
+                        "Error on scoreable forecasts only; selective coverage.",
+                    ),
+                    (
+                        "Case interval score",
+                        f"{case_metrics['weighted_interval_score']:.3f}"
+                        if finite(case_metrics.get("weighted_interval_score"))
+                        else "—",
+                        "Lower is better; scoreable forecasts only.",
+                    ),
+                    (
+                        "Case 90% coverage",
+                        percent(case_metrics.get("coverage_90")),
+                        "Empirical coverage among valid scored targets.",
+                    ),
+                    (
+                        "Case 90% width",
+                        f"{case_metrics['width_90_seconds']:.3f} s"
+                        if finite(case_metrics.get("width_90_seconds"))
+                        else "—",
+                        "Average q05–q95 width on scored targets.",
+                    ),
+                ]
+            )
+            st.caption(
+                "Case metrics summarize the eligible, valid subset of this one race; they do not measure error on abstained or missing sectors."
+            )
         if mexico.get("status"):
             st.caption(f"Case status: {mexico['status']}")
         for chapter in mexico.get("chapters", []):
@@ -497,6 +559,34 @@ elif page == "Mexico Case Study":
                     chapter.get("title", "Race phase"),
                     chapter.get("summary", chapter.get("description", "")),
                 )
+                if finite(chapter.get("scoreable_forecasts")):
+                    st.caption(
+                        f"Laps {chapter.get('lap_start', '—')}–{chapter.get('lap_end', '—')} · Scored: {chapter['scoreable_forecasts']} · Abstentions: {chapter.get('abstentions', '—')} · Missing sector records: {chapter.get('missing_sector_records', '—')}"
+                    )
+        late_chapters = [
+            chapter
+            for chapter in mexico.get("chapters", [])
+            if isinstance(chapter, dict)
+            and finite(chapter.get("lap_start"))
+            and chapter["lap_start"] >= 47
+        ]
+        if late_chapters and all(
+            chapter.get("scoreable_forecasts") == 0 and chapter.get("censored_targets", 0) == 0
+            for chapter in late_chapters
+        ):
+            abstentions = sum(chapter.get("abstentions", 0) for chapter in late_chapters)
+            first_lap = min(chapter["lap_start"] for chapter in late_chapters)
+            st.info(
+                f"All {abstentions} sector origins after lap {first_lap - 1} abstain under the fixed interpretation of the long recorded pit interval. This is not proof that the driver stayed in the pit lane. The reported metrics therefore describe selective race coverage."
+            )
+        if not mexico.get("chapters"):
+            st.caption(
+                "No source-backed race-phase annotations were supplied. The accounting below describes data and forecast coverage without an editorial race narrative."
+            )
+            source_limits = mexico.get("source_limitations", mexico.get("limits"))
+            if source_limits:
+                with st.expander("Source and interpretation limits"):
+                    st.json(source_limits)
         case_root = ARTIFACT_ROOT / "mexico-case-study"
         local_timeline, timeline_error = load_json(case_root / "timeline.json")
         synthetic_notice(local_timeline)
@@ -551,10 +641,12 @@ elif page == "Mexico Case Study":
             st.subheader("Complete lap accounting")
             st.vega_lite_chart(
                 {
-                    "data": {"values": complete},
+                    "data": {"values": [{**row, "Band": "Coverage"} for row in complete]},
                     "height": 75,
+                    "autosize": {"type": "fit-x", "contains": "padding"},
                     "mark": "rect",
                     "encoding": {
+                        "y": {"field": "Band", "type": "nominal", "axis": None},
                         "x": {
                             "field": "Lap",
                             "type": "ordinal",
@@ -563,6 +655,7 @@ elif page == "Mexico Case Study":
                         },
                         "color": {
                             "field": "Status",
+                            "type": "nominal",
                             "scale": {
                                 "domain": [
                                     "Scored",

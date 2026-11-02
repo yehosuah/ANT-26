@@ -1,0 +1,30 @@
+[
+  {
+    "title": "Opening stint",
+    "lap_start": 1,
+    "lap_end": 42,
+    "summary": "Observed execution before the first pit stop, including cold-start abstentions, the missing lap5 record, and the early VSC.",
+    "source": "https://www.formula1.com/en/latest/article/antonelli-crowned-youngest-ever-f1-champion-as-verstappen-wins-eventful-mexico-city-grand-prix.xpMMeef0KmRURs9IDs3LH"
+  },
+  {
+    "title": "Pit stop and interruption",
+    "lap_start": 43,
+    "lap_end": 46,
+    "summary": "First stop, Safety Car and red-flag interruption. The validity rules retain their exclusions.",
+    "source": "https://www.formula1.com/en/latest/article/antonelli-crowned-youngest-ever-f1-champion-as-verstappen-wins-eventful-mexico-city-grand-prix.xpMMeef0KmRURs9IDs3LH"
+  },
+  {
+    "title": "Standing restart and late Safety Car",
+    "lap_start": 47,
+    "lap_end": 62,
+    "summary": "The restarted phase includes a late Safety Car. A long recorded pit interval makes this source context unsuitable for eligible forecasts under the fixed interpretation.",
+    "source": "https://www.formula1.com/en/latest/article/antonelli-crowned-youngest-ever-f1-champion-as-verstappen-wins-eventful-mexico-city-grand-prix.xpMMeef0KmRURs9IDs3LH"
+  },
+  {
+    "title": "Final run",
+    "lap_start": 63,
+    "lap_end": 71,
+    "summary": "The closing laps remain visible even where forecasts abstain. Missing sector timing and ambiguous pit context are not replaced with modeled observations.",
+    "source": "https://www.formula1.com/en/latest/article/antonelli-crowned-youngest-ever-f1-champion-as-verstappen-wins-eventful-mexico-city-grand-prix.xpMMeef0KmRURs9IDs3LH"
+  }
+]

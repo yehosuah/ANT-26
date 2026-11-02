@@ -19,7 +19,7 @@ User authorized implementation and parallel independent work on November 1, 2026
 - [x] M4 Run corrected fixed-budget representation experiments and record the baseline decision
 - [ ] M5 Implement and validate atlas retrieval
 - [x] M6 Integrate API and replay application; container health verified in GitHub CI
-- [ ] M7 Freeze model and run Mexico case study
+- [x] M7 Freeze and publish Mexico case study, with the failed first attempt and diagnostic correction disclosed
 
 Milestones are marked complete only after integration checks and the corresponding evidence exist. Component completion does not establish model quality or full-season data availability.
 
@@ -64,3 +64,14 @@ The next two sections preserve early implementation checkpoints. Their pending s
 - All final artifacts still say `candidate_not_frozen_for_mexico`; Mexico was not queried. Candidate preparation closes technical work but does not bypass the atlas review gate.
 - Sixty corrected blind comparisons across eight held-out races are ready, with trace overlays and blank ratings. `app/review.py` is the explicit-save review UI. There are no human preferences yet; M5 stays open and M7 remains held out.
 - GitHub run 41388102462 passed offline checks, API/UI Docker Compose builds, HTTP health checks, and in-container protocol validation for commit 2933388. Domain/API type checking has subsequently been added to the final verification commands.
+
+## Portfolio release checkpoint
+
+- The user's instruction to unblock the highest-impact work resolved the human-review release dependency by narrowing the atlas claim. Continuous retrieval remains experimental, with zero ratings and no discrete driving-state claims. Scientific human validation remains open; it does not block an explicitly unvalidated research demo. See `docs/release-decision.md`.
+- Added the offline five-page portfolio, committed aggregate evidence, reproducible development orchestration and measured warm CPU inference. The fresh checkout requires neither a provider connection nor private assets. Local assets add detailed forecasts and experimental neighbors.
+- First case-study freeze at `f5775cc` pinned the protocol, existing models, index, dataset and eleven source files. Mexico acquisition followed the freeze: 70 lap records, 30,924 telemetry rows, nine exact source snapshots. The original frozen attempt emitted zero eligible forecasts and is preserved in `reports/mexico-first-attempt.json` and local immutable artifacts.
+- A pre-race unknown-duration pit interval exposed inconsistent historical-reference handling. The repair uses only completed valid non-pit-out lap evidence available by each cutoff. Future-mutation and cutoff-boundary tests passed. Independent offline rematerialization proved all 6,204 development examples, their order and quality results unchanged across 211 exact source manifests. Existing weights and 160 experiment results remain reusable; no fitting or hyperparameter retuning occurred.
+- The second freeze at `2cb6bfb` pins the correction rationale and exact first-attempt freeze/report, enforcing identical model files, reference index, protocol and canonical development examples. Its declared claim is post-inspection implementation-correction diagnostic replay, not an independent blind test.
+- Corrected scoring reused all nine source manifests with the client explicitly offline. All 213 sector slots reconcile: 115 scored, 95 abstained, three missing, zero censored. MAE 0.72364 seconds, WIS 0.50507, 90% coverage 0.93043. All 75 sectors after lap 46 abstain under the unchanged long-pit interpretation; these selective metrics do not cover the entire race or establish that the driver remained in the pit lane.
+- Public reports contain derived accounting and aggregate metrics only. Source rows, individual predictions, weights and private review files remain outside Git. Independent audits verified source identity, model/index invariance and metric arithmetic.
+- GitHub run 41391900921 passed 146 CPU ML/UI tests, core checks and API/UI container verification for `f5775cc`. Later correction tests and final portfolio checks are recorded by the release CI run.

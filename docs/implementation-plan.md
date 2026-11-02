@@ -160,7 +160,9 @@ Each milestone is owned by the implementer, ends with the listed evidence, and m
 - [x] M4 Learned models evaluated; baseline retained after failed improvement gates
 - [ ] M5 Atlas validated
 - [x] M6 Application integrated and API/UI container checks passed
-- [ ] M7 Mexico case study complete
+- [x] M7 Mexico case study delivered with preserved first attempt and disclosed diagnostic correction
+
+Release deviation: human atlas validation remains open, so the portfolio exposes only experimental continuous retrieval with zero ratings. The first frozen Mexico workflow emitted zero eligible forecasts because of an unresolved-pit history implementation defect. A prefix-safe repair left every development example and model weight unchanged. The corrected Mexico output is explicitly a post-inspection diagnostic replay; the original attempt is preserved. See [the case study](mexico-case-study.md) and [release decision](release-decision.md).
 
 ## Mexico case study and demo
 

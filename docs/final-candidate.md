@@ -1,6 +1,6 @@
 # ANT-26 final candidate preparation
 
-The probabilistic forecasting candidate is CatBoost, selected by development weighted interval score on the Mercedes cohort. The continuous atlas has a separate fixed-budget fine-tuned encoder candidate. Both are prepared locally and have status `candidate_not_frozen_for_mexico`; Mexico has not been queried or evaluated through this preparation. The pending atlas review remains a separate release gate.
+The probabilistic forecasting candidate is CatBoost, selected by development weighted interval score on the Mercedes cohort. The continuous atlas has a separate fixed-budget fine-tuned encoder candidate. Their immutable metadata retains `candidate_not_frozen_for_mexico`; separate release manifests subsequently freeze those exact bytes. The release narrowed retrieval to explicitly unvalidated continuous similarity, leaving real human ratings open. See the [release decision](release-decision.md) and [Mexico case study](mexico-case-study.md) for the preserved first attempt and diagnostic correction.
 
 ## Forecasting choice and tradeoff
 
