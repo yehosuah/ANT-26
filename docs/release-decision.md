@@ -9,3 +9,9 @@ CatBoost remains the forecasting model selected on development WIS. The neural f
 Before querying Mexico through the final workflow, freeze the candidate bundles, exact reference index, protocol, feature builder, scoring code, development dataset identity, and this review decision in an immutable release manifest. Verify that manifest before source acquisition and again before offline scoring. Existing candidate metadata is preserved; the separate release manifest records the freeze.
 
 Mexico is one external case study held out from fitting and selection. Earlier exploratory inspection exposed its outcome and a short source window, so it is not an untouched blind test. Report the complete 71-lap accounting, missing records, origin abstentions, invalid targets, calibration failures, and representative successful and difficult predictions. Case-study observations must not become changes to the frozen model.
+
+## Implementation correction and final claim
+
+The original frozen attempt produced zero eligible forecasts because an unknown-duration pre-race pit record indefinitely excluded historical references. That attempt is preserved. A tested, prefix-safe implementation repair bounds unknown exits only with completed valid non-pit-out lap evidence available by the cutoff. Known-duration pit interpretations and learned models remain unchanged.
+
+All 6,204 development examples were independently rebuilt from the same snapshots and found identical, including order and quality results. The second freeze binds the first freeze/report and this rationale while enforcing identical model artifacts, index, protocol and canonical training examples. The corrected case is explicitly a **post-inspection diagnostic replay**, not a new independent test. Its 115 scored sectors do not cover the 75 sector opportunities after lap 46, all of which abstain under the fixed pit-context interpretation.

@@ -91,27 +91,7 @@ def export_case_report(run_path, freeze_path, output_path, *, chapters=(), sourc
         )
     if chapters and sorted(covered) != list(range(1, 72)):
         raise ValueError("Narrative chapters must partition all 71 laps without overlaps")
-    ordered = sorted(
-        scored,
-        key=lambda row: (abs(row["target_seconds"] - row["quantiles"][2]), row["example_id"]),
-    )
-    examples = []
-    for label, row in (
-        [("smallest_error", ordered[0]), ("largest_error", ordered[-1])] if ordered else []
-    ):
-        examples.append(
-            {
-                "role": label,
-                "example_id": row["example_id"],
-                "lap_number": row["lap_number"],
-                "sector_index": row["sector_index"],
-                "absolute_error_seconds": abs(row["target_seconds"] - row["quantiles"][2]),
-                "inside_90_interval": row["quantiles"][0]
-                <= row["target_seconds"]
-                <= row["quantiles"][4],
-                "selection": "descriptive_error_extreme_not_a_quality_estimate",
-            }
-        )
+    errors = [abs(row["target_seconds"] - row["quantiles"][2]) for row in scored]
     payload = {
         "schema_version": "ant26-public-case-study-v1",
         "aggregate_only": True,
@@ -123,7 +103,11 @@ def export_case_report(run_path, freeze_path, output_path, *, chapters=(), sourc
         "metrics": report["metrics"],
         "lap_accounting": laps,
         "chapters": chapter_results,
-        "representative_predictions": examples,
+        "absolute_error_summary": {
+            "count": len(errors),
+            "minimum_seconds": min(errors) if errors else None,
+            "maximum_seconds": max(errors) if errors else None,
+        },
         "atlas_decision": report["atlas_decision"],
         "sources": list(sources),
         "provenance": {

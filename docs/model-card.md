@@ -1,44 +1,43 @@
 # ANT-26 model card
 
-ANT-26 combines probabilistic next-sector forecasting with descriptive telemetry retrieval. The current implementation has software verification and a real-source feasibility audit. It has no established real-data predictive advantage, validated driving-style taxonomy, or Mexico performance result.
+ANT-26 is a research portfolio for probabilistic next-sector forecasting and experimental continuous telemetry retrieval. Completed development experiments did not establish a learned-model advantage. The release retains CatBoost, reports the failed neural and atlas checks, and presents Mexico as a **post-inspection diagnostic replay**. [Development results](../reports/development-results.json), [Mexico results](../reports/mexico-case-study.json).
 
-## Intended use
+## Intended use and inputs
 
-The project is an inspectable research portfolio for ML engineers. Given past telemetry and race context at reconstructed sector entry, a forecast estimates upcoming sector duration. An atlas retrieves similar earlier windows and displays observable feature differences. Neither output establishes driver intention, confidence, racecraft, tyre health, or a causal explanation of championship success.
+Forecasts estimate upcoming sector duration from telemetry and context available before reconstructed sector entry. Inputs use a 32-second, 4 Hz masked sequence and allowlisted numeric summaries; the cutoff is one second before entry. Publication latency was not recorded, so this is event-time replay rather than verified live inference. The population is Antonelli and Russell, not the full grid. [Data card](data-card.md).
 
-The HTTP application currently replays saved benchmark artifacts. It does not train models or promise real-time F1 inference. Retrospective atlas analysis must be labeled separately from prefix-only forecast replay.
+Retrieval describes similarities between observed windows. It does not establish intention, confidence, racecraft, tyre health, exact racing lines or causal explanations of championship success.
 
-## Implemented models
+## Models and fitting boundaries
 
-The baseline family contains same-sector persistence, a recent historical reference, a regularized linear residual model and optional CatBoost quantile models. Fit, calibration and test sessions are explicit. Targets are excluded from the numeric feature allowlist.
+The baselines are same-sector persistence, historical reference, regularized linear residual and CatBoost quantile models. Forecasts provide quantiles at 0.05, 0.10, 0.50, 0.90 and 0.95; designated calibration races widen intervals. Dependence and circuit shift prevent a general coverage guarantee.
 
-The learned candidate uses an adapted masked patch transformer and a non-crossing quantile head. Default inputs are 128 time steps by five telemetry channels, with usable masks. Masked reconstruction uses robust regression for continuous channels and classification losses for brake application and gear. Missing or padded values do not become reconstruction targets. The implementation is motivated by masked time-series learning and is not an exact reproduction of a published model.
+The adapted masked patch transformer has 559,104 parameters, width 128, four layers and four heads. It reconstructs observed continuous and discrete channels, then predicts log duration relative to historical reference through a non-crossing quantile head. Scratch, frozen and fine-tuned modes were evaluated. Normalization policy `constant_unit_scale_v2` assigns unit scale to fitted standard deviations below 1e-6. Earlier defective-normalization runs are invalidated and preserved separately; legacy checkpoints are refused.
 
-Normalization policy `constant_unit_scale_v2` uses unit scale for fitted standard deviations below 1e-6, for both context and sequence channels. A regression reproduces and prevents extreme held-out scaling from previously constant features. Earlier neural results using the superseded policy are invalidated and hidden from replay; their source snapshots remain available locally for audit. The loader requires the current policy.
+Final seed-17 candidates fit the first 16 development races and calibrate on Singapore and Austin. The encoder uses three pretraining and five forecasting epochs; its 4,328 fitting windows form the continuous retrieval index. Mexico's entire weekend is excluded from fitting, normalization, calibration and references. Checksums, scopes and source hashes are pinned by separate release manifests. [Final candidates](final-candidate.md), [release decision](release-decision.md).
 
-Scratch, pretrained-frozen and fine-tuned modes enable attribution of any future gain to representation learning. The head predicts log duration relative to a historical reference and emits quantiles at 0.05, 0.10, 0.50, 0.90 and 0.95. Calibration widens intervals using designated disjoint preceding races; serial dependence and circuit shift prevent a general coverage guarantee.
+## Completed development evaluation
 
-The atlas accepts externally supplied embeddings and also supplies a train-only standardized-feature/PCA baseline. Its immutable reference index excludes Mexico and sessions outside the fitting allowlist. Prefix queries exclude future, same-lap and overlapping same-driver windows. Optional Gaussian-mixture patterns remain descriptive and `validated=false` pending stability checks and review.
+The real cohort contains 18 Antonelli and 17 Russell timed race traces, 760,694 native telemetry rows, 6,204 sector examples and 5,008 scoreable examples. Eight chronological whole-weekend test folds, five fixed seeds and fixed budgets produced **160 corrected representation fits**: 120 Antonelli-only fits across three modes and 40 pooled fine-tuned fits. Primary metrics average within Antonelli races and then weight races equally; uncertainty resamples complete paired races. No learned candidate passed the declared joint 5% MAE/WIS improvement gate.
 
-## Evidence available
+| Pooled development candidate, primary Antonelli metric | Race-macro MAE (s) | WIS |
+| --- | ---: | ---: |
+| Same-sector persistence | 0.94568 | 0.86407 |
+| CatBoost quantiles, selected forecaster | 0.98062 | 0.62862 |
+| Fine-tuned transformer, five-seed mean | 0.99748 | 0.77681 |
 
-- Offline tests exercise future-record invariance, timing/censoring separation, fitting-scope guards, quantile ordering, artifact integrity, retrieval filtering and API responses.
-- A saved synthetic smoke benchmark runs two chronological test folds and identifies itself as exploratory. Its numerical errors cannot substantiate F1 performance claims.
-- Reduced synthetic representation tests verify finite optimization and checkpoint round-tripping. Reconstruction improvement on fitting fixtures is optimization evidence only.
-- The original real-source audit confirms sampled telemetry and contextual endpoints for three development races and two drivers. A subsequent Antonelli-only cohort materializes all 18 pre-Mexico races; [the real data quality review](real-data-quality.md) records coverage and selective missingness. Data availability alone does not establish a learned-model advantage.
+CatBoost was selected for its lower observed WIS, accepting 3.7% higher point MAE than persistence. This does not establish blanket statistical superiority. Corrected neural models still exhibit severe near-constant-feature/out-of-distribution tails: pooled Russell secondary MAE is 31.33 seconds, with documented extreme standardized throttle/brake inputs. Finite clipping is not physical plausibility. [Exact metrics, paired intervals and failure diagnostics](../reports/development-results.json).
 
-The exact current check commands are `uv run ruff check .` and `uv run pytest`. Re-run them against the checked-out revision; test counts can change as implementation proceeds. Experiment details and current measured fixture results live in `docs/representation-experiment.md`.
+Discrete atlas states failed the first bounded stability check: median ARI 0.32123 against a 0.6 target, across 20 race bootstraps and 28 selectively observed Hungary probes. Discrete-state claims were dropped. Continuous retrieval has **zero human ratings**, is unvalidated, and has no established advantage over feature/PCA retrieval. [Atlas evidence](atlas-review.md).
 
-## Planned evaluation and release gates
+## Mexico diagnostic replay
 
-Versioned rules live in `configs/evaluation-protocol.json`. Rolling folds hold out whole weekends across all drivers, with earlier fitting, tuning and calibration partitions. Antonelli's primary metrics average within each race and then give races equal weight. Five fixed seeds and paired race-block bootstrap intervals quantify variability without treating adjacent telemetry samples as independent races.
+The original frozen implementation produced zero eligible forecasts and remains preserved. Inspection identified inconsistent handling of an unknown-duration pre-race pit interval. A prefix-safe implementation correction was tested, and all 6,204 development examples and their ordering remained canonically identical; weights, hyperparameters, protocol and index were unchanged. A separate freeze records the correction and first attempt. Its claim is `post_inspection_implementation_correction_diagnostic_replay`, not an untouched blind test. [First attempt](../reports/mexico-first-attempt.json), [development equality audit](../reports/development-correction-impact.json).
 
-The proposed improvement gates require at least 5% lower race-macro MAE and weighted interval score against their respective strongest development-selected baselines, with uncertainty intervals excluding zero. Interval coverage, widths, abstention, data retention, timing-guard sensitivity and error slices are reported alongside those metrics. These targets have not been achieved or tested on the full real dataset.
+Of 213 expected sector records, 115 are scored, 95 abstain and three are missing. On the scored subset, MAE is **0.72364164 s**, WIS **0.50506749**, and empirical 90% interval coverage **0.93043478**. The largest error is 13.4823 seconds at lap 7 sector 2, including an unexpected VSC. These selective, single-race results do not establish whole-race accuracy or generalization.
 
-Mexico is the final case study after model, preprocessing, calibration, retrieval references and protocol are frozen. Its complete timeline must show missing records, neutralizations, abstentions and failures, rather than only selected successful predictions. A one-race case study cannot replace multi-race evidence of generalization.
+All 75 sector origins after lap 46 abstain under the fixed interpretation of a long recorded pit interval around the interruption. This is a source/interpretation limitation, not evidence that the driver stayed in the pit lane. [Full accounting and limitations](../reports/mexico-case-study.json).
 
-## Limitations and deployment status
+## Verification and deployment status
 
-Circuit and car conditions can dominate embeddings; teammate comparisons do not remove setup, fuel, strategy or mechanical confounding. Sector anchors are approximate, sampled telemetry cannot recover exact racing lines, and unpublished source channels remain unobserved. Cluster stability and human retrieval review are pending.
-
-Model bundles and atlas indices carry schemas, fitting scopes and checksums. Existing artifacts refuse replacement. The local API and UI scaffold are available; container execution and public deployment are separate validation steps. No production or public-hosting claim is made.
+Offline checks exercise timing invariance, scope isolation, censoring, quantile ordering, immutable artifacts and source-to-feature reconstruction. The public aggregate portfolio works offline; the artifact API and replay UI have automated tests, and container builds/health checks passed GitHub CI. Local warm CPU timings are measured separately from service latency. This is not a public hosted service or production deployment. [Engineering evidence](engineering.md), [operations scope](operations.md), [reproduction](reproducibility.md).

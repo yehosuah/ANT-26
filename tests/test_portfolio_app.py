@@ -48,6 +48,19 @@ def test_fresh_checkout_all_pages_use_committed_aggregates(offline_environment):
     table = app.dataframe[0].value
     persistence = table.loc[table["Model"] == "Same-sector persistence"].iloc[0]
     assert persistence["MAE (s)"] == pytest.approx(0.9455166584)
+    app.selectbox[0].set_value("Interval score").run()
+    assert not app.exception
+    chart = (list(app.get("vega_lite_chart")) + list(app.get("arrow_vega_lite_chart")))[0]
+    spec = json.loads(chart.proto.spec)
+    assert spec["encoding"]["x"]["stack"] is None
+    assert spec["encoding"]["x"]["scale"]["domain"][0] == 0
+    assert spec["encoding"]["color"]["type"] == "nominal"
+    import pyarrow as pa
+
+    plotted = pa.ipc.open_stream(chart.proto.data.data).read_all().to_pylist()
+    assert {row["Model"]: row["Value"] for row in plotted} == dict(
+        zip(table["Model"], table["Interval score"], strict=True)
+    )
     app.radio[0].set_value("mercedes_control").run()
     assert not app.exception
     assert app.radio[0].value == "mercedes_control"
@@ -244,3 +257,62 @@ def test_scorer_nested_timeline_censored_prediction_and_atlas_queries(offline_en
     assert any("11404:12:2:1" in caption.value for caption in app.caption)
     assert any("Human ratings: 0" in caption.value for caption in app.caption)
     assert any("63" in caption.value and "Lap 2" in caption.value for caption in app.caption)
+
+
+@pytest.mark.parametrize("claim_location", ["case_kind", "provenance"])
+def test_corrected_mexico_replay_prominently_discloses_original_failure(
+    offline_environment, claim_location
+):
+    reports, _ = offline_environment
+    # Preserve actual public first-attempt accounting; no invented performance metrics.
+    report = json.loads((ROOT / "reports" / "mexico-first-attempt.json").read_text())
+    claim = "post_inspection_implementation_correction_diagnostic_replay"
+    if claim_location == "case_kind":
+        report["case_kind"] = claim
+    else:
+        report["provenance"]["case_claim"] = claim
+    report["implementation_correction"] = {
+        "first_attempt_eligible_forecasts": 0,
+        "first_attempt_scoreable_forecasts": 0,
+        "forecast_artifacts_and_training_examples_unchanged": True,
+    }
+    (reports / "mexico-case-study.json").write_text(json.dumps(report))
+    app = AppTest.from_file(APP_PATH).run()
+    app.sidebar.radio[0].set_value("Mexico Case Study").run()
+    assert not app.exception
+    banner = next(w.value for w in app.warning if "original frozen Mexico run" in w.value)
+    assert "0 forecasts" in banner and "not an independent blind test" in banner
+    assert any("mexico-first-attempt.json" in caption.value for caption in app.caption)
+    assert any("training examples are unchanged" in caption.value for caption in app.caption)
+    assert app.dataframe[0].value["Lap"].tolist() == list(range(1, 72))
+
+
+def test_real_public_mexico_report_shows_selective_metrics_without_private_artifacts(
+    offline_environment,
+):
+    reports, artifacts = offline_environment
+    shutil.copyfile(ROOT / "reports" / "mexico-case-study.json", reports / "mexico-case-study.json")
+    app = AppTest.from_file(APP_PATH).run()
+    app.sidebar.radio[0].set_value("Mexico Case Study").run()
+    assert not app.exception
+    values = {metric.label: metric.value for metric in app.metric}
+    assert values["Official race laps"] == "71"
+    assert values["Scoreable forecasts"] == "115"
+    assert values["Abstentions"] == "95"
+    assert values["Case MAE"] == "0.724 s"
+    assert values["Case interval score"] == "0.505"
+    assert values["Case 90% coverage"] == "93.0%"
+    assert values["Case 90% width"] == "2.298 s"
+    table = app.dataframe[0].value
+    assert len(table) == 71
+    assert table["Scoreable"].sum() == 115
+    assert table["Abstentions"].sum() == 95
+    assert table.loc[table["Lap"] > 46, "Abstentions"].sum() == 75
+    chart = (list(app.get("vega_lite_chart")) + list(app.get("arrow_vega_lite_chart")))[0]
+    spec = json.loads(chart.proto.spec)
+    assert spec["height"] == 75
+    assert spec["autosize"]["type"] == "fit-x"
+    assert spec["encoding"]["y"] == {"field": "Band", "type": "nominal", "axis": None}
+    assert spec["encoding"]["color"]["type"] == "nominal"
+    assert any("not proof that the driver stayed" in notice.value for notice in app.info)
+    assert not artifacts.exists()

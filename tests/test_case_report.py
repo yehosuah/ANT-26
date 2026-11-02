@@ -71,7 +71,8 @@ def test_public_export_preserves_full_missingness_without_source_records(tmp_pat
     result = export_case_report(tmp_path, freeze, tmp_path / "public.json")
     assert len(result["lap_accounting"]) == 71
     assert sum(row["missing_records"] for row in result["lap_accounting"]) == 213
-    assert result["representative_predictions"] == []
+    assert result["absolute_error_summary"]["count"] == 0
+    assert "representative_predictions" not in result
     text = (tmp_path / "public.json").read_text()
     assert str(tmp_path) not in text
     assert '"predictions"' not in text
