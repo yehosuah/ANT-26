@@ -2,6 +2,12 @@
 
 ANT-26 is a research portfolio combining observed F1 telemetry retrieval and probabilistic next-sector forecasting. The public repository is `yehosuah/ANT-26`.
 
+## Git identity
+
+- This is Yehosua's personal portfolio repository. Author and commit as GitHub `yehosuah`, using `Yehosua Hercules <99378735+yehosuah@users.noreply.github.com>`; do not inherit the work account's global identity.
+- Set repository-local Git identity and verify both author and committer attribution before publishing. Authenticate GitHub writes as `yehosuah`.
+- Published release tags and frozen research commit references retain their original IDs. See `docs/commit-attribution.md` for the main-history metadata correction and its provenance mapping.
+
 ## Research boundaries
 
 - Read `docs/execution.md` and `configs/evaluation-protocol.json` before changing model or data behavior.

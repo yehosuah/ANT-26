@@ -12,6 +12,8 @@ User authorized implementation and parallel independent work on November 1, 2026
 - Added three safe aggregate reports, findings/source-audit memos, immutable local reproduction and a sixth offline portfolio page. Exact source/helper hashes are pinned; raw observations and source manifests remain ignored. Independent cell/race/interval recomputation agrees within 1e-12. Zero human atlas ratings remain; M5 scientific validation stays open.
 - Validation: 204 local tests passed; final portfolio changes passed its 11 tests. Ruff, formatting, domain/API mypy and both protocol versions passed. Exact offline reproduction matched all three aggregate reports without replacement. `verify_release` verified the existing v0.2 frozen forecasting artifacts and critical source hashes. Public CI evidence is recorded after publication.
 
+GitHub run [41459816127](https://github.com/yehosuah/ANT-26/actions/runs/41459816127) passed offline, optional ML/UI and API/UI container jobs for the driving-findings publication. The subsequent author-attribution correction preserves every existing file tree and retains original release/provenance references; see [commit mapping](commit-attribution.md). All ten main-history commits now use the personal `yehosuah` identity, and repository-local configuration prevents inheriting the work identity for future commits.
+
 ## Shared interfaces
 
 - Canonical source rows are plain JSON-compatible dictionaries. Times are timezone-aware UTC ISO strings.
