@@ -1,0 +1,343 @@
+{
+  "added_example_count": 0,
+  "all_example_values_unchanged": true,
+  "by_trace": [
+    {
+      "changed_examples": 0,
+      "driver_number": 12,
+      "new_examples": 174,
+      "new_origin_eligible": 167,
+      "old_examples": 174,
+      "old_origin_eligible": 167,
+      "session_key": 11234
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 63,
+      "new_examples": 174,
+      "new_origin_eligible": 161,
+      "old_examples": 174,
+      "old_origin_eligible": 161,
+      "session_key": 11234
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 12,
+      "new_examples": 168,
+      "new_origin_eligible": 150,
+      "old_examples": 168,
+      "old_origin_eligible": 150,
+      "session_key": 11245
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 63,
+      "new_examples": 168,
+      "new_origin_eligible": 136,
+      "old_examples": 168,
+      "old_origin_eligible": 136,
+      "session_key": 11245
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 12,
+      "new_examples": 159,
+      "new_origin_eligible": 116,
+      "old_examples": 159,
+      "old_origin_eligible": 116,
+      "session_key": 11253
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 63,
+      "new_examples": 159,
+      "new_origin_eligible": 122,
+      "old_examples": 159,
+      "old_origin_eligible": 122,
+      "session_key": 11253
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 12,
+      "new_examples": 171,
+      "new_origin_eligible": 148,
+      "old_examples": 171,
+      "old_origin_eligible": 148,
+      "session_key": 11280
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 63,
+      "new_examples": 171,
+      "new_origin_eligible": 146,
+      "old_examples": 171,
+      "old_origin_eligible": 146,
+      "session_key": 11280
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 12,
+      "new_examples": 204,
+      "new_origin_eligible": 198,
+      "old_examples": 204,
+      "old_origin_eligible": 198,
+      "session_key": 11291
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 63,
+      "new_examples": 90,
+      "new_origin_eligible": 82,
+      "old_examples": 90,
+      "old_origin_eligible": 82,
+      "session_key": 11291
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 12,
+      "new_examples": 234,
+      "new_origin_eligible": 176,
+      "old_examples": 234,
+      "old_origin_eligible": 176,
+      "session_key": 11299
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 63,
+      "new_examples": 234,
+      "new_origin_eligible": 189,
+      "old_examples": 234,
+      "old_origin_eligible": 189,
+      "session_key": 11299
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 12,
+      "new_examples": 186,
+      "new_origin_eligible": 178,
+      "old_examples": 186,
+      "old_origin_eligible": 178,
+      "session_key": 11307
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 63,
+      "new_examples": 198,
+      "new_origin_eligible": 192,
+      "old_examples": 198,
+      "old_origin_eligible": 192,
+      "session_key": 11307
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 12,
+      "new_examples": 213,
+      "new_origin_eligible": 204,
+      "old_examples": 213,
+      "old_origin_eligible": 204,
+      "session_key": 11315
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 63,
+      "new_examples": 213,
+      "new_origin_eligible": 203,
+      "old_examples": 213,
+      "old_origin_eligible": 203,
+      "session_key": 11315
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 12,
+      "new_examples": 156,
+      "new_origin_eligible": 131,
+      "old_examples": 156,
+      "old_origin_eligible": 131,
+      "session_key": 11326
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 63,
+      "new_examples": 156,
+      "new_origin_eligible": 134,
+      "old_examples": 156,
+      "old_origin_eligible": 134,
+      "session_key": 11326
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 12,
+      "new_examples": 135,
+      "new_origin_eligible": 117,
+      "old_examples": 135,
+      "old_origin_eligible": 117,
+      "session_key": 11334
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 12,
+      "new_examples": 210,
+      "new_origin_eligible": 28,
+      "old_examples": 210,
+      "old_origin_eligible": 28,
+      "session_key": 11342
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 63,
+      "new_examples": 210,
+      "new_origin_eligible": 26,
+      "old_examples": 210,
+      "old_origin_eligible": 26,
+      "session_key": 11342
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 12,
+      "new_examples": 216,
+      "new_origin_eligible": 157,
+      "old_examples": 216,
+      "old_origin_eligible": 157,
+      "session_key": 11353
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 63,
+      "new_examples": 216,
+      "new_origin_eligible": 163,
+      "old_examples": 216,
+      "old_origin_eligible": 163,
+      "session_key": 11353
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 12,
+      "new_examples": 159,
+      "new_origin_eligible": 93,
+      "old_examples": 159,
+      "old_origin_eligible": 93,
+      "session_key": 11361
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 63,
+      "new_examples": 159,
+      "new_origin_eligible": 94,
+      "old_examples": 159,
+      "old_origin_eligible": 94,
+      "session_key": 11361
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 12,
+      "new_examples": 171,
+      "new_origin_eligible": 165,
+      "old_examples": 171,
+      "old_origin_eligible": 165,
+      "session_key": 11369
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 63,
+      "new_examples": 171,
+      "new_origin_eligible": 163,
+      "old_examples": 171,
+      "old_origin_eligible": 163,
+      "session_key": 11369
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 12,
+      "new_examples": 153,
+      "new_origin_eligible": 125,
+      "old_examples": 153,
+      "old_origin_eligible": 125,
+      "session_key": 11377
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 63,
+      "new_examples": 153,
+      "new_origin_eligible": 126,
+      "old_examples": 153,
+      "old_origin_eligible": 126,
+      "session_key": 11377
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 12,
+      "new_examples": 186,
+      "new_origin_eligible": 180,
+      "old_examples": 186,
+      "old_origin_eligible": 180,
+      "session_key": 11388
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 63,
+      "new_examples": 186,
+      "new_origin_eligible": 178,
+      "old_examples": 186,
+      "old_origin_eligible": 178,
+      "session_key": 11388
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 12,
+      "new_examples": 168,
+      "new_origin_eligible": 162,
+      "old_examples": 168,
+      "old_origin_eligible": 162,
+      "session_key": 11396
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 63,
+      "new_examples": 168,
+      "new_origin_eligible": 160,
+      "old_examples": 168,
+      "old_origin_eligible": 160,
+      "session_key": 11396
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 12,
+      "new_examples": 165,
+      "new_origin_eligible": 130,
+      "old_examples": 165,
+      "old_origin_eligible": 130,
+      "session_key": 11731
+    },
+    {
+      "changed_examples": 0,
+      "driver_number": 63,
+      "new_examples": 150,
+      "new_origin_eligible": 118,
+      "old_examples": 150,
+      "old_origin_eligible": 118,
+      "session_key": 11731
+    }
+  ],
+  "canonical_order_unchanged": true,
+  "changed_example_count": 0,
+  "changed_top_level_fields": {},
+  "interpretation": "Any source-code correction requires new provenance and release freeze. Existing fitted weights/metrics are reusable only if all fitting/calibration/test example values and ordering remain identical.",
+  "network_access_performed": false,
+  "new_compact_examples_sha256": "a6fc63fc63db6d39ed719f9ff97196b2974ec5f759056ac6abd373738bae3d93",
+  "new_dataset_file_sha256": "b477d4f6aa7fef55ce9f7cd47142039c76f481ccc69700f2e07f64fed420d9e0",
+  "new_dataset_path": "data/processed/correction-v2/merged-b477d4f6aa7fef55.json",
+  "new_example_count": 6204,
+  "new_examples_sha256": "4b365b21c246446940a506da7df40e7389797d27550e47b3d7d26ab9a1274afe",
+  "new_feature_builder_sha256": "72d2e44ab73130ea45f0fa67436aab80b9a3a8cd0e3505c41e9dbe424feee54d",
+  "old_compact_examples_sha256": "a6fc63fc63db6d39ed719f9ff97196b2974ec5f759056ac6abd373738bae3d93",
+  "old_dataset_file_sha256": "e7ed15ec6216606e462b43cbfa8388b6447b6255bf40a2fde4e10819b4180450",
+  "old_dataset_path": "data/processed/mercedes/merged-e7ed15ec6216606e.json",
+  "old_example_count": 6204,
+  "old_examples_sha256": "4b365b21c246446940a506da7df40e7389797d27550e47b3d7d26ab9a1274afe",
+  "old_feature_builder_sha256": "517883535b7fe7d546212d56468cc73e5c6c0d04087be79ff8eaae4d7e985fbb",
+  "pinned_source_manifest_count": 211,
+  "quality_report_unchanged": true,
+  "removed_example_count": 0,
+  "schema_version": "ant26-development-correction-impact-v1",
+  "source_manifest_identities_unchanged": true
+}

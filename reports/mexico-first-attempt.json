@@ -1,0 +1,1167 @@
+{
+  "accounting": {
+    "abstention_reasons": {
+      "insufficient_history": 206,
+      "insufficient_telemetry_coverage": 1,
+      "invalid_sector_anchor": 4,
+      "non_green_origin": 15,
+      "pit_lane_origin": 73,
+      "unknown_pit_state": 4
+    },
+    "abstentions": 210,
+    "censored_targets": 0,
+    "eligible_forecasts": 0,
+    "expected_sector_records": 213,
+    "extra_lap_numbers": [],
+    "missing_lap_numbers": [
+      5
+    ],
+    "missing_sector_records": 3,
+    "observed_lap_records": 70,
+    "observed_sector_records": 210,
+    "official_laps": 71,
+    "scoreable_forecasts": 0,
+    "target_exclusion_reasons": {}
+  },
+  "aggregate_only": true,
+  "atlas_decision": {
+    "discrete_style_claims": false,
+    "human_rating_count": 0,
+    "mode": "experimental_continuous_retrieval",
+    "requested_decision": "experimental_continuous_retrieval_unvalidated",
+    "status": "exploratory_unvalidated_no_human_ratings",
+    "validated_retrieval": false
+  },
+  "chapters": [],
+  "lap_accounting": [
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "insufficient_telemetry_coverage": 1,
+        "unknown_pit_state": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 1,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "unknown_pit_state": 1
+      },
+      "expected_sectors": 3,
+      "lap_number": 2,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 3,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 4,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 0,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "missing_source_sector_record": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 5,
+      "missing_records": 3,
+      "observed_sectors": 0,
+      "scoreable_forecasts": 0,
+      "status": "missing_record"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 6,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 7,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 8,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 9,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 10,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 11,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 12,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 13,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 14,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 15,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 16,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 17,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 18,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 19,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 20,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 21,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 22,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 23,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 24,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 25,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 26,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 27,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 28,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 29,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 30,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 31,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 32,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 33,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 34,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 35,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 36,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 37,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 38,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 39,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 40,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 41,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 42,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 43,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "non_green_origin": 1
+      },
+      "expected_sectors": 3,
+      "lap_number": 44,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "non_green_origin": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 45,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 1,
+        "invalid_sector_anchor": 2,
+        "non_green_origin": 1
+      },
+      "expected_sectors": 3,
+      "lap_number": 46,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "pit_lane_origin": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 47,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "pit_lane_origin": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 48,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "pit_lane_origin": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 49,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "pit_lane_origin": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 50,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "pit_lane_origin": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 51,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "pit_lane_origin": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 52,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "pit_lane_origin": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 53,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "pit_lane_origin": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 54,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "pit_lane_origin": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 55,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "pit_lane_origin": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 56,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "pit_lane_origin": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 57,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "pit_lane_origin": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 58,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "non_green_origin": 1,
+        "pit_lane_origin": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 59,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "non_green_origin": 3,
+        "pit_lane_origin": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 60,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "non_green_origin": 3,
+        "pit_lane_origin": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 61,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "non_green_origin": 3,
+        "pit_lane_origin": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 62,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "pit_lane_origin": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 63,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "pit_lane_origin": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 64,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 1,
+        "invalid_sector_anchor": 2,
+        "pit_lane_origin": 1
+      },
+      "expected_sectors": 3,
+      "lap_number": 65,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "pit_lane_origin": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 66,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "pit_lane_origin": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 67,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "pit_lane_origin": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 68,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "pit_lane_origin": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 69,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "pit_lane_origin": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 70,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    },
+    {
+      "abstentions": 3,
+      "censored_targets": 0,
+      "eligible_forecasts": 0,
+      "exclusion_reasons": {
+        "insufficient_history": 3,
+        "pit_lane_origin": 3
+      },
+      "expected_sectors": 3,
+      "lap_number": 71,
+      "missing_records": 0,
+      "observed_sectors": 3,
+      "scoreable_forecasts": 0,
+      "status": "mixed"
+    }
+  ],
+  "limits": [
+    "One race is a descriptive external case study, not a generalization estimate.",
+    "Mexico had prior exploratory exposure; it was excluded from fitting and selection.",
+    "Reconstructed event time does not establish original live data availability.",
+    "Retrieval is experimental with zero human ratings; no driver-intention or championship-causation claim.",
+    "Public data contain derived counts and metrics; source telemetry, individual forecasts and weights remain local."
+  ],
+  "local_output_checksums": {
+    "atlas.json": "e581ab469223b7522fcf36e929d8cb3cf88d3c5ec424927f5cc7ad8f4f13bf97",
+    "predictions.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "timeline.json": "45e3dfa348f48c7ea104a9056341a577898265c389184a4c5372141cb80055b1"
+  },
+  "metrics": {
+    "aggregation": "equal_race_weight",
+    "driver_number": 12,
+    "forecast_count": 0,
+    "macro": {},
+    "per_race": {},
+    "race_count": 0
+  },
+  "provenance": {
+    "case_claim": "held_out_from_fitting_and_selection_not_untouched_blind_test",
+    "case_envelope_sha256": "ac0be28aaf6e7b65955efc118c24fcf8a1970f07808cbda13bac037ca8b0fc39",
+    "case_examples_sha256": "93cb6ad13380e941f4062afdd08e43b1d6385a6435ba01c7e64e9ac431dc9788",
+    "code_revision": "f5775cceda501d4dd5c64be29c526df55bd1de73",
+    "freeze_sha256": "71da78a9c15af2084652a74f0e8a1058adb18030a886d5ae3418f5b0ba9b76b2",
+    "protocol_sha256": "a2a6613afea012b51fa7e2dc0ae2b99d6f213ea99c498a9b732f7f2ed8f1ebd7",
+    "release_manifest_sha256": "9bba77e85a5a4f19ee90cae256a7153b6ac45d836a9e5a3f1dc1b0117a19278f",
+    "replay_assumption": "event_time_not_verified_live_publication_time",
+    "source_files": {
+      "atlas/index.py": "bd5967c11a30308d1ec28780adcaac19cd546c74a781e4704165140d649031de",
+      "datasets/features.py": "517883535b7fe7d546212d56468cc73e5c6c0d04087be79ff8eaae4d7e985fbb",
+      "domain/protocol.py": "e875ecb82bffae6afd409bca24e000b1850629a579d8a1fcfdbaece785eaa127",
+      "evaluation/metrics.py": "5191a702a963fdf7b86060ee87ede4a3da1981f91f11f41ae5b68c41620d3496",
+      "evaluation/splits.py": "cde27992c1dc2aeb3e2ef31026dc098a0a90d9abed6a5a990f97333c593dcbc1",
+      "ingestion/case_study.py": "f4d304d80dc629b123287fb5f6f2adb907ab30ff6e73796205393b98d7546b1e",
+      "ingestion/client.py": "0b9e05fccae93f9c87ba7867a05074c7e21ec6fe8ea4b0a573c8be5e1fbcdaec",
+      "models/artifacts.py": "4ca064bf05ee20a72e232e9fb0fcc893630ecde1dd62a431c74014bb7eece13f",
+      "models/baselines.py": "ac7b98b111e3d442c95e69107c08dacbcdaf4c41be1fef5e6ed4c46932097d02",
+      "models/representation.py": "e8bc31781d74bd3c5619d7d73d6d6ca991b4f80c947a00843d6a38545ec4122d",
+      "release.py": "bc3b9f39066a091a5a8e8b41c72680517e8520651f7d72854786f11268b898c1"
+    },
+    "source_manifests_sha256": "a563a884b1ac17de46025ffa8625c33c02e34b39a8e4ce5d7e9960ee89e8364e"
+  },
+  "race": {
+    "driver_number": 12,
+    "lap_count": 71,
+    "meeting_key": 1298,
+    "session_key": 11404
+  },
+  "release": {
+    "artifact_files": {
+      "baseline/metadata.json": "210ee65aab92a0e6ea4191bb927eac63d29686259dff8f0f6b5ed775630cdb80",
+      "baseline/quantile-0.cbm": "ffad10cc6fdd38a6e838be0a9f44f48fa4d24ea1b822c8bb32c3861c2d0e5c8a",
+      "baseline/quantile-1.cbm": "3e2ef3c8e04be12d94cd3f2b39b5413c01bc68a27597fd6348258e25f73ac180",
+      "baseline/quantile-2.cbm": "178a3af7c24c41cc64f3e65751a63e5b7c5ba8b84b50b34373c0ccd877e69cee",
+      "baseline/quantile-3.cbm": "edc223b5bf13cba7eded0f243480c386ab087d4ebed102b37af988c4060f3fcc",
+      "baseline/quantile-4.cbm": "37f84c82c19e82d7d022824963b583452e0a5aa2f7219d6994d738a65b87a875",
+      "baseline/state.json": "385587fa974bb7ef2c8a8360da4391426d05368b48d1da23b5f84427c19fe01d",
+      "encoder/metadata.json": "286d05f71623431257081a779b465024c908bf715bdaff87eecafceaa4a13e32",
+      "encoder/model.pt": "71165f0f5a1997e4d2cdf68ce22bbda9c7583e852e1cb4297d0f934336ae68d8",
+      "index.json": "5527a53af97ca047d009e5d3b506482fa871b7e05a3ed0025ad43172533aa625"
+    },
+    "calibration_sessions": [
+      11388,
+      11396
+    ],
+    "fit_sessions": [
+      11234,
+      11245,
+      11253,
+      11280,
+      11291,
+      11299,
+      11307,
+      11315,
+      11326,
+      11334,
+      11342,
+      11353,
+      11361,
+      11369,
+      11377,
+      11731
+    ],
+    "frozen_at_utc": "2026-11-02T05:04:27.109594+00:00",
+    "index_hash": "28daa4d0ac27892fe4537c5682c05c33524a41ad50e4202e9f6aae02d295453f",
+    "manifest_sha256": "9bba77e85a5a4f19ee90cae256a7153b6ac45d836a9e5a3f1dc1b0117a19278f",
+    "training_dataset_sha256": "e7ed15ec6216606e462b43cbfa8388b6447b6255bf40a2fde4e10819b4180450"
+  },
+  "representative_predictions": [],
+  "schema_version": "ant26-public-case-study-v1",
+  "sources": [
+    "https://openf1.org/",
+    "https://www.formula1.com/en/latest/article/antonelli-crowned-youngest-ever-f1-champion-as-verstappen-wins-eventful-mexico-city-grand-prix.xpMMeef0KmRURs9IDs3LH"
+  ],
+  "status": "case_study_scored",
+  "synthetic": false
+}

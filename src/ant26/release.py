@@ -25,6 +25,7 @@ from ant26.models.baselines import valid_examples
 
 FREEZE_SCHEMA = "ant26-release-freeze-v1"
 REVIEW_DECISION = "exploratory_unvalidated_no_human_ratings"
+CORRECTION_CLAIM = "post_inspection_implementation_correction_diagnostic_replay"
 
 
 def _sha(value) -> str:
@@ -88,6 +89,74 @@ def _path(reference: str, freeze_path: Path) -> Path:
     return (freeze_path.parent / reference).resolve()
 
 
+def _correction_details(record_path: Path, release: dict, freeze_path: Path) -> dict:
+    """Bind a diagnostic replay to its preserved failed first attempt.
+
+    Historical source hashes deliberately are not compared with current code:
+    the implementation correction is precisely why a separate freeze exists.
+    The forecasting artifacts, protocol, and training examples must be identical.
+    """
+    record = _read(record_path)
+    if not isinstance(record.get("description"), str) or not record["description"].strip():
+        raise ValueError("Implementation correction requires a concrete description")
+    parents = {}
+    for name in ("parent_freeze", "parent_report"):
+        if not record.get(f"{name}_path") or not record.get(f"{name}_sha256"):
+            raise ValueError("Implementation correction requires pinned parent freeze and report")
+        path = (record_path.parent / record[f"{name}_path"]).resolve()
+        if _file_sha(path) != record[f"{name}_sha256"]:
+            raise ValueError(f"Implementation correction {name} checksum mismatch")
+        parents[name] = _read(path)
+    parent, report = parents["parent_freeze"], parents["parent_report"]
+    unsigned = {key: value for key, value in parent.items() if key != "manifest_sha256"}
+    if (
+        parent.get("manifest_sha256") != _sha(unsigned)
+        or parent.get("status") != "frozen_for_case_study"
+    ):
+        raise ValueError("Implementation correction parent freeze is invalid")
+    if (
+        report.get("status") != "case_study_scored"
+        or report.get("race", {}).get("session_key") != 11404
+        or report.get("accounting", {}).get("eligible_forecasts") != 0
+        or report.get("accounting", {}).get("scoreable_forecasts") != 0
+    ):
+        raise ValueError(
+            "Implementation correction requires the preserved zero-forecast first attempt"
+        )
+    provenance = report.get("provenance", {})
+    if (
+        provenance.get("freeze_sha256") != record["parent_freeze_sha256"]
+        or provenance.get("release_manifest_sha256") != parent["manifest_sha256"]
+        or provenance.get("protocol_sha256") != parent.get("protocol_sha256")
+    ):
+        raise ValueError("Implementation correction parent report is not bound to its freeze")
+    for name in (
+        "protocol_sha256",
+        "artifact_files",
+        "fit_sessions",
+        "calibration_sessions",
+        "index_hash",
+    ):
+        if parent.get(name) != release.get(name):
+            raise ValueError(f"Implementation correction must preserve {name}")
+    if (
+        parent["training_dataset"]["examples_sha256"]
+        != release["training_dataset"]["examples_sha256"]
+    ):
+        raise ValueError("Implementation correction must preserve training examples")
+    return {
+        "record_path": os.path.relpath(record_path, freeze_path.parent),
+        "record_sha256": _file_sha(record_path),
+        "description": record["description"],
+        "parent_freeze_sha256": record["parent_freeze_sha256"],
+        "parent_report_sha256": record["parent_report_sha256"],
+        "first_attempt_eligible_forecasts": 0,
+        "first_attempt_scoreable_forecasts": 0,
+        "post_inspection": True,
+        "forecast_artifacts_and_training_examples_unchanged": True,
+    }
+
+
 def _check_models(candidate: Path, protocol: dict):
     from ant26.models.representation import RepresentationBundle
 
@@ -135,6 +204,7 @@ def freeze_release(
     *,
     code_revision,
     review_decision="experimental_continuous_retrieval_unvalidated",
+    correction_record=None,
 ) -> dict:
     """Pin existing candidates and record the explicit exploratory atlas decision.
 
@@ -159,6 +229,12 @@ def freeze_release(
             previous["code_revision"] != code_revision
             or _path(previous["candidate_root"], output) != candidate
             or previous["training_dataset"]["sha256"] != _file_sha(dataset)
+            or previous.get("implementation_correction", {}).get("record_sha256")
+            != (
+                _file_sha(Path(correction_record).resolve())
+                if correction_record is not None
+                else None
+            )
         ):
             raise ValueError("Existing release freeze differs from the requested decision")
         return previous
@@ -242,6 +318,11 @@ def freeze_release(
         },
         "index_encoder_max_abs_difference": float(np.max(np.abs(vectors - saved_vectors))),
     }
+    if correction_record is not None:
+        manifest["implementation_correction"] = _correction_details(
+            Path(correction_record).resolve(), manifest, output
+        )
+        manifest["case_study"]["claim"] = CORRECTION_CLAIM
     manifest["manifest_sha256"] = _sha(manifest)
     _write(output, manifest)
     return manifest
@@ -261,6 +342,16 @@ def verify_release(path, protocol) -> dict:
         raise ValueError("A frozen release is required before final-case access")
     if manifest.get("protocol_sha256") != protocol_hash(protocol):
         raise ValueError("Release protocol has changed")
+    correction = manifest.get("implementation_correction")
+    if correction is not None:
+        if (
+            manifest.get("case_study", {}).get("claim") != CORRECTION_CLAIM
+            or _correction_details(_path(correction["record_path"], path), manifest, path)
+            != correction
+        ):
+            raise ValueError("Implementation correction provenance changed")
+    elif manifest.get("case_study", {}).get("claim") != protocol["final_case_study"]["claim"]:
+        raise ValueError("A diagnostic case claim requires an explicit correction record")
     decision = manifest.get("atlas_decision", {})
     if (
         decision.get("status") != REVIEW_DECISION
@@ -608,6 +699,7 @@ def score_case_study(
             "source_manifests_sha256": _sha(manifests),
             "source_reconstruction_verified": not synthetic,
             "case_claim": release["case_study"]["claim"],
+            "implementation_correction": release.get("implementation_correction"),
             "replay_assumption": "event_time_not_verified_live_publication_time",
             "source_session": envelope.get("source_session"),
             "session_result": envelope.get("session_result"),

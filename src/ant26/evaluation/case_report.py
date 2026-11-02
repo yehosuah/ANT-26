@@ -117,6 +117,7 @@ def export_case_report(run_path, freeze_path, output_path, *, chapters=(), sourc
         "aggregate_only": True,
         "synthetic": False,
         "status": report["status"],
+        "case_kind": report["provenance"]["case_claim"],
         "race": report["race"],
         "accounting": report["accounting"],
         "metrics": report["metrics"],
@@ -158,6 +159,14 @@ def export_case_report(run_path, freeze_path, output_path, *, chapters=(), sourc
             "Public data contain derived counts and metrics; source telemetry, individual forecasts and weights remain local.",
         ],
     }
+    if correction := freeze.get("implementation_correction"):
+        payload["implementation_correction"] = {
+            key: value for key, value in correction.items() if key != "record_path"
+        }
+        payload["limits"].insert(
+            0,
+            "This is a post-inspection diagnostic replay after a preserved zero-forecast first attempt; it is not a new independent test.",
+        )
     output = Path(output_path)
     serialized = json.dumps(payload, sort_keys=True, indent=2, allow_nan=False) + "\n"
     if output.exists() and output.read_text() != serialized:
