@@ -1,12 +1,14 @@
 # ANT-26 data card
 
-ANT-26 studies observed telemetry and sector timing for Kimi Antonelli. Its present real-data evidence establishes source feasibility. It does not establish full-season coverage or model accuracy.
+ANT-26 studies observed telemetry and sector timing for Kimi Antonelli. The current real-data cohort materializes all 18 verified pre-Mexico race sessions for Antonelli. All-driver coverage and model accuracy require separate evidence.
 
 ## Source and current coverage
 
 Historical records come from the independent [OpenF1 API](https://openf1.org/docs/). The audited development catalog contains 18 pre-Mexico 2026 races after canceled sessions and the final case study are separated. Raw provider metadata is preserved. An explicit sourced override distinguishes the Bahrain event's identity from its Malaysian host circuit; see `configs/catalog-overrides.json`.
 
 The saved feasibility audit covers three recent development sessions: 11731, 11388 and 11396. It includes drivers 12 and 63, race-control messages, weather, driver metadata, lap records, stints, intervals and pit records. Car telemetry is sampled for a 60-second window per driver around lap 10, with 211–229 rows in each window. These six windows cannot establish complete-race retention. Counts and source hashes are available in the locally generated `data/audit/audit.json`.
+
+A subsequent full-race CSV acquisition provides 395,446 native telemetry rows for Antonelli across the 18 development races. Its materialized dataset contains 3,228 observed sector examples and 2,619 eligible scoreable targets. A separate Russell cohort adds 17 race sessions and 2,389 scoreable examples; Belgium is explicitly unscoreable because the source has no valid timed laps. The pooled artifact declares only drivers 12 and 63. See [the real data quality review](real-data-quality.md) for immutable artifact identities, exact denominators, acquisition cross-check and Hungary's selective missingness. This is not a complete-field dataset.
 
 An independent synthetic fixture exercises pipeline stages and chronological splits. Its artifacts declare `synthetic=true` and `data_kind=synthetic_integration_fixture`. Synthetic forecast errors are software-test results, not findings about Antonelli.
 
@@ -34,4 +36,4 @@ Forecast eligibility and target validity are separate. An unexpected Safety Car 
 
 Raw responses have retrieval timestamps, query identity and SHA-256 manifests. Processed examples retain source identity, timing assumptions and cutoffs; integration attaches exact source manifests. Refreshing source data creates a new snapshot. Data and generated artifacts are ignored by Git.
 
-Pending evidence includes full telemetry extraction, all-driver coverage, complete-race retention, source alignment across all development races, and final Mexico completeness checks after model freeze. Public dataset redistribution requires checking the provider's applicable rights; the repository can publish code and fetch instructions without bundling the source data.
+Pending evidence includes all-driver coverage, official terminal-lap completeness checks, source alignment across all development races, and final Mexico checks after model freeze. Public dataset redistribution requires checking the provider's applicable rights; the repository can publish code and fetch instructions without bundling the source data.

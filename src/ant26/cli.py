@@ -36,12 +36,24 @@ def main(argv: list[str] | None = None) -> int:
     ingest.add_argument("--cache-root", default="data/raw")
     ingest.add_argument("--progress", default="data/audit/full-trace-progress.json")
     ingest.add_argument("--chunk-seconds", type=int, default=60)
+    ingest.add_argument("--format", choices=["csv", "json"], default="csv")
+    ingest.add_argument("--catalog", default="data/audit/catalog.json")
+    ingest.add_argument("--all-development", action="store_true")
     build = commands.add_parser("build")
     build.add_argument("--cache-root", default="data/raw")
     build.add_argument("--catalog", default="data/audit/catalog.json")
     build.add_argument("--sessions", nargs="*", type=int)
     build.add_argument("--drivers", nargs="+", type=int, default=[12, 63])
     build.add_argument("--output", default="data/processed")
+    materialize = commands.add_parser("materialize")
+    materialize.add_argument("--progress", default="data/audit/bulk-progress.json")
+    materialize.add_argument("--catalog", default="data/audit/catalog.json")
+    materialize.add_argument("--drivers", nargs="+", type=int, default=[12, 63])
+    materialize.add_argument("--output", default="data/processed/current")
+    diagnose = commands.add_parser("diagnose")
+    diagnose.add_argument("--examples", required=True)
+    diagnose.add_argument("--report", required=True)
+    diagnose.add_argument("--output", required=True)
     build.add_argument(
         "--full-traces",
         default=None,
@@ -57,6 +69,15 @@ def main(argv: list[str] | None = None) -> int:
     benchmark.add_argument("--catalog", default="data/audit/catalog.json")
     benchmark.add_argument("--output", default="artifacts/development")
     benchmark.add_argument("--catboost", action="store_true")
+    deep = commands.add_parser("representation-benchmark")
+    deep.add_argument("--examples", required=True)
+    deep.add_argument("--catalog", default="data/audit/catalog.json")
+    deep.add_argument("--output", required=True)
+    deep.add_argument("--baseline-report")
+    deep.add_argument("--seeds", nargs="+", type=int)
+    deep.add_argument("--max-folds", type=int)
+    deep.add_argument("--pretrain-epochs", type=int, default=3)
+    deep.add_argument("--forecast-epochs", type=int, default=5)
     smoke = commands.add_parser("smoke")
     smoke.add_argument("--output", default="artifacts/smoke")
     train = commands.add_parser("train")
@@ -96,27 +117,6 @@ def main(argv: list[str] | None = None) -> int:
             offline=args.offline,
             telemetry_window_seconds=args.telemetry_window_seconds,
         )
-    elif args.command == "ingest":
-        from ant26.ingestion import OpenF1Client, expand_full_traces
-
-        result = expand_full_traces(
-            OpenF1Client(args.cache_root),
-            session_keys=tuple(args.sessions),
-            driver_numbers=tuple(args.drivers),
-            progress_path=args.progress,
-            chunk_seconds=args.chunk_seconds,
-        )
-        print(
-            json.dumps(
-                {
-                    "sessions": {
-                        key: {"status": value["status"], "rows": value["rows"]}
-                        for key, value in result["sessions"].items()
-                    },
-                    "mexico_ingested": result["mexico_ingested"],
-                }
-            )
-        )
         print(
             json.dumps(
                 {
@@ -126,6 +126,85 @@ def main(argv: list[str] | None = None) -> int:
                 }
             )
         )
+    elif args.command == "ingest":
+        from ant26.ingestion import OpenF1Client, expand_full_traces, ingest_development
+
+        if args.format == "csv":
+            result = ingest_development(
+                OpenF1Client(args.cache_root),
+                json.loads(Path(args.catalog).read_text()),
+                session_keys=None if args.all_development else tuple(args.sessions),
+                driver_numbers=tuple(args.drivers),
+                progress_path=args.progress,
+            )
+        else:
+            result = expand_full_traces(
+                OpenF1Client(args.cache_root),
+                session_keys=tuple(
+                    row["session_key"]
+                    for row in json.loads(Path(args.catalog).read_text())["development"]
+                )
+                if args.all_development
+                else tuple(args.sessions),
+                driver_numbers=tuple(args.drivers),
+                progress_path=args.progress,
+                chunk_seconds=args.chunk_seconds,
+            )
+        print(
+            json.dumps(
+                {
+                    "sessions": {
+                        key: {"status": value["status"], "rows": value.get("rows", 0)}
+                        for key, value in result["sessions"].items()
+                    },
+                    "mexico_ingested": result["mexico_ingested"],
+                }
+            )
+        )
+        if any(
+            value["status"] not in {"complete", "unscorable"}
+            for value in result["sessions"].values()
+        ):
+            return 1
+    elif args.command == "materialize":
+        from ant26.datasets.materialize import (
+            materialize_available_sessions,
+            merge_materialized_cohorts,
+        )
+
+        cohorts = [
+            materialize_available_sessions(
+                args.progress,
+                args.catalog,
+                protocol,
+                output_root=Path(args.output) / f"driver-{driver}",
+                driver_number=driver,
+            )
+            for driver in args.drivers
+        ]
+        result = (
+            merge_materialized_cohorts(
+                [row["path"] for row in cohorts], protocol, output_root=args.output
+            )
+            if len(cohorts) > 1
+            else cohorts[0]
+        )
+        print(json.dumps(result))
+    elif args.command == "diagnose":
+        from ant26.evaluation.diagnostics import error_slices
+
+        payload = json.loads(Path(args.examples).read_text())
+        report = json.loads(Path(args.report).read_text())
+        if payload.get("protocol_sha256") != protocol_hash(protocol):
+            raise ValueError("Dataset protocol hash does not match the active protocol")
+        expected = hashlib.sha256(
+            json.dumps(payload["examples"], sort_keys=True, allow_nan=False).encode()
+        ).hexdigest()
+        if report.get("input_sha256") != expected:
+            raise ValueError("Diagnostic dataset does not match the scored examples")
+        result = error_slices(report["predictions"], payload["examples"])
+        _save(Path(args.output), result)
+        print(json.dumps({"output": args.output, "models": sorted(result["models"])}))
     elif args.command == "build":
         from ant26.datasets import build_examples, quality_report
         from ant26.ingestion import OpenF1Client, ProviderError
@@ -221,7 +300,7 @@ def main(argv: list[str] | None = None) -> int:
                 }
             )
         )
-    elif args.command in ("benchmark", "smoke"):
+    elif args.command in ("benchmark", "smoke", "representation-benchmark"):
         from ant26.evaluation import run_benchmark
 
         if args.command == "smoke":
@@ -252,13 +331,30 @@ def main(argv: list[str] | None = None) -> int:
                 if isinstance(payload, dict)
                 else "unspecified"
             )
-        report = run_benchmark(
-            examples,
-            catalog,
-            protocol=protocol,
-            output_dir=args.output,
-            include_catboost=getattr(args, "catboost", False),
-        )
+        if args.command == "representation-benchmark":
+            from ant26.evaluation import run_representation_benchmark
+
+            report = run_representation_benchmark(
+                examples,
+                catalog,
+                protocol,
+                args.output,
+                seeds=args.seeds,
+                max_folds=args.max_folds,
+                pretrain_epochs=args.pretrain_epochs,
+                forecast_epochs=args.forecast_epochs,
+                baseline_report=json.loads(Path(args.baseline_report).read_text())
+                if args.baseline_report
+                else None,
+            )
+        else:
+            report = run_benchmark(
+                examples,
+                catalog,
+                protocol=protocol,
+                output_dir=args.output,
+                include_catboost=getattr(args, "catboost", False),
+            )
         _save(Path(args.output) / "report.json", report)
         _save(Path(args.output) / "predictions.json", report["predictions"])
         print(

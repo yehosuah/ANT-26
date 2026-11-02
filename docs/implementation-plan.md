@@ -154,9 +154,9 @@ Each milestone is owned by the implementer, ends with the listed evidence, and m
 | M7 Freeze and publish the Mexico case study | 3 to 4 days | Freeze pre-Mexico bundle, run Mexico once, explain all eligible and excluded phases, produce report/model card/demo. All findings trace to immutable predictions. | M6 |
 
 - [x] M0 Research contract locked
-- [ ] M1 Data audited
-- [ ] M2 Inputs and leakage tests complete
-- [ ] M3 Baselines reproduced
+- [x] M1 Initial Mercedes cohort audited; full-grid expansion remains open
+- [x] M2 Inputs and leakage tests complete
+- [x] M3 Initial cohort baselines reproduced
 - [ ] M4 Learned models evaluated
 - [ ] M5 Atlas validated
 - [ ] M6 Application integrated

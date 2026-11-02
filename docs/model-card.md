@@ -14,6 +14,8 @@ The baseline family contains same-sector persistence, a recent historical refere
 
 The learned candidate uses an adapted masked patch transformer and a non-crossing quantile head. Default inputs are 128 time steps by five telemetry channels, with usable masks. Masked reconstruction uses robust regression for continuous channels and classification losses for brake application and gear. Missing or padded values do not become reconstruction targets. The implementation is motivated by masked time-series learning and is not an exact reproduction of a published model.
 
+Normalization policy `constant_unit_scale_v2` uses unit scale for fitted standard deviations below 1e-6, for both context and sequence channels. A regression reproduces and prevents extreme held-out scaling from previously constant features. Earlier neural results using the superseded policy are invalidated and hidden from replay; their source snapshots remain available locally for audit. The loader requires the current policy.
+
 Scratch, pretrained-frozen and fine-tuned modes enable attribution of any future gain to representation learning. The head predicts log duration relative to a historical reference and emits quantiles at 0.05, 0.10, 0.50, 0.90 and 0.95. Calibration widens intervals using designated disjoint preceding races; serial dependence and circuit shift prevent a general coverage guarantee.
 
 The atlas accepts externally supplied embeddings and also supplies a train-only standardized-feature/PCA baseline. Its immutable reference index excludes Mexico and sessions outside the fitting allowlist. Prefix queries exclude future, same-lap and overlapping same-driver windows. Optional Gaussian-mixture patterns remain descriptive and `validated=false` pending stability checks and review.
@@ -23,7 +25,7 @@ The atlas accepts externally supplied embeddings and also supplies a train-only 
 - Offline tests exercise future-record invariance, timing/censoring separation, fitting-scope guards, quantile ordering, artifact integrity, retrieval filtering and API responses.
 - A saved synthetic smoke benchmark runs two chronological test folds and identifies itself as exploratory. Its numerical errors cannot substantiate F1 performance claims.
 - Reduced synthetic representation tests verify finite optimization and checkpoint round-tripping. Reconstruction improvement on fitting fixtures is optimization evidence only.
-- The real-source audit confirms sampled telemetry and contextual endpoints for three development races and two drivers. It does not train or evaluate a season model.
+- The original real-source audit confirms sampled telemetry and contextual endpoints for three development races and two drivers. A subsequent Antonelli-only cohort materializes all 18 pre-Mexico races; [the real data quality review](real-data-quality.md) records coverage and selective missingness. Data availability alone does not establish a learned-model advantage.
 
 The exact current check commands are `uv run ruff check .` and `uv run pytest`. Re-run them against the checked-out revision; test counts can change as implementation proceeds. Experiment details and current measured fixture results live in `docs/representation-experiment.md`.
 

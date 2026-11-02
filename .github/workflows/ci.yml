@@ -15,3 +15,25 @@ jobs:
       - run: uv run ruff check .
       - run: uv run pytest
       - run: uv run ant26 protocol-check
+  container:
+    needs: offline
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose up --build -d
+      - name: Verify API and UI health
+        run: |
+          python3 - <<'PY'
+          import json, time, urllib.request
+          for endpoint in ['http://127.0.0.1:8000/health', 'http://127.0.0.1:8501/_stcore/health']:
+              for attempt in range(30):
+                  try:
+                      with urllib.request.urlopen(endpoint, timeout=2) as response:
+                          assert response.status == 200
+                      break
+                  except OSError:
+                      time.sleep(1)
+              else:
+                  raise SystemExit(f'Container did not become healthy: {endpoint}')
+          PY
+      - run: docker compose exec -T api uv run --no-sync ant26 protocol-check

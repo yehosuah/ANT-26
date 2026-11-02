@@ -135,3 +135,51 @@ def test_calibration_uses_disjoint_scope_and_keeps_encoder_fixed():
     assert (adjusted[:, 0] <= raw[:, 0]).all()
     assert np.all(np.diff(adjusted, axis=1) >= 0)
     np.testing.assert_allclose(bundle.encode(rows), before)
+
+
+def test_constant_training_features_do_not_amplify_valid_heldout_changes():
+    from ant26.models.baselines import NUMERIC_FEATURES
+
+    rows = examples()
+    for row in rows:
+        row["features"].update(rainfall=0.0, brake_max=1.0)
+    bundle = train_representation(
+        rows,
+        {1},
+        config=EncoderConfig(width=16, layers=1, heads=2, max_steps=32),
+        pretrain_epochs=0,
+        forecast_epochs=1,
+        data_kind="synthetic_constant_scale_regression",
+    )
+    heldout = deepcopy(rows)
+    for row in heldout:
+        row["features"].update(rainfall=1.0, brake_max=0.0)
+        for timestep in row["features"]["sequence"]:
+            timestep[4] = 6.0
+    sequence, _, context = bundle._inputs(heldout)
+    # All are valid physical changes from columns constant in the fitting data.
+    # Unit-scale fallback preserves them without turning them into +/-1e6.
+    np.testing.assert_allclose(context[:, NUMERIC_FEATURES.index("rainfall")].numpy(), 1.0)
+    np.testing.assert_allclose(context[:, NUMERIC_FEATURES.index("brake_max")].numpy(), -1.0)
+    np.testing.assert_allclose(sequence[:, :, 4].numpy(), 1.0)
+    assert bundle.metadata["normalization_policy"] == "constant_unit_scale_v2"
+
+
+def test_legacy_normalization_checkpoint_requires_retraining(tmp_path):
+    import json
+
+    bundle = train_representation(
+        examples(),
+        {1},
+        config=EncoderConfig(width=16, layers=1, heads=2, max_steps=32),
+        pretrain_epochs=0,
+        forecast_epochs=1,
+        data_kind="synthetic_legacy_policy_regression",
+    )
+    bundle.save(tmp_path)
+    path = tmp_path / "metadata.json"
+    metadata = json.loads(path.read_text())
+    metadata.pop("normalization_policy")
+    path.write_text(json.dumps(metadata))
+    with pytest.raises(ValueError, match="retrain"):
+        RepresentationBundle.load(tmp_path)

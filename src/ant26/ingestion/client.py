@@ -114,6 +114,7 @@ class OpenF1Client:
         *,
         refresh: bool = False,
         response_format: str = "json",
+        allow_no_results: bool = False,
     ) -> list[dict[str, Any]]:
         """Return validated rows; last_manifest identifies the exact source snapshot."""
         self.last_manifest = None
@@ -140,7 +141,8 @@ class OpenF1Client:
             if manifest.get("raw_response_filename"):
                 original = (snapshot / manifest["raw_response_filename"]).read_bytes()
                 if hashlib.sha256(original).hexdigest() != manifest["raw_response_sha256"]:
-                    raise CacheIntegrityError("original CSV response checksum mismatch")
+                    label = "CSV" if manifest.get("response_format") == "csv" else "source"
+                    raise CacheIntegrityError(f"original {label} response checksum mismatch")
             self.last_manifest = manifest | {"snapshot_path": str(snapshot), "cache_hit": True}
             return self._validate(payload)
         if self.offline:
@@ -149,6 +151,7 @@ class OpenF1Client:
         if params:
             url += "?" + urlencode(params)
         request = Request(url, headers={"User-Agent": "ANT-26/0.1 research (read-only)"})
+        no_results_raw = None
         for attempt in range(self.max_attempts):
             self._throttle()
             try:
@@ -156,6 +159,16 @@ class OpenF1Client:
                     payload = response.read()
                 break
             except HTTPError as exc:
+                if allow_no_results and exc.code == 404:
+                    original = exc.read()
+                    try:
+                        recognized = json.loads(original) == {"detail": "No results found."}
+                    except (ValueError, UnicodeDecodeError):
+                        recognized = False
+                    if recognized:
+                        no_results_raw = original
+                        payload = b"[]"
+                        break
                 if (
                     exc.code not in {408, 429, 500, 502, 503, 504}
                     or attempt + 1 == self.max_attempts
@@ -171,7 +184,7 @@ class OpenF1Client:
                     raise ProviderError(f"OpenF1 network failure for {endpoint}: {exc}") from exc
                 self._sleep(2**attempt)
         raw_payload = payload
-        if response_format == "csv":
+        if response_format == "csv" and no_results_raw is None:
             try:
                 reader = csv.DictReader(io.StringIO(payload.decode("utf-8-sig")))
                 required = {
@@ -228,6 +241,16 @@ class OpenF1Client:
                     "normalization_schema": "car-data-csv-numeric-utc-v1",
                 }
             )
+        if no_results_raw is not None:
+            manifest.update(
+                {
+                    "http_status": 404,
+                    "raw_response_filename": "response.error.json",
+                    "raw_response_sha256": hashlib.sha256(no_results_raw).hexdigest(),
+                    "normalization_schema": "explicit-openf1-no-results-v1",
+                    "empty_result_interpretation": "no_available_provider_records_not_proof_of_no_events",
+                }
+            )
         query_dir.mkdir(parents=True, exist_ok=True)
         # Lock writers so concurrent identical fetches cannot partially replace a snapshot.
         with (query_dir / ".write.lock").open("a+") as lock:
@@ -235,8 +258,10 @@ class OpenF1Client:
             if not snapshot.exists():
                 temporary = Path(tempfile.mkdtemp(dir=query_dir, prefix=".snapshot-"))
                 (temporary / "response.json").write_bytes(payload)
-                if response_format == "csv":
+                if response_format == "csv" and no_results_raw is None:
                     (temporary / "response.csv").write_bytes(raw_payload)
+                if no_results_raw is not None:
+                    (temporary / "response.error.json").write_bytes(no_results_raw)
                 (temporary / "manifest.json").write_bytes(_json_bytes(manifest))
                 os.rename(temporary, snapshot)
             else:

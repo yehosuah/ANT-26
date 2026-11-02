@@ -118,6 +118,19 @@ def run_benchmark(
         "data_kind": catalog.get("data_kind", "unspecified")
         if isinstance(catalog, dict)
         else "unspecified",
+        "observed_driver_numbers": sorted({row["driver_number"] for row in examples}),
+        "training_driver_count": len(
+            {
+                row["driver_number"]
+                for fold in results
+                if fold["status"] == "evaluated"
+                for row in valid_examples(examples)
+                if row["session_key"] in fold["fit_sessions"] + fold["tune_sessions"]
+            }
+        ),
+        "cohort_limitation": "Antonelli-only cohort; no pooled multi-driver representation claim"
+        if {row["driver_number"] for row in examples} == {12}
+        else "Metrics describe observed dataset drivers, not a verified complete field",
         "synthetic": catalog.get("data_kind", "").startswith("synthetic")
         if isinstance(catalog, dict)
         else False,
