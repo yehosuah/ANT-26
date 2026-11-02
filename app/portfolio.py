@@ -183,22 +183,131 @@ def lap_summary(row):
     }
 
 
+def policy_comparison(report):
+    """Display reported cohort accounting without conflating changed populations."""
+    with st.expander("Compare pit-policy revisions"):
+        synthetic_notice(report)
+        metrics(
+            [
+                (
+                    "Common scored origins",
+                    displayed_number(report.get("common_scoreable"), "count"),
+                    "Identical origin IDs scored under both policies.",
+                ),
+                (
+                    "Newly scored origins",
+                    displayed_number(report.get("newly_scoreable"), "count"),
+                    "Scored only under the revised policy.",
+                ),
+                (
+                    "Lost scored origins",
+                    displayed_number(report.get("lost_scoreable"), "count"),
+                    "Scored only under the prior policy.",
+                ),
+            ]
+        )
+        coverage = []
+        for scope, values in report.get("coverage", {}).items():
+            if not isinstance(values, dict):
+                continue
+            for version in ("prior", "new"):
+                counts = values.get(version, {})
+                if isinstance(counts, dict):
+                    coverage.append(
+                        {
+                            "Scope": scope,
+                            "Version": version,
+                            **{
+                                key: counts[key]
+                                for key in (
+                                    "expected_slots",
+                                    "scored",
+                                    "abstained",
+                                    "censored",
+                                    "missing_record",
+                                    "eligible",
+                                )
+                                if key in counts
+                            },
+                        }
+                    )
+        if coverage:
+            st.dataframe(pd.DataFrame(coverage), hide_index=True, width="stretch")
+        common = report.get("common_scoreable", {})
+        common_metrics = []
+        for version, key in (("Prior", "prior_metrics"), ("Revised", "new_metrics")):
+            values = common.get(key, {}).get("macro", {})
+            if values:
+                common_metrics.append(
+                    {
+                        "Common-origin subset": version,
+                        "MAE (s)": values.get("mae_seconds"),
+                        "Interval score": values.get("weighted_interval_score"),
+                        "90% coverage": values.get("coverage_90"),
+                    }
+                )
+        if common_metrics:
+            st.dataframe(pd.DataFrame(common_metrics), hide_index=True, width="stretch")
+        st.caption(
+            "Coverage and scored cohorts can change along with features and fitted artifacts. Overall metric differences are not an isolated causal effect of timestamp semantics or an independent improvement claim."
+        )
+        st.json(
+            {
+                key: report[key]
+                for key in ("implementation_and_model_changes", "provenance")
+                if key in report
+            },
+            expanded=False,
+        )
+        source_footer("reports/pit-policy-comparison.json")
+
+
 development, development_error = load_json(REPORT_ROOT / "development-results.json")
 if not isinstance(development, dict):
     development = None
-mexico, mexico_error = load_json(REPORT_ROOT / "mexico-case-study.json")
-if not isinstance(mexico, dict):
-    mexico = None
+case_versions = {
+    "pit-v0.2.0": (
+        "Pit policy v0.2 · diagnostic replay",
+        "mexico-case-study-pit-v0.2.0.json",
+        "mexico-case-study-pit-v0.2.0",
+    ),
+    "published-v0.1": (
+        "Published v0.1 · initial pit interpretation",
+        "mexico-case-study.json",
+        "mexico-case-study",
+    ),
+}
+available_versions = [
+    version
+    for version, (_, filename, _) in case_versions.items()
+    if (REPORT_ROOT / filename).exists()
+]
 
 with st.sidebar:
     st.markdown("### ANT-26")
     st.caption("F1 TELEMETRY / ML RESEARCH")
     st.divider()
     page = st.radio("Explore", PAGES, label_visibility="collapsed")
+    selected_case = (
+        st.selectbox(
+            "Mexico case version",
+            available_versions,
+            format_func=lambda version: case_versions[version][0],
+            key="mexico_case_version",
+        )
+        if "pit-v0.2.0" in available_versions
+        else "published-v0.1"
+    )
     st.divider()
     st.caption("Kimi Antonelli · 2026")
     st.caption("Reproducible evidence. Explicit uncertainty.")
     st.caption("Offline portfolio · no data-service connection required")
+
+case_label, case_filename, case_directory = case_versions[selected_case]
+case_root = ARTIFACT_ROOT / case_directory
+mexico, mexico_error = load_json(REPORT_ROOT / case_filename)
+if not isinstance(mexico, dict):
+    mexico = None
 
 if development_error:
     st.warning(development_error)
@@ -244,6 +353,9 @@ if page == "Overview":
         st.markdown(
             '<div class="ant-verdict"><strong>The benchmark kept the baseline.</strong><br>No learned-model improvement gate passed under the declared fixed budgets. The neural experiments, uncertainty checks and failures remain part of the result.</div>',
             unsafe_allow_html=True,
+        )
+        st.caption(
+            "The 160 historical neural fits use the published v0.1 feature policy. They do not validate the revised pit-policy baseline or its replay."
         )
         columns = st.columns([1.2, 1])
         with columns[0]:
@@ -296,6 +408,9 @@ elif page == "Development Results":
         "What the benchmark found",
         "Chronological evaluation of sector timing, probabilistic uncertainty, and representation learning. Antonelli remains the primary test subject.",
         kicker="ANT-26 / DEVELOPMENT RESULTS",
+    )
+    st.caption(
+        "Historical benchmark · published v0.1 feature policy. All 160 neural fits remain attached to that policy; a revised-policy baseline is a separate experiment."
     )
     if not development:
         st.info(
@@ -445,11 +560,61 @@ elif page == "Development Results":
                 "Retention uses observed origins with known green track state and outside-pit state. It is not coverage of every official race opportunity. Hungary's selective missingness remains visible."
             )
             source_footer("reports/development-results.json")
+    revised_development, revised_error = load_json(REPORT_ROOT / "pit-policy-development.json")
+    if revised_error:
+        st.warning(revised_error)
+    if isinstance(revised_development, dict):
+        st.subheader("Pit policy v0.2 development evidence")
+        synthetic_notice(revised_development)
+        st.caption(
+            "Separate baseline and data-policy evidence. Historical neural results above are not reused as validation of this policy."
+        )
+        metrics(
+            [
+                (
+                    "Revised-policy source examples",
+                    displayed_number(revised_development, "input_example_count"),
+                    "Declared two-driver source cohort.",
+                ),
+                (
+                    "Revised-policy scoreable examples",
+                    displayed_number(revised_development, "scoreable_example_count"),
+                    "Before chronological fold selection.",
+                ),
+                (
+                    "Revised-policy test races",
+                    displayed_number(revised_development, "evaluated_fold_count"),
+                    "Chronological baseline evaluation; Antonelli primary.",
+                ),
+            ]
+        )
+        revised_rows = []
+        for model, values in revised_development.get("summary", {}).items():
+            primary = values.get("antonelli", {})
+            macro = primary.get("macro", {})
+            if macro:
+                revised_rows.append(
+                    {
+                        "Model": MODEL_NAMES.get(model, model),
+                        "MAE (s)": macro.get("mae_seconds"),
+                        "Interval score": macro.get("weighted_interval_score"),
+                        "90% coverage": macro.get("coverage_90"),
+                        "90% width (s)": macro.get("width_90_seconds"),
+                        "Forecasts": primary.get("forecast_count"),
+                    }
+                )
+        if revised_rows:
+            st.dataframe(pd.DataFrame(revised_rows), hide_index=True, width="stretch")
+        with st.expander("Revised-policy baseline provenance"):
+            st.json(revised_development, expanded=False)
+        source_footer("reports/pit-policy-development.json")
 
 elif page == "Mexico Case Study":
     diagnostic_claim = "post_inspection_implementation_correction_diagnostic_replay"
+    revised_policy = selected_case == "pit-v0.2.0"
     diagnostic = bool(mexico) and (
-        mexico.get("case_kind") == diagnostic_claim
+        revised_policy
+        or mexico.get("case_kind") == diagnostic_claim
         or mexico.get("provenance", {}).get("case_claim") == diagnostic_claim
     )
     hero(
@@ -461,15 +626,26 @@ elif page == "Mexico Case Study":
         else "Development and final-case evidence stay separate",
     )
     if diagnostic:
-        st.warning(
-            "The original frozen Mexico run emitted 0 forecasts. This corrected run is a diagnostic replay after an implementation repair made following inspection of the case. It is not an independent blind test."
-        )
+        if revised_policy:
+            st.warning(
+                "This is a post-inspection diagnostic replay under a revised feature policy, not an independent blind test. Development examples, fitted models and the retrieval index may differ from published v0.1; their identities and changes are recorded in the reports."
+            )
+            st.caption(
+                "Report-derived pit intervals approximate completed passes. Records enter features only at their report timestamps; exact physical entry/exit and original live-publication availability are not established."
+            )
+        else:
+            st.warning(
+                "The original frozen Mexico run emitted 0 forecasts. This corrected run is a diagnostic replay after an implementation repair made following inspection of the case. It is not an independent blind test."
+            )
         correction = mexico.get("implementation_correction", {})
-        if correction.get("forecast_artifacts_and_training_examples_unchanged") is True:
+        if (
+            not revised_policy
+            and correction.get("forecast_artifacts_and_training_examples_unchanged") is True
+        ):
             st.caption(
                 "The forecast artifacts and training examples are unchanged. The original zero-forecast result is preserved in reports/mexico-first-attempt.json."
             )
-        else:
+        elif not revised_policy:
             st.caption(
                 "The original zero-forecast result is preserved in reports/mexico-first-attempt.json; correction provenance is retained in the case report."
             )
@@ -483,6 +659,7 @@ elif page == "Mexico Case Study":
         )
     else:
         synthetic_notice(mexico)
+        st.caption(f"Selected case: {case_label}")
         race = mexico.get("race", {})
         accounting = mexico.get("accounting", mexico.get("coverage", {}))
         laps = number(accounting, "official_laps", "expected_laps") or number(
@@ -551,6 +728,11 @@ elif page == "Mexico Case Study":
             st.caption(
                 "Case metrics summarize the eligible, valid subset of this one race; they do not measure error on abstained or missing sectors."
             )
+        comparison, comparison_error = load_json(REPORT_ROOT / "pit-policy-comparison.json")
+        if comparison_error:
+            st.warning(comparison_error)
+        if isinstance(comparison, dict):
+            policy_comparison(comparison)
         if mexico.get("status"):
             st.caption(f"Case status: {mexico['status']}")
         for chapter in mexico.get("chapters", []):
@@ -570,9 +752,13 @@ elif page == "Mexico Case Study":
             and finite(chapter.get("lap_start"))
             and chapter["lap_start"] >= 47
         ]
-        if late_chapters and all(
-            chapter.get("scoreable_forecasts") == 0 and chapter.get("censored_targets", 0) == 0
-            for chapter in late_chapters
+        if (
+            not revised_policy
+            and late_chapters
+            and all(
+                chapter.get("scoreable_forecasts") == 0 and chapter.get("censored_targets", 0) == 0
+                for chapter in late_chapters
+            )
         ):
             abstentions = sum(chapter.get("abstentions", 0) for chapter in late_chapters)
             first_lap = min(chapter["lap_start"] for chapter in late_chapters)
@@ -587,7 +773,6 @@ elif page == "Mexico Case Study":
             if source_limits:
                 with st.expander("Source and interpretation limits"):
                     st.json(source_limits)
-        case_root = ARTIFACT_ROOT / "mexico-case-study"
         local_timeline, timeline_error = load_json(case_root / "timeline.json")
         synthetic_notice(local_timeline)
         if timeline_error:
@@ -794,7 +979,7 @@ elif page == "Mexico Case Study":
                     if key in mexico
                 }
             )
-        source_footer("reports/mexico-case-study.json")
+        source_footer(f"reports/{case_filename}")
 
 elif page == "Atlas":
     hero(
@@ -813,7 +998,10 @@ elif page == "Atlas":
             "State claims withheld",
             "The current evidence does not validate discrete driving states. Human retrieval judgments remain separate from forecast-head performance.",
         )
-    atlas, error = load_json(ARTIFACT_ROOT / "mexico-case-study" / "atlas.json")
+    st.caption(
+        f"Selected case: {case_label}. References and queries come from this version's local artifact only."
+    )
+    atlas, error = load_json(case_root / "atlas.json")
     synthetic_notice(atlas)
     if error:
         st.warning(error)

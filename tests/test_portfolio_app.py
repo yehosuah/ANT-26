@@ -316,3 +316,116 @@ def test_real_public_mexico_report_shows_selective_metrics_without_private_artif
     assert spec["encoding"]["color"]["type"] == "nominal"
     assert any("not proof that the driver stayed" in notice.value for notice in app.info)
     assert not artifacts.exists()
+
+
+def test_case_version_defaults_to_revised_and_matches_atlas_without_legacy_claims(
+    offline_environment,
+):
+    reports, artifacts = offline_environment
+    shutil.copyfile(ROOT / "reports" / "mexico-case-study.json", reports / "mexico-case-study.json")
+    revised = {
+        "synthetic": True,
+        "case_kind": "post_inspection_feature_policy_revision_diagnostic_replay",
+        "race": {"lap_count": 2},
+        "accounting": {"official_laps": 2, "scoreable_forecasts": 3, "abstentions": 3},
+        "lap_accounting": [
+            {"lap_number": 1, "scoreable_forecasts": 3, "eligible_forecasts": 3, "abstentions": 0},
+            {"lap_number": 2, "scoreable_forecasts": 0, "eligible_forecasts": 0, "abstentions": 3},
+        ],
+        # Even a misleading invariant flag cannot carry the legacy claim into a revision.
+        "implementation_correction": {"forecast_artifacts_and_training_examples_unchanged": True},
+        "chapters": [
+            {
+                "title": "Late fixture",
+                "lap_start": 47,
+                "lap_end": 71,
+                "scoreable_forecasts": 0,
+                "abstentions": 75,
+            }
+        ],
+    }
+    (reports / "mexico-case-study-pit-v0.2.0.json").write_text(json.dumps(revised))
+    comparison = {
+        "synthetic": True,
+        "common_scoreable": {"count": 1},
+        "newly_scoreable": {"count": 2},
+        "lost_scoreable": {"count": 0},
+        "coverage": {
+            "late_75_slots_laps_47_to_71": {
+                "prior": {"expected_slots": 3, "scored": 0, "abstained": 3},
+                "new": {"expected_slots": 3, "scored": 2, "abstained": 1},
+            }
+        },
+    }
+    (reports / "pit-policy-comparison.json").write_text(json.dumps(comparison))
+    for directory, identifier in (
+        ("mexico-case-study", "old-query"),
+        ("mexico-case-study-pit-v0.2.0", "revised-query"),
+    ):
+        path = artifacts / directory
+        path.mkdir(parents=True)
+        (path / "atlas.json").write_text(
+            json.dumps(
+                {
+                    "synthetic": True,
+                    "human_rating_count": 0,
+                    "queries": [{"query_id": identifier, "neighbors": []}],
+                }
+            )
+        )
+    app = AppTest.from_file(APP_PATH).run()
+    assert app.sidebar.selectbox[0].value == "pit-v0.2.0"
+    app.sidebar.radio[0].set_value("Mexico Case Study").run()
+    assert not app.exception
+    assert any("revised feature policy" in warning.value for warning in app.warning)
+    assert not any("training examples are unchanged" in caption.value for caption in app.caption)
+    assert not any("All 75 sector origins" in notice.value for notice in app.info)
+    assert {m.label: m.value for m in app.metric}["Common scored origins"] == "1"
+    assert {m.label: m.value for m in app.metric}["Newly scored origins"] == "2"
+    app.sidebar.radio[0].set_value("Atlas").run()
+    assert not app.exception
+    assert any("revised-query" in caption.value for caption in app.caption)
+    app.sidebar.selectbox[0].set_value("published-v0.1").run()
+    assert not app.exception
+    assert any("old-query" in caption.value for caption in app.caption)
+    app.sidebar.radio[0].set_value("Mexico Case Study").run()
+    assert not app.exception
+    assert {m.label: m.value for m in app.metric}["Scoreable forecasts"] == "115"
+    assert any("All 75 sector origins" in notice.value for notice in app.info)
+
+
+def test_revised_baseline_summary_is_separate_from_historical_neural_fits(offline_environment):
+    reports, _ = offline_environment
+    shutil.copyfile(
+        ROOT / "reports" / "development-results.json", reports / "development-results.json"
+    )
+    (reports / "pit-policy-development.json").write_text(
+        json.dumps(
+            {
+                "synthetic": True,
+                "protocol_version": "0.2.0",
+                "cohort_driver_numbers": [12, 63],
+                "input_example_count": 6,
+                "scoreable_example_count": 5,
+                "evaluated_fold_count": 2,
+                "summary": {
+                    "catboost_quantile": {
+                        "antonelli": {
+                            "macro": {
+                                "mae_seconds": 1.5,
+                                "weighted_interval_score": 0.8,
+                                "coverage_90": 0.9,
+                            },
+                            "forecast_count": 5,
+                        }
+                    }
+                },
+            }
+        )
+    )
+    app = AppTest.from_file(APP_PATH).run()
+    app.sidebar.radio[0].set_value("Development Results").run()
+    assert not app.exception
+    assert any("160 neural fits remain attached" in caption.value for caption in app.caption)
+    assert {m.label: m.value for m in app.metric}["Revised-policy scoreable examples"] == "5"
+    assert app.dataframe[-1].value.iloc[0]["MAE (s)"] == 1.5

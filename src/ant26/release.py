@@ -55,6 +55,7 @@ def _code_files() -> dict[str, Path]:
     package = Path(__file__).parent
     names = (
         "release.py",
+        "revisions.py",
         "datasets/features.py",
         "models/baselines.py",
         "models/artifacts.py",
@@ -205,6 +206,7 @@ def freeze_release(
     code_revision,
     review_decision="experimental_continuous_retrieval_unvalidated",
     correction_record=None,
+    feature_revision_record=None,
 ) -> dict:
     """Pin existing candidates and record the explicit exploratory atlas decision.
 
@@ -212,6 +214,8 @@ def freeze_release(
     that the forecast existed before the race or that retrieval is validated.
     """
     allowed_decisions = {"experimental_continuous_retrieval_unvalidated", REVIEW_DECISION}
+    if correction_record is not None and feature_revision_record is not None:
+        raise ValueError("Choose one explicit correction or feature-policy revision record")
     if review_decision not in allowed_decisions:
         raise ValueError(
             "This release supports only the explicit unvalidated continuous-atlas decision"
@@ -233,6 +237,12 @@ def freeze_release(
             != (
                 _file_sha(Path(correction_record).resolve())
                 if correction_record is not None
+                else None
+            )
+            or previous.get("feature_policy_revision", {}).get("record_sha256")
+            != (
+                _file_sha(Path(feature_revision_record).resolve())
+                if feature_revision_record is not None
                 else None
             )
         ):
@@ -286,6 +296,7 @@ def freeze_release(
         "frozen_at_utc": datetime.now(timezone.utc).isoformat(),
         "code_revision": code_revision,
         "protocol_sha256": protocol_hash(protocol),
+        "protocol_version": protocol.get("protocol_version"),
         "candidate_root": os.path.relpath(candidate, output.parent),
         "training_dataset": {
             "path": os.path.relpath(dataset, output.parent),
@@ -323,6 +334,13 @@ def freeze_release(
             Path(correction_record).resolve(), manifest, output
         )
         manifest["case_study"]["claim"] = CORRECTION_CLAIM
+    if feature_revision_record is not None:
+        from ant26.revisions import FEATURE_REVISION_CLAIM, feature_revision_details
+
+        manifest["feature_policy_revision"] = feature_revision_details(
+            feature_revision_record, manifest, output, protocol
+        )
+        manifest["case_study"]["claim"] = FEATURE_REVISION_CLAIM
     manifest["manifest_sha256"] = _sha(manifest)
     _write(output, manifest)
     return manifest
@@ -343,7 +361,23 @@ def verify_release(path, protocol) -> dict:
     if manifest.get("protocol_sha256") != protocol_hash(protocol):
         raise ValueError("Release protocol has changed")
     correction = manifest.get("implementation_correction")
-    if correction is not None:
+    revision = manifest.get("feature_policy_revision")
+    if correction is not None and revision is not None:
+        raise ValueError(
+            "A release cannot conflate implementation repair and feature-policy revision"
+        )
+    if revision is not None:
+        from ant26.revisions import FEATURE_REVISION_CLAIM, feature_revision_details
+
+        if (
+            manifest.get("case_study", {}).get("claim") != FEATURE_REVISION_CLAIM
+            or feature_revision_details(
+                _path(revision["record_path"], path), manifest, path, protocol
+            )
+            != revision
+        ):
+            raise ValueError("Feature-policy revision provenance changed")
+    elif correction is not None:
         if (
             manifest.get("case_study", {}).get("claim") != CORRECTION_CLAIM
             or _correction_details(_path(correction["record_path"], path), manifest, path)
@@ -700,6 +734,7 @@ def score_case_study(
             "source_reconstruction_verified": not synthetic,
             "case_claim": release["case_study"]["claim"],
             "implementation_correction": release.get("implementation_correction"),
+            "feature_policy_revision": release.get("feature_policy_revision"),
             "replay_assumption": "event_time_not_verified_live_publication_time",
             "source_session": envelope.get("source_session"),
             "session_result": envelope.get("session_result"),

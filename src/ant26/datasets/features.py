@@ -304,13 +304,28 @@ def _window(car: dict, cutoff: float, flags: list, policy: dict) -> dict:
     return result
 
 
-def _pit_intervals(pit: list[dict], identity: tuple) -> list[tuple[float, float | None]]:
+def _pit_intervals(
+    pit: list[dict],
+    identity: tuple,
+    *,
+    cutoff: float | None = None,
+    timestamp_policy: str | None = None,
+) -> list[tuple[float, float | None]]:
     result = []
     for time, row in _events(pit, identity[0]):
         if row.get("driver_number") != identity[1]:
             continue
+        # Availability belongs to the provider report, not the back-derived
+        # approximate entry. Future completion reports cannot backfill inputs.
+        if timestamp_policy == "completion_report_v2" and (cutoff is None or time > cutoff):
+            continue
         duration = _number(row.get("lane_duration", row.get("pit_duration")))
-        result.append((time, time + duration if duration is not None and duration >= 0 else None))
+        if timestamp_policy == "completion_report_v2" and duration is not None and duration >= 0:
+            result.append((time - duration, time))
+        else:
+            result.append(
+                (time, time + duration if duration is not None and duration >= 0 else None)
+            )
     return result
 
 
@@ -427,6 +442,9 @@ def build_examples(
     and training functions rather than this stateless transformation.
     """
     policy = {**DEFAULTS, **((protocol or {}).get("prediction", {}))}
+    pit_timestamp_policy = policy.get("pit_timestamp_policy")
+    if pit_timestamp_policy not in (None, "completion_report_v2"):
+        raise ValueError("unsupported pit timestamp policy")
     if (
         policy["feature_guard_seconds"] <= 0
         or policy["tensor_grid_hz"] <= 0
@@ -474,6 +492,14 @@ def build_examples(
                     "pit_state_assumption": "bounded_pit_records_and_completed_running_sectors",
                     "source_identity": {"session_key": identity[0], "driver_number": identity[1]},
                     "grid_adds_information": False,
+                    **(
+                        {
+                            "pit_timestamp_policy": pit_timestamp_policy,
+                            "pit_state_assumption": "completion_reports_available_by_cutoff_and_completed_running_lap_bounds",
+                        }
+                        if pit_timestamp_policy == "completion_report_v2"
+                        else {}
+                    ),
                 },
             }
             if origin is None:
@@ -482,6 +508,11 @@ def build_examples(
                 continue
             cutoff = origin - policy["feature_guard_seconds"]
             row["cutoff"] = _iso(cutoff)
+            available_pits = (
+                _pit_intervals(pit, identity, cutoff=cutoff, timestamp_policy=pit_timestamp_policy)
+                if pit_timestamp_policy == "completion_report_v2"
+                else pits
+            )
             prior = [r for r in driver_sectors if _historical_timing_valid(r, cutoff)]
             # Full-lap validity is retrospective until the complete lap ends.
             # Incomplete-lap sectors cannot establish exit from an open pit
@@ -493,7 +524,7 @@ def build_examples(
                 and r["lap_completed_at"] <= cutoff
                 and not r["lap"].get("is_pit_out_lap")
             ]
-            bounded_pits = _bounded_pit_intervals(pits, cutoff, completed_lap_evidence)
+            bounded_pits = _bounded_pit_intervals(available_pits, cutoff, completed_lap_evidence)
             history = []
             for previous in prior:
                 if previous["sector_index"] != sector or previous["lap"].get("is_pit_out_lap"):
@@ -505,6 +536,9 @@ def build_examples(
                 was_pitting = any(
                     start < (pit_end if pit_end is not None else math.inf) and end > pit_start
                     for pit_start, pit_end in bounded_pits
+                    if pit_timestamp_policy != "completion_report_v2"
+                    or pit_end is None
+                    or pit_end > pit_start
                 )
                 if was_green and not was_pitting:
                     history.append(previous)

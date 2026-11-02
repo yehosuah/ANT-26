@@ -6,6 +6,7 @@ import hashlib
 import json
 from pathlib import Path
 
+from ant26.domain.protocol import protocol_hash
 from ant26.evaluation.metrics import macro_metrics
 from ant26.evaluation.splits import is_mexico, rolling_splits
 from ant26.models.baselines import train_baselines, valid_examples
@@ -112,6 +113,7 @@ def run_benchmark(
     report = {
         "project": "ANT-26",
         "protocol_version": protocol.get("protocol_version", "defaults"),
+        "protocol_sha256": protocol_hash(protocol),
         "input_sha256": hashlib.sha256(
             json.dumps(examples, sort_keys=True, allow_nan=False).encode()
         ).hexdigest(),
