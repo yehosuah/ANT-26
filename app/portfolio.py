@@ -15,7 +15,14 @@ import streamlit as st
 ROOT = Path(__file__).resolve().parents[1]
 REPORT_ROOT = Path(os.environ.get("ANT26_REPORT_ROOT", str(ROOT / "reports")))
 ARTIFACT_ROOT = Path(os.environ.get("ANT26_PORTFOLIO_ARTIFACT_ROOT", str(ROOT / "artifacts")))
-PAGES = ["Overview", "Development Results", "Mexico Case Study", "Atlas", "Methods"]
+PAGES = [
+    "Overview",
+    "Driving Findings",
+    "Development Results",
+    "Mexico Case Study",
+    "Atlas",
+    "Methods",
+]
 MODEL_NAMES = {
     "same_sector_persistence": "Same-sector persistence",
     "historical_reference": "Recent-sector median",
@@ -404,6 +411,152 @@ if page == "Overview":
         )
     if development:
         source_footer("reports/development-results.json")
+
+elif page == "Driving Findings":
+    hero(
+        "Observed driving",
+        "Completed-sector native telemetry, matched within race and context, with uncertainty calculated across races.",
+        tag="Antonelli versus Russell · retrospective observational study",
+    )
+    behavior, behavior_error = load_json(REPORT_ROOT / "driver-behavior.json")
+    if behavior_error:
+        st.warning(behavior_error)
+    if not isinstance(behavior, dict):
+        st.info("The observed-driving analysis report has not been bundled yet.")
+    else:
+        primary = behavior.get("primary", {})
+        metrics(
+            [
+                (
+                    "Matched races",
+                    primary.get("race_count", "—"),
+                    "Races are the uncertainty unit.",
+                ),
+                (
+                    "Matched context cells",
+                    primary.get("matched_cell_count", "—"),
+                    "Race, sector, compound, tyre age and race progress.",
+                ),
+            ]
+        )
+        labels = {
+            "full_throttle_fraction": "Full throttle (at least 98%)",
+            "brake_fraction": "Brake applied",
+            "coast_fraction": "Coasting (at least 80 km/h)",
+        }
+        rows = []
+        for name, label in labels.items():
+            value = primary.get("metrics", {}).get(name, {})
+            interval = value.get("bonferroni98_333_percentage_points", [])
+            if len(interval) != 2:
+                continue
+            rows.append(
+                {
+                    "Measurement": label,
+                    "Antonelli minus Russell (pp)": value.get("difference_percentage_points"),
+                    "Family-wise lower (pp)": interval[0],
+                    "Family-wise upper (pp)": interval[1],
+                }
+            )
+        if rows:
+            st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+            import altair as alt
+
+            chart_data = pd.DataFrame(rows)
+            base = alt.Chart(chart_data).encode(
+                y=alt.Y("Measurement:N", sort=list(labels.values()))
+            )
+            zero = (
+                alt.Chart(pd.DataFrame({"zero": [0]})).mark_rule(color="#8d938b").encode(x="zero:Q")
+            )
+            intervals = base.mark_rule(color="#a77f43", strokeWidth=3).encode(
+                x=alt.X(
+                    "Family-wise lower (pp):Q",
+                    title="Antonelli minus Russell (percentage points)",
+                    scale=alt.Scale(zero=True),
+                ),
+                x2="Family-wise upper (pp):Q",
+            )
+            points = base.mark_point(color="#20272c", filled=True, size=85).encode(
+                x="Antonelli minus Russell (pp):Q"
+            )
+            st.altair_chart(
+                (zero + intervals + points).properties(height=210), use_container_width=True
+            )
+        st.caption(
+            "Intervals use complete-race bootstrap blocks and account for the three primary comparisons. A percentage point is a difference in time fraction, not a pace gain."
+        )
+        for name, finding in behavior.get("findings", {}).items():
+            verdict = finding.get("evidence_level", "unavailable").replace("_", " ")
+            st.write(
+                f"**{labels.get(name, name)}:** {verdict}. {finding.get('interpretation', '')}"
+            )
+        uncertain_checks = []
+        for name, result in behavior.get("sensitivities", {}).items():
+            interval = (
+                result.get("metrics", {})
+                .get("coast_fraction", {})
+                .get("bonferroni98_333_percentage_points")
+            )
+            if (
+                isinstance(interval, list)
+                and len(interval) == 2
+                and interval[0] <= 0 <= interval[1]
+            ):
+                uncertain_checks.append(name.replace("_", " "))
+        if uncertain_checks:
+            st.caption(
+                "Coasting's adjusted interval includes zero in these sensitivity checks: "
+                + ", ".join(uncertain_checks)
+                + ". Direction consistency does not establish a difference in every restricted subset."
+            )
+        additional, _ = load_json(REPORT_ROOT / "driver-behavior-audit.json")
+        if isinstance(additional, dict):
+            check = additional.get("coverage_098", {}).get("metrics", {}).get("coast_fraction", {})
+            interval = check.get("bonferroni98_333_percentage_points")
+            effect = check.get("difference_percentage_points")
+            if finite(effect) and isinstance(interval, list) and len(interval) == 2:
+                st.caption(
+                    f"Additional fixed 98% coverage audit: coasting {effect:+.2f} pp, adjusted interval [{interval[0]:+.2f}, {interval[1]:+.2f}]. Requested before measurement and executed after the primary result; original evidence is preserved."
+                )
+        with st.expander("Matching, exclusions and sensitivity analyses"):
+            st.json(
+                {
+                    "coverage": primary.get("coverage", {}),
+                    "matching": primary.get("matching", {}),
+                    "sensitivities": behavior.get("sensitivities", {}),
+                }
+            )
+        st.warning(
+            "These observations describe the available Mercedes cohort. Car setup, traffic, fuel, strategy and conditions can still differ. Binary brake application does not measure brake pressure; sampled telemetry does not establish exact racing lines or driver intent."
+        )
+        mexico_behavior, phase_error = load_json(REPORT_ROOT / "mexico-driving-behavior.json")
+        if phase_error:
+            st.warning(phase_error)
+        if isinstance(mexico_behavior, dict):
+            st.subheader("Mexico: observed green-running phases")
+            phase_rows = []
+            for phase in mexico_behavior.get("phases", []):
+                tyres = phase.get("tyre_context", {})
+                phase_rows.append(
+                    {
+                        "Phase": phase["title"],
+                        "Retained sectors": phase["retained_sectors"],
+                        "Observed sectors": phase["observed_sectors"],
+                        "Tyre age (laps)": f"{tyres.get('age_min_laps')}–{tyres.get('age_max_laps')}",
+                        "Full throttle": percent(phase.get("full_throttle_fraction")),
+                        "Brake applied": percent(phase.get("brake_fraction")),
+                        "Coasting": percent(phase.get("coast_fraction")),
+                    }
+                )
+            st.dataframe(pd.DataFrame(phase_rows), hide_index=True, use_container_width=True)
+            st.caption(
+                "Phase fractions weight retained sectors by observed time. Tyre ages, fuel, traffic and restart conditions differ; phase contrasts do not establish adaptation or intent."
+            )
+        st.caption(
+            "The full interpretation is in docs/driver-behavior-findings.md. No human atlas ratings have been collected."
+        )
+        source_footer("reports/driver-behavior.json")
 
 elif page == "Development Results":
     hero(

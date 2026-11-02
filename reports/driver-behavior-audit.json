@@ -1,0 +1,887 @@
+{
+  "aggregate_only": true,
+  "amendment": {
+    "bootstrap": {
+      "resamples": 10000,
+      "seed": 17,
+      "unit": "complete_race"
+    },
+    "execution_timing": "executed_after_primary_analysis",
+    "matching_and_metrics_changed": false,
+    "minimum_native_coverage": 0.98,
+    "primary_outputs_replaced": false,
+    "reason": "Previously requested stricter coverage check omitted from primary orchestration.",
+    "request_timing": "requested_before_measurements",
+    "threshold_search_performed": false
+  },
+  "analysis_kind": "retrospective_observational_quality_sensitivity_amendment",
+  "coverage_098": {
+    "coverage": {
+      "by_driver": {
+        "12": {
+          "matched": 729,
+          "retained": 1644
+        },
+        "63": {
+          "matched": 704,
+          "retained": 1399
+        }
+      },
+      "by_race": [
+        {
+          "12": {
+            "matched": 61,
+            "observed": 174,
+            "retained": 96
+          },
+          "63": {
+            "matched": 49,
+            "observed": 174,
+            "retained": 53
+          },
+          "matched_cell_count": 31,
+          "session_key": 11234
+        },
+        {
+          "12": {
+            "matched": 56,
+            "observed": 168,
+            "retained": 67
+          },
+          "63": {
+            "matched": 54,
+            "observed": 168,
+            "retained": 55
+          },
+          "matched_cell_count": 36,
+          "session_key": 11245
+        },
+        {
+          "12": {
+            "matched": 45,
+            "observed": 159,
+            "retained": 64
+          },
+          "63": {
+            "matched": 43,
+            "observed": 159,
+            "retained": 53
+          },
+          "matched_cell_count": 29,
+          "session_key": 11253
+        },
+        {
+          "12": {
+            "matched": 16,
+            "observed": 171,
+            "retained": 84
+          },
+          "63": {
+            "matched": 15,
+            "observed": 171,
+            "retained": 77
+          },
+          "matched_cell_count": 12,
+          "session_key": 11280
+        },
+        {
+          "12": {
+            "matched": 50,
+            "observed": 204,
+            "retained": 134
+          },
+          "63": {
+            "matched": 47,
+            "observed": 90,
+            "retained": 51
+          },
+          "matched_cell_count": 28,
+          "session_key": 11291
+        },
+        {
+          "12": {
+            "matched": 71,
+            "observed": 234,
+            "retained": 126
+          },
+          "63": {
+            "matched": 67,
+            "observed": 234,
+            "retained": 112
+          },
+          "matched_cell_count": 38,
+          "session_key": 11299
+        },
+        {
+          "12": {
+            "matched": 97,
+            "observed": 186,
+            "retained": 113
+          },
+          "63": {
+            "matched": 92,
+            "observed": 198,
+            "retained": 114
+          },
+          "matched_cell_count": 53,
+          "session_key": 11307
+        },
+        {
+          "12": {
+            "matched": 55,
+            "observed": 213,
+            "retained": 136
+          },
+          "63": {
+            "matched": 49,
+            "observed": 213,
+            "retained": 133
+          },
+          "matched_cell_count": 27,
+          "session_key": 11315
+        },
+        {
+          "12": {
+            "matched": 37,
+            "observed": 156,
+            "retained": 67
+          },
+          "63": {
+            "matched": 39,
+            "observed": 156,
+            "retained": 60
+          },
+          "matched_cell_count": 23,
+          "session_key": 11326
+        },
+        {
+          "12": {
+            "matched": 0,
+            "observed": 135,
+            "retained": 74
+          },
+          "63": {
+            "matched": 0,
+            "observed": 0,
+            "retained": 0
+          },
+          "matched_cell_count": 0,
+          "session_key": 11334
+        },
+        {
+          "12": {
+            "matched": 10,
+            "observed": 210,
+            "retained": 12
+          },
+          "63": {
+            "matched": 10,
+            "observed": 210,
+            "retained": 10
+          },
+          "matched_cell_count": 5,
+          "session_key": 11342
+        },
+        {
+          "12": {
+            "matched": 72,
+            "observed": 216,
+            "retained": 129
+          },
+          "63": {
+            "matched": 70,
+            "observed": 216,
+            "retained": 136
+          },
+          "matched_cell_count": 39,
+          "session_key": 11353
+        },
+        {
+          "12": {
+            "matched": 0,
+            "observed": 159,
+            "retained": 90
+          },
+          "63": {
+            "matched": 0,
+            "observed": 159,
+            "retained": 94
+          },
+          "matched_cell_count": 0,
+          "session_key": 11361
+        },
+        {
+          "12": {
+            "matched": 0,
+            "observed": 171,
+            "retained": 95
+          },
+          "63": {
+            "matched": 0,
+            "observed": 171,
+            "retained": 91
+          },
+          "matched_cell_count": 0,
+          "session_key": 11369
+        },
+        {
+          "12": {
+            "matched": 72,
+            "observed": 153,
+            "retained": 79
+          },
+          "63": {
+            "matched": 74,
+            "observed": 153,
+            "retained": 82
+          },
+          "matched_cell_count": 43,
+          "session_key": 11377
+        },
+        {
+          "12": {
+            "matched": 21,
+            "observed": 186,
+            "retained": 116
+          },
+          "63": {
+            "matched": 19,
+            "observed": 186,
+            "retained": 124
+          },
+          "matched_cell_count": 13,
+          "session_key": 11388
+        },
+        {
+          "12": {
+            "matched": 66,
+            "observed": 168,
+            "retained": 92
+          },
+          "63": {
+            "matched": 76,
+            "observed": 168,
+            "retained": 93
+          },
+          "matched_cell_count": 40,
+          "session_key": 11396
+        },
+        {
+          "12": {
+            "matched": 0,
+            "observed": 165,
+            "retained": 70
+          },
+          "63": {
+            "matched": 0,
+            "observed": 150,
+            "retained": 61
+          },
+          "matched_cell_count": 0,
+          "session_key": 11731
+        }
+      ],
+      "exclusion_reason_counts": {
+        "insufficient_native_coverage": 910,
+        "invalid_native_metric": 56,
+        "invalid_sector_anchor": 56,
+        "invalid_sector_timing": 66,
+        "invalid_tyre_age": 9,
+        "local_marshal_sector_flag": 557,
+        "missing_compound": 9,
+        "missing_or_invalid_tyre_age": 9,
+        "native_gap_exceeds_one_second": 1830,
+        "not_continuously_global_green": 323,
+        "pit_or_adjacent_lap": 750,
+        "pit_out_lap": 192,
+        "race_start_lap": 105,
+        "unknown_compound": 9
+      },
+      "matched_observations": 1433,
+      "observed": 6204,
+      "retained_before_matching": 3043,
+      "unmatched_retained_observations": 1610
+    },
+    "matched_cell_count": 417,
+    "matching": {
+      "aggregation": "driver_mean_within_cell_then_equal_cells_within_race_then_equal_races",
+      "dry_only": false,
+      "fields": [
+        "session_key",
+        "sector_index",
+        "compound",
+        "tyre_age_bin",
+        "lap_fraction_bin"
+      ],
+      "lap_fraction_bin": 0.1,
+      "minimum_interval_gap_seconds": null,
+      "minimum_native_coverage": 0.98,
+      "tyre_age_bin_laps": 3
+    },
+    "metrics": {
+      "brake_fraction": {
+        "antonelli_mean": 0.2048053122160238,
+        "bonferroni98_333_percentage_points": [
+          -1.0213139138602543,
+          0.19925585169367294
+        ],
+        "ci95_percentage_points": [
+          -0.9132830213873698,
+          0.09866068237886642
+        ],
+        "difference_percentage_points": -0.3954964221892866,
+        "leave_one_race_out": {
+          "all_same_sign_as_full_effect": true,
+          "estimates": [
+            {
+              "difference_percentage_points": -0.4223163973176332,
+              "excluded_session_key": 11234
+            },
+            {
+              "difference_percentage_points": -0.30069499917194503,
+              "excluded_session_key": 11245
+            },
+            {
+              "difference_percentage_points": -0.4254912116820072,
+              "excluded_session_key": 11253
+            },
+            {
+              "difference_percentage_points": -0.3568113154001441,
+              "excluded_session_key": 11280
+            },
+            {
+              "difference_percentage_points": -0.4574701600045154,
+              "excluded_session_key": 11291
+            },
+            {
+              "difference_percentage_points": -0.2555661882696604,
+              "excluded_session_key": 11299
+            },
+            {
+              "difference_percentage_points": -0.3894496272108235,
+              "excluded_session_key": 11307
+            },
+            {
+              "difference_percentage_points": -0.44220955247701865,
+              "excluded_session_key": 11315
+            },
+            {
+              "difference_percentage_points": -0.4830334882509497,
+              "excluded_session_key": 11326
+            },
+            {
+              "difference_percentage_points": -0.30472298347804216,
+              "excluded_session_key": 11342
+            },
+            {
+              "difference_percentage_points": -0.45583821515227835,
+              "excluded_session_key": 11353
+            },
+            {
+              "difference_percentage_points": -0.500047885584643,
+              "excluded_session_key": 11377
+            },
+            {
+              "difference_percentage_points": -0.29949028398444055,
+              "excluded_session_key": 11388
+            },
+            {
+              "difference_percentage_points": -0.44380760266591174,
+              "excluded_session_key": 11396
+            }
+          ],
+          "maximum_percentage_points": -0.2555661882696604,
+          "minimum_percentage_points": -0.500047885584643
+        },
+        "race_sign_counts": {
+          "negative": 8,
+          "positive": 6,
+          "zero": 0
+        },
+        "russell_mean": 0.20876027643791664
+      },
+      "coast_fraction": {
+        "antonelli_mean": 0.04227138464386224,
+        "bonferroni98_333_percentage_points": [
+          -1.7913671611613895,
+          -0.01932762720729385
+        ],
+        "ci95_percentage_points": [
+          -1.6340179775485264,
+          -0.19931066428605018
+        ],
+        "difference_percentage_points": -0.9134536663029229,
+        "leave_one_race_out": {
+          "all_same_sign_as_full_effect": true,
+          "estimates": [
+            {
+              "difference_percentage_points": -0.8665029387391795,
+              "excluded_session_key": 11234
+            },
+            {
+              "difference_percentage_points": -0.8936324336372669,
+              "excluded_session_key": 11245
+            },
+            {
+              "difference_percentage_points": -0.7681177426779716,
+              "excluded_session_key": 11253
+            },
+            {
+              "difference_percentage_points": -0.7698396126943097,
+              "excluded_session_key": 11280
+            },
+            {
+              "difference_percentage_points": -1.0239077925273439,
+              "excluded_session_key": 11291
+            },
+            {
+              "difference_percentage_points": -0.9913025277363827,
+              "excluded_session_key": 11299
+            },
+            {
+              "difference_percentage_points": -0.9283916667065214,
+              "excluded_session_key": 11307
+            },
+            {
+              "difference_percentage_points": -0.9186726496878548,
+              "excluded_session_key": 11315
+            },
+            {
+              "difference_percentage_points": -0.9025828665438336,
+              "excluded_session_key": 11326
+            },
+            {
+              "difference_percentage_points": -0.9797212887392305,
+              "excluded_session_key": 11342
+            },
+            {
+              "difference_percentage_points": -0.830419063266543,
+              "excluded_session_key": 11353
+            },
+            {
+              "difference_percentage_points": -1.0316144388990227,
+              "excluded_session_key": 11377
+            },
+            {
+              "difference_percentage_points": -1.1264663058432303,
+              "excluded_session_key": 11388
+            },
+            {
+              "difference_percentage_points": -0.757180000542231,
+              "excluded_session_key": 11396
+            }
+          ],
+          "maximum_percentage_points": -0.757180000542231,
+          "minimum_percentage_points": -1.1264663058432303
+        },
+        "race_sign_counts": {
+          "negative": 10,
+          "positive": 4,
+          "zero": 0
+        },
+        "russell_mean": 0.05140592130689148
+      },
+      "full_throttle_fraction": {
+        "antonelli_mean": 0.47348479349970823,
+        "bonferroni98_333_percentage_points": [
+          -2.0767094385143228,
+          0.916153734487754
+        ],
+        "ci95_percentage_points": [
+          -1.858657446554658,
+          0.6321407002929039
+        ],
+        "difference_percentage_points": -0.626801752121003,
+        "leave_one_race_out": {
+          "all_same_sign_as_full_effect": true,
+          "estimates": [
+            {
+              "difference_percentage_points": -0.3386545453674147,
+              "excluded_session_key": 11234
+            },
+            {
+              "difference_percentage_points": -0.48666406815153046,
+              "excluded_session_key": 11245
+            },
+            {
+              "difference_percentage_points": -0.712093480084505,
+              "excluded_session_key": 11253
+            },
+            {
+              "difference_percentage_points": -0.7263410000657735,
+              "excluded_session_key": 11280
+            },
+            {
+              "difference_percentage_points": -0.46360338459007094,
+              "excluded_session_key": 11291
+            },
+            {
+              "difference_percentage_points": -0.8229751820028873,
+              "excluded_session_key": 11299
+            },
+            {
+              "difference_percentage_points": -0.5636579281062801,
+              "excluded_session_key": 11307
+            },
+            {
+              "difference_percentage_points": -0.44904395612036985,
+              "excluded_session_key": 11315
+            },
+            {
+              "difference_percentage_points": -0.46697624803880716,
+              "excluded_session_key": 11326
+            },
+            {
+              "difference_percentage_points": -0.953847102562295,
+              "excluded_session_key": 11342
+            },
+            {
+              "difference_percentage_points": -0.5755893352194419,
+              "excluded_session_key": 11353
+            },
+            {
+              "difference_percentage_points": -0.49225460641762137,
+              "excluded_session_key": 11377
+            },
+            {
+              "difference_percentage_points": -0.8660724130220855,
+              "excluded_session_key": 11388
+            },
+            {
+              "difference_percentage_points": -0.8574512799449596,
+              "excluded_session_key": 11396
+            }
+          ],
+          "maximum_percentage_points": -0.3386545453674147,
+          "minimum_percentage_points": -0.953847102562295
+        },
+        "race_sign_counts": {
+          "negative": 8,
+          "positive": 6,
+          "zero": 0
+        },
+        "russell_mean": 0.47975281102091827
+      }
+    },
+    "per_race": [
+      {
+        "antonelli": {
+          "brake_fraction": 0.16088467293664815,
+          "coast_fraction": 0.0512306478764191,
+          "full_throttle_fraction": 0.5260159450283756
+        },
+        "difference": {
+          "brake_fraction": -0.0004683674552078132,
+          "coast_fraction": -0.01523813124631588,
+          "full_throttle_fraction": -0.043727154399176515
+        },
+        "matched_cell_count": 31,
+        "russell": {
+          "brake_fraction": 0.16135304039185597,
+          "coast_fraction": 0.06646877912273498,
+          "full_throttle_fraction": 0.5697430994275521
+        },
+        "session_key": 11234
+      },
+      {
+        "antonelli": {
+          "brake_fraction": 0.1950776863619083,
+          "coast_fraction": 0.03713983093264406,
+          "full_throttle_fraction": 0.45378527331868285
+        },
+        "difference": {
+          "brake_fraction": -0.016279149214147276,
+          "coast_fraction": -0.011711296909564517,
+          "full_throttle_fraction": -0.02448591643724146
+        },
+        "matched_cell_count": 36,
+        "russell": {
+          "brake_fraction": 0.21135683557605559,
+          "coast_fraction": 0.048851127842208575,
+          "full_throttle_fraction": 0.4782711897559243
+        },
+        "session_key": 11245
+      },
+      {
+        "antonelli": {
+          "brake_fraction": 0.16671866360521048,
+          "coast_fraction": 0.036231782533645764,
+          "full_throttle_fraction": 0.5220699242598659
+        },
+        "difference": {
+          "brake_fraction": -5.5641587839189155e-05,
+          "coast_fraction": -0.028028206734272886,
+          "full_throttle_fraction": 0.00481990711404523
+        },
+        "matched_cell_count": 29,
+        "russell": {
+          "brake_fraction": 0.16677430519304967,
+          "coast_fraction": 0.06425998926791865,
+          "full_throttle_fraction": 0.5172500171458206
+        },
+        "session_key": 11253
+      },
+      {
+        "antonelli": {
+          "brake_fraction": 0.17752006402077783,
+          "coast_fraction": 0.026275475175202248,
+          "full_throttle_fraction": 0.5065244564875157
+        },
+        "difference": {
+          "brake_fraction": -0.0089840281044814,
+          "coast_fraction": -0.027804363632148957,
+          "full_throttle_fraction": 0.006672084711610127
+        },
+        "matched_cell_count": 12,
+        "russell": {
+          "brake_fraction": 0.18650409212525923,
+          "coast_fraction": 0.054079838807351205,
+          "full_throttle_fraction": 0.4998523717759055
+        },
+        "session_key": 11280
+      },
+      {
+        "antonelli": {
+          "brake_fraction": 0.22343748592072002,
+          "coast_fraction": 0.023253744351280543,
+          "full_throttle_fraction": 0.5498651716057351
+        },
+        "difference": {
+          "brake_fraction": 0.004101621694086871,
+          "coast_fraction": 0.0052244997461455,
+          "full_throttle_fraction": -0.0274838053002312
+        },
+        "matched_cell_count": 28,
+        "russell": {
+          "brake_fraction": 0.21933586422663315,
+          "coast_fraction": 0.018029244605135043,
+          "full_throttle_fraction": 0.5773489769059663
+        },
+        "session_key": 11291
+      },
+      {
+        "antonelli": {
+          "brake_fraction": 0.3058791418971857,
+          "coast_fraction": 0.03959619202625681,
+          "full_throttle_fraction": 0.29164973838304
+        },
+        "difference": {
+          "brake_fraction": -0.022145894631444285,
+          "coast_fraction": 0.0009858153233205241,
+          "full_throttle_fraction": 0.019234528363434922
+        },
+        "matched_cell_count": 38,
+        "russell": {
+          "brake_fraction": 0.32802503652862997,
+          "coast_fraction": 0.03861037670293629,
+          "full_throttle_fraction": 0.27241521001960506
+        },
+        "session_key": 11299
+      },
+      {
+        "antonelli": {
+          "brake_fraction": 0.19226788526428415,
+          "coast_fraction": 0.06113914201839448,
+          "full_throttle_fraction": 0.3862746543751123
+        },
+        "difference": {
+          "brake_fraction": -0.0047410475690930765,
+          "coast_fraction": -0.007192596610561423,
+          "full_throttle_fraction": -0.014476714643124
+        },
+        "matched_cell_count": 53,
+        "russell": {
+          "brake_fraction": 0.19700893283337723,
+          "coast_fraction": 0.0683317386289559,
+          "full_throttle_fraction": 0.4007513690182363
+        },
+        "session_key": 11307
+      },
+      {
+        "antonelli": {
+          "brake_fraction": 0.20219689054611414,
+          "coast_fraction": 0.034737455246572596,
+          "full_throttle_fraction": 0.536762751686698
+        },
+        "difference": {
+          "brake_fraction": 0.002117742715512294,
+          "coast_fraction": -0.008456068822988091,
+          "full_throttle_fraction": -0.02937653100129234
+        },
+        "matched_cell_count": 27,
+        "russell": {
+          "brake_fraction": 0.20007914783060185,
+          "coast_fraction": 0.04319352406956069,
+          "full_throttle_fraction": 0.5661392826879903
+        },
+        "session_key": 11315
+      },
+      {
+        "antonelli": {
+          "brake_fraction": 0.15966576401692517,
+          "coast_fraction": 0.03990571906691452,
+          "full_throttle_fraction": 0.5451240043647327
+        },
+        "difference": {
+          "brake_fraction": 0.007424854366123335,
+          "coast_fraction": -0.010547740631710843,
+          "full_throttle_fraction": -0.027045333051895493
+        },
+        "matched_cell_count": 23,
+        "russell": {
+          "brake_fraction": 0.15224090965080184,
+          "coast_fraction": 0.050453459698625365,
+          "full_throttle_fraction": 0.5721693374166282
+        },
+        "session_key": 11326
+      },
+      {
+        "antonelli": {
+          "brake_fraction": 0.257521573631342,
+          "coast_fraction": 0.07119887936866584,
+          "full_throttle_fraction": 0.34072838181562864
+        },
+        "difference": {
+          "brake_fraction": -0.01575551125435465,
+          "coast_fraction": -0.0005197457463092664,
+          "full_throttle_fraction": 0.03624787803615792
+        },
+        "matched_cell_count": 5,
+        "russell": {
+          "brake_fraction": 0.27327708488569663,
+          "coast_fraction": 0.07171862511497511,
+          "full_throttle_fraction": 0.3044805037794707
+        },
+        "session_key": 11342
+      },
+      {
+        "antonelli": {
+          "brake_fraction": 0.21378993619209907,
+          "coast_fraction": 0.05099107621842401,
+          "full_throttle_fraction": 0.4521811063599233
+        },
+        "difference": {
+          "brake_fraction": 0.003889468863296053,
+          "coast_fraction": -0.01992903505775863,
+          "full_throttle_fraction": -0.012925631718412989
+        },
+        "matched_cell_count": 39,
+        "russell": {
+          "brake_fraction": 0.20990046732880302,
+          "coast_fraction": 0.07092011127618264,
+          "full_throttle_fraction": 0.4651067380783363
+        },
+        "session_key": 11353
+      },
+      {
+        "antonelli": {
+          "brake_fraction": 0.1737520518979167,
+          "coast_fraction": 0.03394354784872671,
+          "full_throttle_fraction": 0.6342310459394196
+        },
+        "difference": {
+          "brake_fraction": 0.009636726019503467,
+          "coast_fraction": 0.006226363774463731,
+          "full_throttle_fraction": -0.02375914646264965
+        },
+        "matched_cell_count": 43,
+        "russell": {
+          "brake_fraction": 0.16411532587841324,
+          "coast_fraction": 0.02771718407426298,
+          "full_throttle_fraction": 0.6579901924020692
+        },
+        "session_key": 11377
+      },
+      {
+        "antonelli": {
+          "brake_fraction": 0.24458762053695707,
+          "coast_fraction": 0.058792230657373754,
+          "full_throttle_fraction": 0.40100220059485925
+        },
+        "difference": {
+          "brake_fraction": -0.016435762188522857,
+          "coast_fraction": 0.0185571064772107,
+          "full_throttle_fraction": 0.024837168395930698
+        },
+        "matched_cell_count": 13,
+        "russell": {
+          "brake_fraction": 0.2610233827254799,
+          "coast_fraction": 0.040235124180163055,
+          "full_throttle_fraction": 0.37616503219892855
+        },
+        "session_key": 11388
+      },
+      {
+        "antonelli": {
+          "brake_fraction": 0.19397493419624404,
+          "coast_fraction": 0.027363661693551027,
+          "full_throttle_fraction": 0.4825724547763267
+        },
+        "difference": {
+          "brake_fraction": 0.0023254892400683957,
+          "coast_fraction": -0.02945011321191917,
+          "full_throttle_fraction": 0.023716421095904328
+        },
+        "matched_cell_count": 40,
+        "russell": {
+          "brake_fraction": 0.19164944495617564,
+          "coast_fraction": 0.056813774905470196,
+          "full_throttle_fraction": 0.4588560336804224
+        },
+        "session_key": 11396
+      }
+    ],
+    "race_count": 14,
+    "status": "evaluated"
+  },
+  "drivers": {
+    "antonelli": 12,
+    "russell": 63
+  },
+  "interpretation": "This fixed quality check supplements the preserved primary analysis. Matched-cohort sensor fractions do not establish intent, causality, pace superiority or a car-independent driving signature.",
+  "limitations": [
+    "The analysis is retrospective and the audit was executed after primary results were visible.",
+    "The three metric intervals use complete-race blocks and Bonferroni adjustment; sensitivities are descriptive robustness checks.",
+    "Selective source coverage and unrecorded fuel, setup, traffic and race instructions can remain confounders.",
+    "An interval close to zero supports cautious finite-cohort wording rather than a universal driver-style claim."
+  ],
+  "mexico_included_in_matching": false,
+  "provenance": {
+    "audit_code_sha256": "90be0bc70bc0eee434dd3c215e6fc16d78fb27b6cde85d755e2d87470ab57447",
+    "comparison_code_sha256": "de7433c33779352cb2ea2c0bc44d9e3f1ba3b5b55b5ae3c0b8fa4d5ebbc65cbf",
+    "observation_metadata": {
+      "aggregate_source_sha256": "6cb5de6fbab0cfb6e4b9723222c8bee2e20282612dc139c7c72c52d440e9be66",
+      "builder_sha256": "5d9ac03d383b4725d457a3f3f0f35a26960d62719580c499e6475de7d7c6da3a",
+      "imported_helper_sha256": {
+        "features.py": "accabdd7f55be045b712d73667afbce5a4208a077cfd54af009c5f7011e378ba",
+        "materialize.py": "ebe403de181894653ee40327686246896be53ee6aec9db6bce7a9b9dfea605aa"
+      },
+      "lap_fraction_denominator_kind": "max_completed_valid_timed_lap_across_declared_race_cohort",
+      "measurement_policy": {
+        "analysis": "retrospective_completed_sector_observation",
+        "coast_minimum_speed_kmh": 80,
+        "coast_throttle_maximum_percent": 5,
+        "full_throttle_minimum_percent": 98,
+        "live_publication_availability": "unknown",
+        "local_flags": "any_active_marshal_sector_non_green_veto_without_geometry",
+        "maximum_hold_seconds": 1.0,
+        "maximum_native_gap_seconds": 1.0,
+        "maximum_traffic_observation_age_seconds": 15.0,
+        "maximum_weather_observation_age_seconds": 120.0,
+        "minimum_valid_coverage": 0.9,
+        "pit_exclusion": "recorded_pit_and_pit_out_lap_plus_or_minus_one_lap",
+        "time_weighting": "native_zero_order_hold_joint_valid_speed_throttle_brake"
+      },
+      "mexico_driver_numbers": [
+        12
+      ],
+      "mexico_separate_from_development": true,
+      "source_cohort_driver_numbers": [
+        12,
+        63
+      ]
+    },
+    "observations_sha256": "f24e858b30ddb7fea344eed9b5c225a9aa560ff892436eb2527943e9550effd9"
+  },
+  "schema_version": "ant26-driver-behavior-additional-audit-v1"
+}

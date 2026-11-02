@@ -88,6 +88,34 @@ def test_missing_and_malformed_reports_degrade_without_fake_data(offline_environ
     app.sidebar.radio[0].set_value("Atlas").run()
     assert not app.exception
     assert any("No local case-retrieval" in node.value for node in app.info)
+    app.sidebar.radio[0].set_value("Driving Findings").run()
+    assert not app.exception
+    assert any("analysis report has not been bundled" in node.value for node in app.info)
+
+
+def test_observed_driving_works_without_private_source_artifacts(offline_environment):
+    reports, artifacts = offline_environment
+    for filename in (
+        "driver-behavior.json",
+        "mexico-driving-behavior.json",
+        "driver-behavior-audit.json",
+    ):
+        shutil.copyfile(ROOT / "reports" / filename, reports / filename)
+    source = json.loads((reports / "driver-behavior.json").read_text())
+    app = AppTest.from_file(APP_PATH, default_timeout=20).run()
+    app.sidebar.radio[0].set_value("Driving Findings").run()
+    assert not app.exception
+    assert {m.label: m.value for m in app.metric}["Matched races"] == str(
+        source["primary"]["race_count"]
+    )
+    table = app.dataframe[0].value
+    assert len(table) == 3
+    assert table.iloc[0]["Antonelli minus Russell (pp)"] == pytest.approx(
+        source["primary"]["metrics"]["full_throttle_fraction"]["difference_percentage_points"]
+    )
+    assert len(app.dataframe[1].value) == 4
+    assert any("Additional fixed 98% coverage audit" in node.value for node in app.caption)
+    assert not artifacts.exists()
 
 
 def test_public_lap_accounting_retains_all_71_rows_and_zero_counts(offline_environment):
