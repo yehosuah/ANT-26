@@ -4,7 +4,7 @@ The probabilistic forecasting candidate is CatBoost, selected by development wei
 
 ## Forecasting choice and tradeoff
 
-Across the eight chronological development test races, the selected CatBoost baseline achieved WIS 0.6286189 and MAE 0.9806240 seconds. Same-sector persistence had the lowest MAE, 0.9456798 seconds. The probabilistic choice therefore accepts a 3.6951% point-error increase in exchange for the best observed interval score. This is an explicit objective tradeoff, not evidence that the learned encoder beat the baselines.
+Across the eight chronological development test races, evaluating Antonelli with Mercedes-cohort training, the selected CatBoost baseline achieved WIS 0.6286189 and MAE 0.9806240 seconds. Same-sector persistence had the lowest MAE, 0.9456798 seconds. The probabilistic choice therefore accepts a 3.6951% point-error increase in exchange for the best observed interval score. This is an explicit objective tradeoff, not evidence that the learned encoder beat the baselines.
 
 The observed cohort contains Antonelli and Russell only. Source availability covers 35 driver-race pairs; Russell has no valid timed laps in the Belgian source. The artifacts do not establish full-field generalization or isolate driver behavior from car, setup, and strategy.
 
