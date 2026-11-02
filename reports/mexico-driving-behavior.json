@@ -1,0 +1,658 @@
+{
+  "accounting": {
+    "brake_fraction": 0.25012673680063585,
+    "coast_fraction": 0.06583953121754892,
+    "coverage_fraction": 1.0,
+    "covered_seconds": 3308.043000936508,
+    "excluded_sectors": 89,
+    "exclusion_reasons": {
+      "insufficient_native_coverage": 1,
+      "invalid_sector_anchor": 6,
+      "invalid_sector_timing": 6,
+      "local_marshal_sector_flag": 21,
+      "native_gap_exceeds_one_second": 56,
+      "not_continuously_global_green": 17,
+      "pit_or_adjacent_lap": 24,
+      "pit_out_lap": 9,
+      "race_start_lap": 3
+    },
+    "expected_sectors": 213,
+    "full_throttle_fraction": 0.31714218974198516,
+    "mean_sector_seconds": 27.339198347107438,
+    "median_sector_seconds": 27.961,
+    "missing_sectors": 3,
+    "observed_sectors": 210,
+    "retained_sectors": 121,
+    "sector_seconds": 3308.043,
+    "tyre_context": {
+      "age_known_sectors": 121,
+      "age_max_laps": 40.0,
+      "age_median_laps": 20.0,
+      "age_min_laps": 2.0,
+      "age_unknown_sectors": 0,
+      "compounds": {
+        "SOFT": 121
+      },
+      "stint_number_unknown_count": 0,
+      "stint_numbers": {
+        "1": 83,
+        "3": 38
+      }
+    }
+  },
+  "aggregate_only": true,
+  "limitations": [
+    "Phase comparisons are descriptive and selective; they do not establish adaptation, intention or causal driver development.",
+    "Opening fresh soft tyres, used soft tyres after the restart, and older final-run tyres differ in age and conditions.",
+    "Track evolution, fuel, traffic, neutralizations and geometry can explain control or pace differences.",
+    "Conservative local-yellow persistence may reflect a missing CLEAR; it is not ground truth that the track remained yellow.",
+    "Pace comparisons should use the same timing sector; overall phase control fractions also mix sector exposure.",
+    "Native telemetry is sparse; unobserved intervals and invalid samples do not become inferred driving actions.",
+    "Completed-sector observations are retrospective and never the inputs for their own forecast."
+  ],
+  "methodology": {
+    "brake": "binary_brake_on_not_brake_pressure",
+    "coast": "throttle_at_most_5_percent_brake_off_speed_at_least_80_kmh",
+    "control_aggregation": "sum_fraction_times_jointly_valid_seconds_divided_by_sum_jointly_valid_seconds",
+    "control_denominator": "retained_jointly_observed_sector_time_not_unobserved_time",
+    "exclusion_reason_counts": "one_sector_can_have_multiple_reasons",
+    "flags": "global_green_and_no_uncleared_local_yellow; veto_is_source_uncertainty_not_verified_physical_flag_state",
+    "full_throttle": "throttle_at_least_98_percent",
+    "phase_pace": "per_timing_sector_duration_mean_and_median; pooled_phase_pace_mixes_sector_geometry",
+    "pit_adjacency": "retrospectively_exclude_pit_and_pit_out_laps_plus_one_neighbor_on_each_side",
+    "source_control_measurement": "native_zero_order_hold_no_interpolation; source_observation_builder_defines_gap_and_quality_gates",
+    "tyre_age": "source_tyre_age_at_stint_start_plus_laps_since_stint_start"
+  },
+  "phases": [
+    {
+      "brake_fraction": 0.2524990662058226,
+      "coast_fraction": 0.06636370745902105,
+      "coverage_fraction": 1.0,
+      "covered_seconds": 2277.7510001659393,
+      "excluded_sectors": 40,
+      "exclusion_reasons": {
+        "insufficient_native_coverage": 1,
+        "local_marshal_sector_flag": 7,
+        "native_gap_exceeds_one_second": 30,
+        "pit_or_adjacent_lap": 9,
+        "pit_out_lap": 3,
+        "race_start_lap": 3
+      },
+      "expected_sectors": 126,
+      "full_throttle_fraction": 0.3104483327015913,
+      "lap_end": 42,
+      "lap_start": 1,
+      "mean_sector_seconds": 27.442783132530124,
+      "median_sector_seconds": 27.989,
+      "missing_sectors": 3,
+      "observed_sectors": 123,
+      "phase_id": "opening",
+      "retained_sectors": 83,
+      "sector_seconds": 2277.751,
+      "sectors": [
+        {
+          "brake_fraction": 0.17448970328179558,
+          "coast_fraction": 0.06406341326296282,
+          "coverage_fraction": 1.0,
+          "covered_seconds": 756.0790004730225,
+          "excluded_sectors": 14,
+          "exclusion_reasons": {
+            "local_marshal_sector_flag": 2,
+            "native_gap_exceeds_one_second": 10,
+            "pit_or_adjacent_lap": 3,
+            "pit_out_lap": 1,
+            "race_start_lap": 1
+          },
+          "full_throttle_fraction": 0.5699377961800086,
+          "mean_sector_seconds": 28.002925925925926,
+          "median_sector_seconds": 27.981,
+          "observed_sectors": 41,
+          "retained_sectors": 27,
+          "sector_index": 1,
+          "sector_seconds": 756.079,
+          "tyre_context": {
+            "age_known_sectors": 27,
+            "age_max_laps": 40.0,
+            "age_median_laps": 21.0,
+            "age_min_laps": 2.0,
+            "age_unknown_sectors": 0,
+            "compounds": {
+              "SOFT": 27
+            },
+            "stint_number_unknown_count": 0,
+            "stint_numbers": {
+              "1": 27
+            }
+          }
+        },
+        {
+          "brake_fraction": 0.26936465480522853,
+          "coast_fraction": 0.062156433907228456,
+          "coverage_fraction": 1.0,
+          "covered_seconds": 978.1610000133514,
+          "excluded_sectors": 11,
+          "exclusion_reasons": {
+            "local_marshal_sector_flag": 3,
+            "native_gap_exceeds_one_second": 8,
+            "pit_or_adjacent_lap": 3,
+            "pit_out_lap": 1,
+            "race_start_lap": 1
+          },
+          "full_throttle_fraction": 0.19421138313761535,
+          "mean_sector_seconds": 32.60536666666666,
+          "median_sector_seconds": 32.576,
+          "observed_sectors": 41,
+          "retained_sectors": 30,
+          "sector_index": 2,
+          "sector_seconds": 978.161,
+          "tyre_context": {
+            "age_known_sectors": 30,
+            "age_max_laps": 40.0,
+            "age_median_laps": 22.5,
+            "age_min_laps": 2.0,
+            "age_unknown_sectors": 0,
+            "compounds": {
+              "SOFT": 30
+            },
+            "stint_number_unknown_count": 0,
+            "stint_numbers": {
+              "1": 30
+            }
+          }
+        },
+        {
+          "brake_fraction": 0.33066488099517155,
+          "coast_fraction": 0.07713551344777275,
+          "coverage_fraction": 0.9999999994104359,
+          "covered_seconds": 543.5109996795654,
+          "excluded_sectors": 15,
+          "exclusion_reasons": {
+            "insufficient_native_coverage": 1,
+            "local_marshal_sector_flag": 2,
+            "native_gap_exceeds_one_second": 12,
+            "pit_or_adjacent_lap": 3,
+            "pit_out_lap": 1,
+            "race_start_lap": 1
+          },
+          "full_throttle_fraction": 0.15866468268405862,
+          "mean_sector_seconds": 20.90426923076923,
+          "median_sector_seconds": 20.8985,
+          "observed_sectors": 41,
+          "retained_sectors": 26,
+          "sector_index": 3,
+          "sector_seconds": 543.511,
+          "tyre_context": {
+            "age_known_sectors": 26,
+            "age_max_laps": 40.0,
+            "age_median_laps": 21.5,
+            "age_min_laps": 2.0,
+            "age_unknown_sectors": 0,
+            "compounds": {
+              "SOFT": 26
+            },
+            "stint_number_unknown_count": 0,
+            "stint_numbers": {
+              "1": 26
+            }
+          }
+        }
+      ],
+      "title": "Opening stint",
+      "tyre_context": {
+        "age_known_sectors": 83,
+        "age_max_laps": 40.0,
+        "age_median_laps": 22.0,
+        "age_min_laps": 2.0,
+        "age_unknown_sectors": 0,
+        "compounds": {
+          "SOFT": 83
+        },
+        "stint_number_unknown_count": 0,
+        "stint_numbers": {
+          "1": 83
+        }
+      }
+    },
+    {
+      "brake_fraction": null,
+      "coast_fraction": null,
+      "coverage_fraction": null,
+      "covered_seconds": 0.0,
+      "excluded_sectors": 12,
+      "exclusion_reasons": {
+        "invalid_sector_anchor": 3,
+        "invalid_sector_timing": 3,
+        "local_marshal_sector_flag": 4,
+        "native_gap_exceeds_one_second": 3,
+        "not_continuously_global_green": 5,
+        "pit_or_adjacent_lap": 12,
+        "pit_out_lap": 6
+      },
+      "expected_sectors": 12,
+      "full_throttle_fraction": null,
+      "lap_end": 46,
+      "lap_start": 43,
+      "mean_sector_seconds": null,
+      "median_sector_seconds": null,
+      "missing_sectors": 0,
+      "observed_sectors": 12,
+      "phase_id": "interruption",
+      "retained_sectors": 0,
+      "sector_seconds": 0.0,
+      "sectors": [
+        {
+          "brake_fraction": null,
+          "coast_fraction": null,
+          "coverage_fraction": null,
+          "covered_seconds": 0.0,
+          "excluded_sectors": 4,
+          "exclusion_reasons": {
+            "invalid_sector_anchor": 1,
+            "invalid_sector_timing": 1,
+            "local_marshal_sector_flag": 1,
+            "not_continuously_global_green": 1,
+            "pit_or_adjacent_lap": 4,
+            "pit_out_lap": 2
+          },
+          "full_throttle_fraction": null,
+          "mean_sector_seconds": null,
+          "median_sector_seconds": null,
+          "observed_sectors": 4,
+          "retained_sectors": 0,
+          "sector_index": 1,
+          "sector_seconds": 0.0,
+          "tyre_context": {
+            "age_known_sectors": 0,
+            "age_max_laps": null,
+            "age_median_laps": null,
+            "age_min_laps": null,
+            "age_unknown_sectors": 0,
+            "compounds": {},
+            "stint_number_unknown_count": 0,
+            "stint_numbers": {}
+          }
+        },
+        {
+          "brake_fraction": null,
+          "coast_fraction": null,
+          "coverage_fraction": null,
+          "covered_seconds": 0.0,
+          "excluded_sectors": 4,
+          "exclusion_reasons": {
+            "invalid_sector_anchor": 1,
+            "invalid_sector_timing": 1,
+            "local_marshal_sector_flag": 2,
+            "native_gap_exceeds_one_second": 2,
+            "not_continuously_global_green": 2,
+            "pit_or_adjacent_lap": 4,
+            "pit_out_lap": 2
+          },
+          "full_throttle_fraction": null,
+          "mean_sector_seconds": null,
+          "median_sector_seconds": null,
+          "observed_sectors": 4,
+          "retained_sectors": 0,
+          "sector_index": 2,
+          "sector_seconds": 0.0,
+          "tyre_context": {
+            "age_known_sectors": 0,
+            "age_max_laps": null,
+            "age_median_laps": null,
+            "age_min_laps": null,
+            "age_unknown_sectors": 0,
+            "compounds": {},
+            "stint_number_unknown_count": 0,
+            "stint_numbers": {}
+          }
+        },
+        {
+          "brake_fraction": null,
+          "coast_fraction": null,
+          "coverage_fraction": null,
+          "covered_seconds": 0.0,
+          "excluded_sectors": 4,
+          "exclusion_reasons": {
+            "invalid_sector_anchor": 1,
+            "invalid_sector_timing": 1,
+            "local_marshal_sector_flag": 1,
+            "native_gap_exceeds_one_second": 1,
+            "not_continuously_global_green": 2,
+            "pit_or_adjacent_lap": 4,
+            "pit_out_lap": 2
+          },
+          "full_throttle_fraction": null,
+          "mean_sector_seconds": null,
+          "median_sector_seconds": null,
+          "observed_sectors": 4,
+          "retained_sectors": 0,
+          "sector_index": 3,
+          "sector_seconds": 0.0,
+          "tyre_context": {
+            "age_known_sectors": 0,
+            "age_max_laps": null,
+            "age_median_laps": null,
+            "age_min_laps": null,
+            "age_unknown_sectors": 0,
+            "compounds": {},
+            "stint_number_unknown_count": 0,
+            "stint_numbers": {}
+          }
+        }
+      ],
+      "title": "Pit stop and interruption",
+      "tyre_context": {
+        "age_known_sectors": 0,
+        "age_max_laps": null,
+        "age_median_laps": null,
+        "age_min_laps": null,
+        "age_unknown_sectors": 0,
+        "compounds": {},
+        "stint_number_unknown_count": 0,
+        "stint_numbers": {}
+      }
+    },
+    {
+      "brake_fraction": 0.23991388443027978,
+      "coast_fraction": 0.06676681545516229,
+      "coverage_fraction": 1.0,
+      "covered_seconds": 647.0280003547668,
+      "excluded_sectors": 24,
+      "exclusion_reasons": {
+        "local_marshal_sector_flag": 9,
+        "native_gap_exceeds_one_second": 15,
+        "not_continuously_global_green": 11,
+        "pit_or_adjacent_lap": 3
+      },
+      "expected_sectors": 48,
+      "full_throttle_fraction": 0.34143499214890644,
+      "lap_end": 62,
+      "lap_start": 47,
+      "mean_sector_seconds": 26.959500000000002,
+      "median_sector_seconds": 27.662,
+      "missing_sectors": 0,
+      "observed_sectors": 48,
+      "phase_id": "restart",
+      "retained_sectors": 24,
+      "sector_seconds": 647.028,
+      "sectors": [
+        {
+          "brake_fraction": 0.16572246987633005,
+          "coast_fraction": 0.06433571274649044,
+          "coverage_fraction": 0.9999999998619591,
+          "covered_seconds": 248.71099996566772,
+          "excluded_sectors": 7,
+          "exclusion_reasons": {
+            "local_marshal_sector_flag": 3,
+            "native_gap_exceeds_one_second": 4,
+            "not_continuously_global_green": 3,
+            "pit_or_adjacent_lap": 1
+          },
+          "full_throttle_fraction": 0.5906212405499853,
+          "mean_sector_seconds": 27.634555555555558,
+          "median_sector_seconds": 27.66,
+          "observed_sectors": 16,
+          "retained_sectors": 9,
+          "sector_index": 1,
+          "sector_seconds": 248.711,
+          "tyre_context": {
+            "age_known_sectors": 9,
+            "age_max_laps": 17.0,
+            "age_median_laps": 10.0,
+            "age_min_laps": 6.0,
+            "age_unknown_sectors": 0,
+            "compounds": {
+              "SOFT": 9
+            },
+            "stint_number_unknown_count": 0,
+            "stint_numbers": {
+              "3": 9
+            }
+          }
+        },
+        {
+          "brake_fraction": 0.2612285777663135,
+          "coast_fraction": 0.06228085571923025,
+          "coverage_fraction": 1.0,
+          "covered_seconds": 254.68500018119812,
+          "excluded_sectors": 8,
+          "exclusion_reasons": {
+            "local_marshal_sector_flag": 3,
+            "native_gap_exceeds_one_second": 6,
+            "not_continuously_global_green": 4,
+            "pit_or_adjacent_lap": 1
+          },
+          "full_throttle_fraction": 0.197620593160542,
+          "mean_sector_seconds": 31.835625,
+          "median_sector_seconds": 31.8335,
+          "observed_sectors": 16,
+          "retained_sectors": 8,
+          "sector_index": 2,
+          "sector_seconds": 254.685,
+          "tyre_context": {
+            "age_known_sectors": 8,
+            "age_max_laps": 16.0,
+            "age_median_laps": 10.0,
+            "age_min_laps": 6.0,
+            "age_unknown_sectors": 0,
+            "compounds": {
+              "SOFT": 8
+            },
+            "stint_number_unknown_count": 0,
+            "stint_numbers": {
+              "3": 8
+            }
+          }
+        },
+        {
+          "brake_fraction": 0.3305878860982861,
+          "coast_fraction": 0.078930878054881,
+          "coverage_fraction": 1.0,
+          "covered_seconds": 143.632000207901,
+          "excluded_sectors": 9,
+          "exclusion_reasons": {
+            "local_marshal_sector_flag": 3,
+            "native_gap_exceeds_one_second": 5,
+            "not_continuously_global_green": 4,
+            "pit_or_adjacent_lap": 1
+          },
+          "full_throttle_fraction": 0.1649562774584126,
+          "mean_sector_seconds": 20.518857142857144,
+          "median_sector_seconds": 20.513,
+          "observed_sectors": 16,
+          "retained_sectors": 7,
+          "sector_index": 3,
+          "sector_seconds": 143.632,
+          "tyre_context": {
+            "age_known_sectors": 7,
+            "age_max_laps": 16.0,
+            "age_median_laps": 11.0,
+            "age_min_laps": 7.0,
+            "age_unknown_sectors": 0,
+            "compounds": {
+              "SOFT": 7
+            },
+            "stint_number_unknown_count": 0,
+            "stint_numbers": {
+              "3": 7
+            }
+          }
+        }
+      ],
+      "title": "Restarted phase and late Safety Car",
+      "tyre_context": {
+        "age_known_sectors": 24,
+        "age_max_laps": 17.0,
+        "age_median_laps": 10.5,
+        "age_min_laps": 6.0,
+        "age_unknown_sectors": 0,
+        "compounds": {
+          "SOFT": 24
+        },
+        "stint_number_unknown_count": 0,
+        "stint_numbers": {
+          "3": 24
+        }
+      }
+    },
+    {
+      "brake_fraction": 0.2532692854626968,
+      "coast_fraction": 0.06115888857343515,
+      "coverage_fraction": 1.0,
+      "covered_seconds": 383.264000415802,
+      "excluded_sectors": 13,
+      "exclusion_reasons": {
+        "invalid_sector_anchor": 3,
+        "invalid_sector_timing": 3,
+        "local_marshal_sector_flag": 1,
+        "native_gap_exceeds_one_second": 8,
+        "not_continuously_global_green": 1
+      },
+      "expected_sectors": 27,
+      "full_throttle_fraction": 0.3159127922636734,
+      "lap_end": 71,
+      "lap_start": 63,
+      "mean_sector_seconds": 27.376,
+      "median_sector_seconds": 27.616,
+      "missing_sectors": 0,
+      "observed_sectors": 27,
+      "phase_id": "final",
+      "retained_sectors": 14,
+      "sector_seconds": 383.264,
+      "sectors": [
+        {
+          "brake_fraction": 0.15208901308482953,
+          "coast_fraction": 0.06539509355050221,
+          "coverage_fraction": 1.0,
+          "covered_seconds": 110.10000014305115,
+          "excluded_sectors": 5,
+          "exclusion_reasons": {
+            "invalid_sector_anchor": 1,
+            "invalid_sector_timing": 1,
+            "native_gap_exceeds_one_second": 4
+          },
+          "full_throttle_fraction": 0.6015894667200266,
+          "mean_sector_seconds": 27.525,
+          "median_sector_seconds": 27.569000000000003,
+          "observed_sectors": 9,
+          "retained_sectors": 4,
+          "sector_index": 1,
+          "sector_seconds": 110.1,
+          "tyre_context": {
+            "age_known_sectors": 4,
+            "age_max_laps": 29.0,
+            "age_median_laps": 26.5,
+            "age_min_laps": 22.0,
+            "age_unknown_sectors": 0,
+            "compounds": {
+              "SOFT": 4
+            },
+            "stint_number_unknown_count": 0,
+            "stint_numbers": {
+              "3": 4
+            }
+          }
+        },
+        {
+          "brake_fraction": 0.27043834701091934,
+          "coast_fraction": 0.05629375682445886,
+          "coverage_fraction": 1.0,
+          "covered_seconds": 191.83300018310547,
+          "excluded_sectors": 3,
+          "exclusion_reasons": {
+            "invalid_sector_anchor": 1,
+            "invalid_sector_timing": 1,
+            "native_gap_exceeds_one_second": 2
+          },
+          "full_throttle_fraction": 0.20618975932963557,
+          "mean_sector_seconds": 31.972166666666666,
+          "median_sector_seconds": 31.891,
+          "observed_sectors": 9,
+          "retained_sectors": 6,
+          "sector_index": 2,
+          "sector_seconds": 191.833,
+          "tyre_context": {
+            "age_known_sectors": 6,
+            "age_max_laps": 29.0,
+            "age_median_laps": 24.5,
+            "age_min_laps": 21.0,
+            "age_unknown_sectors": 0,
+            "compounds": {
+              "SOFT": 6
+            },
+            "stint_number_unknown_count": 0,
+            "stint_numbers": {
+              "3": 6
+            }
+          }
+        },
+        {
+          "brake_fraction": 0.34974363604863234,
+          "coast_fraction": 0.06689946290052455,
+          "coverage_fraction": 1.0,
+          "covered_seconds": 81.33100008964539,
+          "excluded_sectors": 5,
+          "exclusion_reasons": {
+            "invalid_sector_anchor": 1,
+            "invalid_sector_timing": 1,
+            "local_marshal_sector_flag": 1,
+            "native_gap_exceeds_one_second": 2,
+            "not_continuously_global_green": 1
+          },
+          "full_throttle_fraction": 0.18798490142111,
+          "mean_sector_seconds": 20.33275,
+          "median_sector_seconds": 20.316000000000003,
+          "observed_sectors": 9,
+          "retained_sectors": 4,
+          "sector_index": 3,
+          "sector_seconds": 81.331,
+          "tyre_context": {
+            "age_known_sectors": 4,
+            "age_max_laps": 28.0,
+            "age_median_laps": 24.5,
+            "age_min_laps": 21.0,
+            "age_unknown_sectors": 0,
+            "compounds": {
+              "SOFT": 4
+            },
+            "stint_number_unknown_count": 0,
+            "stint_numbers": {
+              "3": 4
+            }
+          }
+        }
+      ],
+      "title": "Final run",
+      "tyre_context": {
+        "age_known_sectors": 14,
+        "age_max_laps": 29.0,
+        "age_median_laps": 25.0,
+        "age_min_laps": 21.0,
+        "age_unknown_sectors": 0,
+        "compounds": {
+          "SOFT": 14
+        },
+        "stint_number_unknown_count": 0,
+        "stint_numbers": {
+          "3": 14
+        }
+      }
+    }
+  ],
+  "schema_version": "ant26-mexico-driving-behavior-v1",
+  "scope": {
+    "analysis": "retrospective_completed_sector_native_telemetry",
+    "driver_number": 12,
+    "official_laps": 71,
+    "session_key": 11404
+  },
+  "source_measurement_provenance": {
+    "aggregate_source_sha256": "6cb5de6fbab0cfb6e4b9723222c8bee2e20282612dc139c7c72c52d440e9be66",
+    "builder_sha256": "5d9ac03d383b4725d457a3f3f0f35a26960d62719580c499e6475de7d7c6da3a",
+    "imported_helper_sha256": {
+      "features.py": "accabdd7f55be045b712d73667afbce5a4208a077cfd54af009c5f7011e378ba",
+      "materialize.py": "ebe403de181894653ee40327686246896be53ee6aec9db6bce7a9b9dfea605aa"
+    }
+  },
+  "source_observations_sha256": "742055edb1f5e5d05c203961da24d628e54ea04fc506717e260fa38f05c24458",
+  "summary_builder_sha256": "460fa87b04b18e87d85aeacf7b2a6156ec194b990b8426299ad0a559fb06a1b7"
+}

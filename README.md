@@ -2,7 +2,9 @@
 
 [![Checks](https://github.com/yehosuah/ANT-26/actions/workflows/ci.yml/badge.svg)](https://github.com/yehosuah/ANT-26/actions/workflows/ci.yml)
 
-**Can a short telemetry history improve the next-sector forecast?** ANT-26 studies Kimi Antonelli's 2026 season with masked sequence learning, calibrated quantile forecasts, and an experimental behavioral atlas.
+**What can observed telemetry tell us about Antonelli's driving—and the next sector?** ANT-26 combines native telemetry measurements, matched teammate comparisons, masked sequence learning, calibrated quantile forecasts, and an experimental behavioral atlas.
+
+**First driving finding:** Antonelli's matched coasting fraction is **4.29% versus Russell's 5.23%** across 14 races: **−0.94 percentage points**, adjusted bootstrap interval **[−1.81, −0.06]**. Direction persists under stricter matching, but some sensitivity intervals include zero. Full-throttle and brake-use differences remain inconclusive. This is a selected observational cohort, with no causal driving-style claim. [Findings, robustness checks and Mexico phase measurements](docs/driver-behavior-findings.md).
 
 The benchmark retained CatBoost. The project includes 160 representation fits, a complete research pipeline, an offline portfolio application, and a Mexico case study that preserves a failed first attempt and its implementation correction.
 
@@ -19,7 +21,7 @@ make install
 make demo
 ```
 
-Open `http://127.0.0.1:8501`. The five pages work with committed aggregate results. No API, provider credentials, downloaded telemetry, trained weights, or GPU is required. `docker compose up --build` also starts the portfolio and read-only API.
+Open `http://127.0.0.1:8501`. The six pages work with committed aggregate results, including **Driving Findings**. No API, provider credentials, downloaded telemetry, trained weights, or GPU is required. `docker compose up --build` also starts the portfolio and read-only API.
 
 Watch the [original v0.1.0 walkthrough](docs/walkthrough.md), or browse the [v0.2.0 release](https://github.com/yehosuah/ANT-26/releases/tag/v0.2.0). The sidebar selects the revised or preserved case evidence.
 
@@ -30,6 +32,7 @@ The API-backed artifact viewer remains available through `streamlit run app/repl
 | Evidence | Result |
 |---|---|
 | Development data | 18 Antonelli races, 17 scoreable Russell races; 760,694 native telemetry rows |
+| Observed-driving comparison | 14 matched races, 455 context cells, 1,584 sectors; lower matched coasting, two inconclusive pedal-use comparisons |
 | V0.2 forecast dataset | 6,204 observed sectors, 5,249 scoreable examples; Mercedes cohort only |
 | Historical v0.1 neural evaluation | Eight whole-race holdouts, five fixed seeds, paired race bootstrap; 559,104-parameter masked encoder |
 | V0.2 baseline evaluation | Eight chronological holdouts; fixed model settings; 1,137 Antonelli test forecasts |
@@ -43,6 +46,7 @@ Development scores evaluate Antonelli. Historical neural results remain attached
 
 ## Inspect the engineering
 
+- [Observed driving findings](docs/driver-behavior-findings.md): native measurements, race-block uncertainty, matched context, source audit and Mexico phase descriptions.
 - [Pit-timestamp revision](docs/pit-timestamp-correction.md): source semantics, cutoff safety, refitting and recovered late coverage.
 - [Preserved v0.1 Mexico case](docs/mexico-case-study.md): original accounting, source limitations and first-attempt history.
 - [Engineering decisions](docs/engineering.md): architecture, learning objective, leakage boundaries, normalization failure and model selection.
